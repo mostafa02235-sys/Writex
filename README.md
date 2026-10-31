@@ -8,6 +8,7 @@ Writex is a mobile-first document workspace for Android. It brings a Word-style 
   <img src="docs/screenshots/home.png" width="240" alt="Writex home screen">
   <img src="docs/screenshots/editor.png" width="240" alt="Writex editor">
   <img src="docs/screenshots/arabic.png" width="240" alt="Writex in Arabic">
+  <img src="docs/screenshots/arabic-create.png" width="240" alt="Create section in Arabic">
 </p>
 
 ## Download
