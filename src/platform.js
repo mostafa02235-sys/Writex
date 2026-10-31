@@ -40,7 +40,10 @@ export async function initNative({ theme } = {}) {
   document.documentElement.classList.add('native', 'native-' + platform);
   try {
     N.App.addListener('backButton', () => {
-      if (!handleBack()) N.App.exitApp();
+      const handled = handleBack();
+      // Short in-memory trace for the device test; nothing is stored or sent
+      (window.__writexBackLog = window.__writexBackLog || []).push((handled ? 'handled' : 'exit') + '@' + Date.now() % 100000);
+      if (!handled) N.App.exitApp();
     });
     N.App.addListener('appStateChange', ({ isActive }) => {
       if (!isActive) window.dispatchEvent(new Event(BACKGROUND_EVENT));

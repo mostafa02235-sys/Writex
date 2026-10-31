@@ -135,8 +135,18 @@ async function goHome() {
   await check('Android back button leaves the editor', async () => {
     await page.evaluate(() => document.activeElement && document.activeElement.blur());
     // The first press may only close the keyboard; Android's own back is used, never a page button
-    for (let i = 0; i < 3 && !(await page.$('.shell')); i++) await back();
-    await page.waitForSelector('.shell', { timeout: 10000 });
+    const state = () => page.evaluate(() => JSON.stringify({
+      shell: !!document.querySelector('.shell'), editor: !!document.querySelector('.qwrap'), vis: document.visibilityState,
+      layers: [...document.querySelectorAll('.present, .pop, .scrim, .sheet-scrim:not(.out), .draw, .reader, .studio-page')].map((e) => e.className).slice(0, 4),
+      backs: (window.__writexBackLog || []).slice(-3),
+    })).catch((e) => 'page: ' + e.message);
+    const seen = [];
+    for (let i = 0; i < 3 && !(await page.$('.shell')); i++) {
+      await back();
+      const focus = (adb('shell', 'dumpsys', 'window').match(/mCurrentFocus=.*/) || [''])[0];
+      seen.push(`press ${i + 1}: ${await state()} ${focus.slice(0, 90)}`);
+    }
+    try { await page.waitForSelector('.shell', { timeout: 10000 }); } catch (e) { await shot('03-back-failed'); throw new Error(seen.join(' | ')); }
     await shot('03-after-back');
     return 'back on home';
   });
