@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from '../react.js';
 import { Modal } from './ui.jsx';
 import { loadScript } from '../util.js';
+import { libUrls } from '../vendor.js';
 
 // LaTeX equations rendered with MathJax (SVG output, no web fonts needed) and
 // stored in the document as an image that keeps its LaTeX source for editing.
@@ -17,10 +18,10 @@ function loadMathJax() {
   if (!window.MathJax || !window.MathJax.tex2svgPromise) {
     window.MathJax = { tex: { inlineMath: [] }, svg: { fontCache: 'none' }, startup: { typeset: false }, options: { enableMenu: false } };
   }
-  ready = loadScript([
+  ready = loadScript(libUrls('mathjax.js', [
     'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js',
     'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg-full.js',
-  ], () => !!(window.MathJax && window.MathJax.tex2svgPromise))
+  ]), () => !!(window.MathJax && window.MathJax.tex2svgPromise))
     .then(() => (window.MathJax.startup && window.MathJax.startup.promise) || null)
     .catch((e) => { ready = null; throw e; });
   return ready;

@@ -1,5 +1,7 @@
 // Document persistence: IndexedDB with an in-memory fallback.
 
+// The database keeps its original name so documents written before the rename to
+// Writex keep loading. It is internal and never shown to people.
 const DB_NAME = 'qalam-docs';
 const VERSION = 3;
 let dbp = null;

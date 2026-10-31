@@ -10,7 +10,7 @@ import * as db from '../db.js';
 import * as store from '../store.js';
 import * as learn from '../learn.js';
 import { complete, clip, providerStatus, getAIConfig, aiErrorText } from '../ai.js';
-import { fmtDate, uid, storage, saveFile, safeFilename, readFileAs, downscaleImage } from '../util.js';
+import { fmtDate, uid, storage, saveFile, savedLabel, safeFilename, readFileAs, downscaleImage } from '../util.js';
 import { textToDelta } from '../exporters.js';
 
 const nd = (e) => e.preventDefault();
@@ -186,7 +186,7 @@ function StudioPage({ creation, onClose, onSaved, toast, openDoc }) {
     try {
       const r = c.type === 'infographic' || c.type === 'cover' ? await nodeToPng(nodeRef.current, 2) : await svgToPng(svgRef.current, 2);
       const res = await saveFile(safeFilename(c.title || meta.label, 'png'), r.blob);
-      if (res === 'saved') toast('Image ready');
+      if (res === 'saved') toast(savedLabel('Image ready'));
       return r;
     } catch (e) { toast('Export failed: ' + e.message, 'error'); return null; }
   };
@@ -216,7 +216,7 @@ function StudioPage({ creation, onClose, onSaved, toast, openDoc }) {
   return window.ReactDOM.createPortal(
     <div className="studio-page" role="dialog" aria-label={meta.label}>
       <header className="think-bar">
-        <button type="button" className="tb lg" aria-label="Close" onClick={onClose}><Icon name="X" size={22} /></button>
+        <button type="button" data-close className="tb lg" aria-label="Close" onClick={onClose}><Icon name="X" size={22} /></button>
         <div className="m-title">
           <input className="studio-title" id="studio-title" dir="auto" value={c.title} aria-label="Name" onChange={(e) => { setC({ ...c, title: e.target.value }); setDirty(true); }} />
           <span className="m-sub">{meta.label}{c.sourceTitle ? ' · from ' + c.sourceTitle : ''}{dirty ? ' · not saved' : ''}</span>
@@ -241,8 +241,8 @@ function StudioPage({ creation, onClose, onSaved, toast, openDoc }) {
 
 /* ---------- section ---------- */
 export function CreateSection({ toast, openDoc, openSettings }) {
-  const [tab, setTabState] = useState(() => storage.get('qalam.createTab', 'studio'));
-  const setTab = (t) => { setTabState(t); storage.set('qalam.createTab', t); };
+  const [tab, setTabState] = useState(() => storage.get('writex.createTab', 'studio'));
+  const setTab = (t) => { setTabState(t); storage.set('writex.createTab', t); };
   const [creations, setCreations] = useState([]);
   const [flow, setFlow] = useState(null); // {type, source, opts}
   const [busy, setBusy] = useState(false);

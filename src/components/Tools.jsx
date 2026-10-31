@@ -50,7 +50,7 @@ export function SourcesSheet({ open, refs, onChange, onCite, onBibliography, onC
   );
   return (
     <Sheet open={open} onClose={onClose} title={f ? (f.id ? 'Edit source' : 'New source') : 'Citations & sources'} className="sheet-tall"
-      actions={f ? <button type="button" className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setEditing(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
+      actions={f ? <button type="button" data-back className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setEditing(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
       {f ? (
         <div className="form-stack">
           <Seg label="Source type" value={f.type} onChange={(v) => setEditing({ ...f, type: v })} options={[{ value: 'book', label: 'Book' }, { value: 'article', label: 'Article' }, { value: 'web', label: 'Website' }]} />
@@ -178,7 +178,7 @@ export function VersionsSheet({ open, docId, current, onRestore, onCopy, onSaveN
   return (
     <>
       <Sheet open={open} onClose={onClose} title={sel ? fmtDate(sel.at) : 'Version history'} className="sheet-tall"
-        actions={sel ? <button type="button" className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setSel(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
+        actions={sel ? <button type="button" data-back className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setSel(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
         {locked ? <p className="mnote">Version history is off for password-protected documents, so no unencrypted copies are kept.</p>
           : sel ? (
             <>

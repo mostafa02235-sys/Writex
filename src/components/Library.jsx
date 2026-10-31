@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from '../react.js';
+import { onBack } from '../platform.js';
+import { LOGO } from '../brand.js';
 import { Icon } from '../icons.jsx';
 import { ConfirmDialog, PromptDialog, Sheet, Seg } from './ui.jsx';
 import * as store from '../store.js';
@@ -61,18 +63,18 @@ const NAV = [
 export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThemeMode, persistent, embedded, openSettings }) {
   const [docs, setDocs] = useState(null);
   const [folders, setFolders] = useState([]);
-  const [section, setSectionState] = useState(() => storage.get('qalam.libSection', 'home'));
+  const [section, setSectionState] = useState(() => storage.get('writex.libSection', 'home'));
   const [folder, setFolder] = useState('all');
   const [q, setQ] = useState('');
   const [sort, setSort] = useState('updated');
-  const [layout, setLayoutState] = useState(() => storage.get('qalam.docLayout', 'list'));
+  const [layout, setLayoutState] = useState(() => storage.get('writex.docLayout', 'list'));
   const [dialog, setDialog] = useState(null);
   const [actionDoc, setActionDoc] = useState(null);
   const [actionPage, setActionPage] = useState(null);
   const [prefs, setPrefs] = useState(() => ({
-    darkPaper: storage.get('qalam.darkPaper', false),
-    mobileView: storage.get('qalam.mobileView', 'mobile'),
-    toolbarHidden: storage.get('qalam.mToolbarHidden', false),
+    darkPaper: storage.get('writex.darkPaper', false),
+    mobileView: storage.get('writex.mobileView', 'mobile'),
+    toolbarHidden: storage.get('writex.mToolbarHidden', false),
   }));
   const [subjects, setSubjects] = useState([]);
   const [customTpls, setCustomTpls] = useState([]);
@@ -80,7 +82,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   const [recentMode, setRecentMode] = useState('edited');
   const [filter, setFilter] = useState('none');
   const [unlock, setUnlock] = useState(null); // {doc, error}
-  const [customHL, setCustomHL] = useState(() => storage.get('qalam.customHighlights', []));
+  const [customHL, setCustomHL] = useState(() => storage.get('writex.customHighlights', []));
   const [aiState, setAiState] = useState(null);
   const [online, setOnline] = useState(() => navigator.onLine !== false);
   const fileRef = useRef(null);
@@ -91,8 +93,10 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
     return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
   }, []);
 
-  const setSection = (s) => { setSectionState(s); storage.set('qalam.libSection', s); if (mainRef.current) mainRef.current.scrollTop = 0; };
-  const setLayout = (l) => { setLayoutState(l); storage.set('qalam.docLayout', l); };
+  const setSection = (s) => { setSectionState(s); storage.set('writex.libSection', s); if (mainRef.current) mainRef.current.scrollTop = 0; };
+  // Android back: Documents / Study / Templates / Settings return to Home first
+  useEffect(() => (section !== 'home' ? onBack(() => { setSection('home'); return true; }) : undefined), [section]);
+  const setLayout = (l) => { setLayoutState(l); storage.set('writex.docLayout', l); };
   const setPref = (k, v, key) => { setPrefs((p) => ({ ...p, [k]: v })); storage.set(key, v); };
 
   const refresh = async () => {
@@ -270,8 +274,8 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       <>
         <header className="home-head">
           <div className="brand">
-            <span className="brand-mark" aria-hidden="true">ق</span>
-            <span className="brand-name">Qalam</span>
+            <img className="brand-mark" src={LOGO} alt="" aria-hidden="true" />
+            <span className="brand-name">Writex</span>
           </div>
           <button type="button" className="tb lg" aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} onClick={toggleTheme}>
             <Icon name={theme === 'dark' ? 'Sun' : 'Moon'} size={20} />
@@ -460,7 +464,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
             </div>
             <label className="set-row">
               <span className="set-label">Dark paper<small>Show pages in a dark colour while editing. Exports stay white.</small></span>
-              <input id="set-darkpaper" type="checkbox" className="switch" checked={prefs.darkPaper} onChange={(e) => setPref('darkPaper', e.target.checked, 'qalam.darkPaper')} />
+              <input id="set-darkpaper" type="checkbox" className="switch" checked={prefs.darkPaper} onChange={(e) => setPref('darkPaper', e.target.checked, 'writex.darkPaper')} />
             </label>
           </div>
         </section>
@@ -469,11 +473,11 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           <div className="set-card">
             <div className="set-row col">
               <span className="set-label">Open documents in<small>Mobile view reflows text to your screen. Page view shows real A4 pages.</small></span>
-              <Seg label="Default view on phones" value={prefs.mobileView} onChange={(v) => setPref('mobileView', v, 'qalam.mobileView')} options={[{ value: 'mobile', label: 'Mobile view', icon: 'Smartphone' }, { value: 'print', label: 'Page view', icon: 'Files' }]} />
+              <Seg label="Default view on phones" value={prefs.mobileView} onChange={(v) => setPref('mobileView', v, 'writex.mobileView')} options={[{ value: 'mobile', label: 'Mobile view', icon: 'Smartphone' }, { value: 'print', label: 'Page view', icon: 'Files' }]} />
             </div>
             <label className="set-row">
               <span className="set-label">Formatting toolbar<small>When off, a floating Aa button opens formatting.</small></span>
-              <input id="set-toolbar" type="checkbox" className="switch" checked={!prefs.toolbarHidden} onChange={(e) => setPref('toolbarHidden', !e.target.checked, 'qalam.mToolbarHidden')} />
+              <input id="set-toolbar" type="checkbox" className="switch" checked={!prefs.toolbarHidden} onChange={(e) => setPref('toolbarHidden', !e.target.checked, 'writex.mToolbarHidden')} />
             </label>
           </div>
         </section>
@@ -485,10 +489,10 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
               <div className="mswatches">
                 {HIGHLIGHTS.map((c) => <span key={c} className="msw static" style={{ background: c }} />)}
                 {customHL.map((c) => (
-                  <button type="button" key={c} className="msw removable" style={{ background: c }} aria-label={'Remove colour ' + c} onClick={() => { const n = customHL.filter((x) => x !== c); setCustomHL(n); storage.set('qalam.customHighlights', n); }}><Icon name="X" size={12} /></button>
+                  <button type="button" key={c} className="msw removable" style={{ background: c }} aria-label={'Remove colour ' + c} onClick={() => { const n = customHL.filter((x) => x !== c); setCustomHL(n); storage.set('writex.customHighlights', n); }}><Icon name="X" size={12} /></button>
                 ))}
                 <label className="msw add" aria-label="Add colour"><Icon name="Plus" size={16} />
-                  <input id="set-hl" type="color" defaultValue="#FFD6E7" onChange={(e) => { const c = e.target.value; const n = [...customHL.filter((x) => x !== c), c].slice(-8); setCustomHL(n); storage.set('qalam.customHighlights', n); }} />
+                  <input id="set-hl" type="color" defaultValue="#FFD6E7" onChange={(e) => { const c = e.target.value; const n = [...customHL.filter((x) => x !== c), c].slice(-8); setCustomHL(n); storage.set('writex.customHighlights', n); }} />
                 </label>
               </div>
             </div>
@@ -536,7 +540,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
         <section className="set-group">
           <h2>About</h2>
           <div className="set-card">
-            <div className="set-row"><span className="set-label">Qalam · قلم<small>A document editor for Arabic and English. Pages, tables, images, equations, references, study notebooks and a writing assistant, with PDF and Word export. Home-screen widgets need the future native app.</small></span></div>
+            <div className="set-row"><span className="set-label">Writex<small>A writing, reading and learning workspace for Arabic and English. Pages, tables, images, equations, references, study notebooks, a reader, a studio and a writing assistant, with PDF and Word export.</small></span></div>
           </div>
         </section>
       </>
@@ -548,7 +552,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
     <div className={'lib' + (embedded ? ' embedded' : '')}>
       {!embedded && (
         <nav className="bnav" aria-label="Main">
-          <div className="rail-brand"><span className="brand-mark" aria-hidden="true">ق</span><span className="brand-name">Qalam</span></div>
+          <div className="rail-brand"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="brand-name">Writex</span></div>
           {NAV.map((n) => (
             <button type="button" key={n.id} className={'bnav-item' + (section === n.id ? ' on' : '')} aria-current={section === n.id ? 'page' : undefined} onClick={() => setSection(n.id)}>
               <span className="bnav-ico"><Icon name={n.icon} size={22} stroke={section === n.id ? 2.1 : 1.7} /></span>
@@ -573,7 +577,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       <input ref={fileRef} id="import-docx" type="file" accept=".docx,.txt,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden onChange={onImport} />
 
       <Sheet open={!!ad} onClose={closeActions} title={ad ? ({ move: 'Move to folder', category: 'Category', subject: 'Study subject' }[actionPage] || ad.title) : ''}
-        actions={actionPage ? <button type="button" className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setActionPage(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
+        actions={actionPage ? <button type="button" data-back className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setActionPage(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
         {ad && actionPage === 'category' && (
           <div className="mlist">
             {[null, ...CATEGORIES].map((c) => (

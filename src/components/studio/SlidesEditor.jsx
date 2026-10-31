@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from '../../react.js';
 import { Icon } from '../../icons.jsx';
 import { Seg } from '../ui.jsx';
-import { loadScript, uid, AR_RE, readFileAs, downscaleImage, saveFile, safeFilename } from '../../util.js';
+import { loadScript, uid, AR_RE, readFileAs, downscaleImage, saveFile, savedLabel, safeFilename } from '../../util.js';
+import { libUrls } from '../../vendor.js';
 
 export const THEMES = {
   midnight: { label: 'Midnight', bg: '#0B0F19', ink: '#FFFFFF', sub: '#A9B4CC', accent: '#8EA5FF' },
@@ -60,7 +61,7 @@ function Thumb({ slide, theme, active, n, onClick }) {
 }
 
 export async function exportPptx(deck) {
-  await loadScript(['https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js', 'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js'], () => !!window.PptxGenJS);
+  await loadScript(libUrls('pptxgen.js', ['https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js', 'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js']), () => !!window.PptxGenJS);
   const t = THEMES[deck.theme] || THEMES.midnight;
   const hex = (c) => c.replace('#', '');
   const pptx = new window.PptxGenJS();
@@ -115,7 +116,7 @@ export function SlidesEditor({ deck, onChange, toast }) {
   const pickImage = async (e) => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; const url = await downscaleImage(await readFileAs(f, 'dataurl'), 1400); set({ image: url, layout: 'image' }); };
   const doExport = async () => {
     const busy = toast('Building PowerPoint file…', 'busy');
-    try { const blob = await exportPptx(deck); busy.close(); const r = await saveFile(safeFilename(deck.title || 'Presentation', 'pptx'), blob); if (r === 'saved') toast('PowerPoint file ready'); } catch (e) { busy.close(); toast('Export failed: ' + (e.message || e), 'error'); }
+    try { const blob = await exportPptx(deck); busy.close(); const r = await saveFile(safeFilename(deck.title || 'Presentation', 'pptx'), blob); if (r === 'saved') toast(savedLabel('PowerPoint file ready')); } catch (e) { busy.close(); toast('Export failed: ' + (e.message || e), 'error'); }
   };
   useEffect(() => {
     if (present == null) return undefined;

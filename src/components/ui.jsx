@@ -103,7 +103,7 @@ export function Modal({ title, children, onClose, footer, width = 440, className
       <div className={'modal ' + (className || '')} role="dialog" aria-modal="true" aria-label={title} style={{ width }}>
         <div className="modal-head">
           <h2>{title}</h2>
-          {onClose && <button type="button" className="tb" aria-label="Close" onClick={onClose}><Icon name="X" size={18} /></button>}
+          {onClose && <button type="button" data-close className="tb" aria-label="Close" onClick={onClose}><Icon name="X" size={18} /></button>}
         </div>
         <div className="modal-body">{children}</div>
         {footer && <div className="modal-foot">{footer}</div>}
@@ -217,7 +217,7 @@ export function Sheet({ open, onClose, title, children, className, actions }) {
             <h2>{title}</h2>
             <div className="bs-actions">
               {actions}
-              <button type="button" className="tb" aria-label="Close" onClick={onClose}><Icon name="X" size={20} /></button>
+              <button type="button" data-close className="tb" aria-label="Close" onClick={onClose}><Icon name="X" size={20} /></button>
             </div>
           </div>
         </div>

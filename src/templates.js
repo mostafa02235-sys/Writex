@@ -189,11 +189,11 @@ export const TEMPLATES = [
 ];
 
 export const WELCOME = {
-  title: 'Welcome to Qalam',
-  settings: () => S({ pageNumbers: { on: true, where: 'footer', align: 'center', format: 'pageof' }, header: { text: 'Qalam · Getting started', align: 'left' } }),
+  title: 'Welcome to Writex',
+  settings: () => S({ pageNumbers: { on: true, where: 'footer', align: 'center', format: 'pageof' }, header: { text: 'Writex · Getting started', align: 'left' } }),
   delta: () => buildWithTables([
     p([['Example document', { color: '#6B7280', size: '10pt' }]]),
-    h(1, 'Welcome to Qalam'),
+    h(1, 'Welcome to Writex'),
     p('This is a real document. Edit anything — your changes save automatically in this browser. Use the ribbon above: Home for text and paragraphs, Insert for tables, images and page breaks, Layout for page size and margins, Review for word count and find & replace, and View for zoom and dark mode.'),
     h(2, 'Arabic and English together'),
     p('Each paragraph picks its own direction from its first letters, so you can mix languages freely.'),

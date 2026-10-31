@@ -208,7 +208,7 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
                   <div className="drows">
                     {filtered.map((s) => (
                       <button type="button" key={src.sourceKey(s)} className="drow src-pick" disabled={s.locked} onClick={() => setRef({ kind: s.kind, id: s.id })}>
-                        <span className={'ftype t-' + (s.kind === 'doc' ? 'doc' : s.ftype)}><Icon name={s.locked ? 'Lock' : s.kind === 'doc' ? 'PenLine' : src.FILE_TYPES[s.ftype].icon} size={20} /><b>{s.kind === 'doc' ? 'Qalam' : src.FILE_TYPES[s.ftype].label}</b></span>
+                        <span className={'ftype t-' + (s.kind === 'doc' ? 'doc' : s.ftype)}><Icon name={s.locked ? 'Lock' : s.kind === 'doc' ? 'PenLine' : src.FILE_TYPES[s.ftype].icon} size={20} /><b>{s.kind === 'doc' ? 'Writex' : src.FILE_TYPES[s.ftype].label}</b></span>
                         <span className="drow-text"><span className="drow-title" dir="auto">{s.title}</span><span className="drow-meta">{s.locked ? 'Password protected · unlock it in Write first' : fmtDate(s.at) + (s.words ? ` · ${s.words.toLocaleString()} words` : '')}</span></span>
                         <Icon name="ChevronRight" size={18} className="mrow-chev" />
                       </button>

@@ -1,5 +1,6 @@
-// Export (PDF, DOCX, HTML, TXT) and import (DOCX) for Qalam documents.
+// Export (PDF, DOCX, HTML, TXT) and import (DOCX) for Writex documents.
 import { loadScript, firstStrongDir, AR_RE } from './util.js';
+import { libUrls } from './vendor.js';
 import { pageGeometry, fontByStack } from './constants.js';
 
 const LIBS = {
@@ -27,10 +28,10 @@ const LIBS = {
 };
 
 export const loadLib = {
-  html2canvas: () => loadScript(LIBS.html2canvas, () => !!window.html2canvas),
-  jspdf: () => loadScript(LIBS.jspdf, () => !!(window.jspdf && window.jspdf.jsPDF)),
-  mammoth: () => loadScript(LIBS.mammoth, () => !!window.mammoth),
-  docx: () => loadScript(LIBS.docx, () => !!(window.docx && window.docx.Packer)),
+  html2canvas: () => loadScript(libUrls('html2canvas.js', LIBS.html2canvas), () => !!window.html2canvas),
+  jspdf: () => loadScript(libUrls('jspdf.js', LIBS.jspdf), () => !!(window.jspdf && window.jspdf.jsPDF)),
+  mammoth: () => loadScript(libUrls('mammoth.js', LIBS.mammoth), () => !!window.mammoth),
+  docx: () => loadScript(libUrls('docx.js', LIBS.docx), () => !!(window.docx && window.docx.Packer)),
 };
 
 /* ---------------- PDF ---------------- */
@@ -382,7 +383,7 @@ export async function exportDOCX({ delta, settings, title }) {
 
   const hd = (id, name, pt) => ({ id, name, basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: pt * 2, sizeComplexScript: pt * 2, bold: true, boldComplexScript: true, color: '111827' }, paragraph: { spacing: { before: 240, after: 120 }, keepNext: true } });
   const doc = new D.Document({
-    creator: 'Qalam',
+    creator: 'Writex',
     title: title || 'Document',
     styles: {
       default: {

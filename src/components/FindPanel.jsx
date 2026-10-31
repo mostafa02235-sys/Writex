@@ -9,10 +9,10 @@ export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onCl
     const q = quill();
     const r = lastRange.current;
     if (q && r && r.length && r.length < 80) return q.getText(r.index, r.length).replace(/\n/g, ' ');
-    return storage.get('qalam.lastFind', '');
+    return storage.get('writex.lastFind', '');
   });
   const [repl, setRepl] = useState('');
-  const [opts, setOpts] = useState(() => storage.get('qalam.findOpts', { matchCase: false, wholeWord: false, arabicLoose: true }));
+  const [opts, setOpts] = useState(() => storage.get('writex.findOpts', { matchCase: false, wholeWord: false, arabicLoose: true }));
   const input = useRef(null);
 
   useEffect(() => { const t = setTimeout(() => { if (input.current) { input.current.focus(); input.current.select(); } }, 20); return () => clearTimeout(t); }, []);
@@ -21,10 +21,10 @@ export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onCl
       const list = runFind(query, opts);
       if (list.length) gotoHit(list.cur, list);
     }, 160);
-    storage.set('qalam.lastFind', query);
+    storage.set('writex.lastFind', query);
     return () => clearTimeout(t);
   }, [query, opts]);
-  useEffect(() => { storage.set('qalam.findOpts', opts); }, [opts]);
+  useEffect(() => { storage.set('writex.findOpts', opts); }, [opts]);
   // refresh matches after edits
   useEffect(() => {
     if (!hits.stale) return undefined;
@@ -69,7 +69,7 @@ export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onCl
         </label>
         <button type="button" className="tb sm" aria-label="Previous match" disabled={!n} onClick={prev}><Icon name="ChevronUp" size={16} /></button>
         <button type="button" className="tb sm" aria-label="Next match" disabled={!n} onClick={next}><Icon name="ChevronDown" size={16} /></button>
-        <button type="button" className="tb sm" aria-label="Close find" onClick={onClose}><Icon name="X" size={16} /></button>
+        <button type="button" data-close className="tb sm" aria-label="Close find" onClick={onClose}><Icon name="X" size={16} /></button>
       </div>
       {showReplace && (
         <div className="fp-row">

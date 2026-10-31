@@ -37,7 +37,7 @@ function PdfReader({ file, data, onClose, toast }) {
   const [err, setErr] = useState('');
   const [page, setPage] = useState(file.pos || 1);
   const [zoom, setZoom] = useState(1);
-  const [dark, setDark] = useState(() => storage.get('qalam.pdfDark', false));
+  const [dark, setDark] = useState(() => storage.get('writex.pdfDark', false));
   const [panel, setPanel] = useState(null);
   const [q, setQ] = useState('');
   const [texts, setTexts] = useState(file.pages || null);
@@ -53,7 +53,7 @@ function PdfReader({ file, data, onClose, toast }) {
     src.openPdf(data).then((p) => { if (live) setPdf(p); }).catch((e) => { if (live) setErr(e.message || 'This PDF could not be opened.'); });
     return () => { live = false; if (tts) window.speechSynthesis.cancel(); };
   }, []);
-  useEffect(() => { storage.set('qalam.pdfDark', dark); }, [dark]);
+  useEffect(() => { storage.set('writex.pdfDark', dark); }, [dark]);
   useEffect(() => {
     const el = scroller.current; if (!el) return undefined;
     const ro = new ResizeObserver(() => setWidth(el.clientWidth));
@@ -145,7 +145,7 @@ function PdfReader({ file, data, onClose, toast }) {
   return (
     <div className={'reader pdfr theme-night' + (dark ? ' pdf-dark' : '')} role="dialog" aria-label={'Reading ' + file.name}>
       <header className="r-bar">
-        <button type="button" className="tb lg" aria-label="Close" onClick={onClose}><Icon name="X" size={22} /></button>
+        <button type="button" data-close className="tb lg" aria-label="Close" onClick={onClose}><Icon name="X" size={22} /></button>
         <div className="r-title"><span dir="auto">{file.name}</span><small className="tnum">{pdf ? `Page ${page} of ${pdf.numPages}` : 'Opening…'}</small></div>
         <button type="button" className={'tb lg' + (panel === 'search' ? ' on' : '')} aria-label="Search in PDF" onClick={() => { setPanel(panel === 'search' ? null : 'search'); ensureText(); }}><Icon name="Search" size={20} /></button>
         <button type="button" className={'tb lg' + (panel === 'view' ? ' on' : '')} aria-label="View options" onClick={() => setPanel(panel === 'view' ? null : 'view')}><Icon name="ALargeSmall" size={21} /></button>
@@ -203,7 +203,7 @@ function ImageViewer({ file, data, onClose }) {
   return (
     <div className="reader theme-night" role="dialog" aria-label={file.name}>
       <header className="r-bar">
-        <button type="button" className="tb lg" aria-label="Close" onClick={onClose}><Icon name="X" size={22} /></button>
+        <button type="button" data-close className="tb lg" aria-label="Close" onClick={onClose}><Icon name="X" size={22} /></button>
         <div className="r-title"><span dir="auto">{file.name}</span><small>{sizeText(file.size)}</small></div>
         <button type="button" className="tb lg" aria-label="Zoom out" onClick={() => setZ((v) => Math.max(0.5, v - 0.25))}><Icon name="ZoomOut" size={20} /></button>
         <button type="button" className="tb lg" aria-label="Zoom in" onClick={() => setZ((v) => Math.min(4, v + 0.25))}><Icon name="ZoomIn" size={20} /></button>
@@ -219,7 +219,7 @@ const FILTERS = [['all', 'All'], ['pdf', 'PDF'], ['docx', 'Word'], ['txt', 'Text
 export function ReadSection({ toast, openDoc, openSettings, askAbout }) {
   const [files, setFiles] = useState(null);
   const [docs, setDocs] = useState([]);
-  const [filter, setFilter] = useState(() => storage.get('qalam.readFilter', 'all'));
+  const [filter, setFilter] = useState(() => storage.get('writex.readFilter', 'all'));
   const [q, setQ] = useState('');
   const [open, setOpen] = useState(null); // {kind, file|doc, data|html}
   const [act, setAct] = useState(null);
@@ -230,7 +230,7 @@ export function ReadSection({ toast, openDoc, openSettings, askAbout }) {
     try { const [f, d] = await Promise.all([src.listFiles(), store.listDocs()]); setFiles(f); setDocs(d); } catch (e) { setFiles([]); toast('Files could not be loaded: ' + e.message, 'error'); }
   };
   useEffect(() => { refresh(); }, []);
-  useEffect(() => { storage.set('qalam.readFilter', filter); }, [filter]);
+  useEffect(() => { storage.set('writex.readFilter', filter); }, [filter]);
 
   const onPick = async (e) => {
     const list = Array.from(e.target.files || []);
@@ -338,7 +338,7 @@ export function ReadSection({ toast, openDoc, openSettings, askAbout }) {
                 ) : (
                   <article key={d.id} className="drow">
                     <button type="button" className="drow-main" onClick={() => openWriteDoc(d)}>
-                      <span className="ftype t-doc"><Icon name={d.locked ? 'Lock' : 'PenLine'} size={20} /><b>Qalam</b></span>
+                      <span className="ftype t-doc"><Icon name={d.locked ? 'Lock' : 'PenLine'} size={20} /><b>Writex</b></span>
                       <span className="drow-text"><span className="drow-title" dir="auto">{d.title}</span><span className="drow-meta">{fmtDate(d.updatedAt)}{d.words ? ` · ${d.words.toLocaleString()} words` : ''}</span></span>
                     </button>
                     <button type="button" className="tb lg" aria-label={'Ask about ' + d.title} onClick={() => askAbout({ kind: 'doc', id: d.id })}><Icon name="MessagesSquare" size={19} /></button>

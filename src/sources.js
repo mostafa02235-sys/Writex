@@ -2,6 +2,7 @@
 // editor documents (Write) and imported files (Read).
 import * as db from './db.js';
 import { uid, loadScript } from './util.js';
+import { libUrls, vendorUrl } from './vendor.js';
 import { loadLib } from './exporters.js';
 import { sessionKeys } from './crypto.js';
 
@@ -49,12 +50,12 @@ export async function deleteFile(id) { await db.del('files', id); await db.del('
 /* ---------- PDF (pdf.js) ---------- */
 const PDF_VER = '3.11.174';
 export async function loadPdfJs() {
-  await loadScript([
+  await loadScript(libUrls('pdf.js', [
     `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDF_VER}/pdf.min.js`,
     `https://cdn.jsdelivr.net/npm/pdfjs-dist@${PDF_VER}/build/pdf.min.js`,
-  ], () => !!window.pdfjsLib);
+  ]), () => !!window.pdfjsLib);
   const lib = window.pdfjsLib;
-  if (!lib.GlobalWorkerOptions.workerSrc) lib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDF_VER}/pdf.worker.min.js`;
+  if (!lib.GlobalWorkerOptions.workerSrc) lib.GlobalWorkerOptions.workerSrc = vendorUrl('pdf.worker.js') || `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDF_VER}/pdf.worker.min.js`;
   return lib;
 }
 export async function openPdf(data) {
@@ -66,7 +67,7 @@ export async function openPdf(data) {
   } catch (e) {
     if (e && e.name === 'PasswordException') throw new Error('This PDF is password protected.');
     // Worker blocked: run pdf.js on the main thread instead
-    await loadScript([`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDF_VER}/pdf.worker.min.js`], () => !!window.pdfjsWorker);
+    await loadScript(libUrls('pdf.worker.js', [`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDF_VER}/pdf.worker.min.js`]), () => !!window.pdfjsWorker);
     return lib.getDocument({ data: new Uint8Array(data.slice(0)), isEvalSupported: false, useSystemFonts: true }).promise;
   }
 }

@@ -169,7 +169,7 @@ export function DrawingEditor({ initial, onInsert, onClose, maxWidth }) {
   return window.ReactDOM.createPortal(
     <div className="draw" role="dialog" aria-label="Drawing">
       <header className="draw-bar">
-        <button type="button" className="tb lg" aria-label="Cancel drawing" onClick={onClose}><Icon name="X" size={22} /></button>
+        <button type="button" data-close className="tb lg" aria-label="Cancel drawing" onClick={onClose}><Icon name="X" size={22} /></button>
         <span className="draw-title">Drawing</span>
         <button type="button" className="tb lg" aria-label="Undo" disabled={!items.length} onClick={undo}><Icon name="Undo2" size={20} /></button>
         <button type="button" className="tb lg" aria-label="Redo" disabled={!redo.length} onClick={redoIt}><Icon name="Redo2" size={20} /></button>

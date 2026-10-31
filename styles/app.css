@@ -86,10 +86,10 @@ button { cursor: pointer; }
 .danger-text { color: var(--danger); }
 .spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line-strong); border-top-color: var(--accent); animation: spin .8s linear infinite; display: inline-block; flex: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.brand-mark { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font-family: var(--font-ar); font-size: 22px; line-height: 1; padding-bottom: 4px; box-sizing: border-box; flex: none; }
-.brand-mark.sm { width: 26px; height: 26px; font-size: 18px; border-radius: 7px; padding-bottom: 3px; }
+.brand-mark { display: inline-block; width: 32px; height: 32px; border-radius: 8px; object-fit: cover; background: #000; flex: none; }
+.brand-mark.sm { width: 26px; height: 26px; border-radius: 7px; }
 .splash { height: 100%; display: grid; place-items: center; align-content: center; gap: 18px; }
-.splash .brand-mark { width: 52px; height: 52px; font-size: 34px; border-radius: 12px; }
+.splash .brand-mark { width: 72px; height: 72px; border-radius: 16px; }
 
 .pop { position: fixed; z-index: 60; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--pop-shadow); padding: 6px; overflow-y: auto; animation: pop .14s ease-out; color: var(--ink); }
 @keyframes pop { from { opacity: 0; transform: translateY(-4px); } }

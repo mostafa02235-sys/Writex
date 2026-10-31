@@ -234,7 +234,7 @@ export function LearnTab({ toast, request, aiOk, aiMessage }) {
     return (
       <>
         <header className="sec-top">
-          <button type="button" className="tb lg" aria-label="Back to Learn" onClick={() => setMode(null)}><Icon name="ChevronLeft" size={24} /></button>
+          <button type="button" data-back className="tb lg" aria-label="Back to Learn" onClick={() => setMode(null)}><Icon name="ChevronLeft" size={24} /></button>
           <h1 className="subj-h1" dir="auto">{deck.name}</h1>
           <div className="sec-top-actions">
             <button type="button" className="tb lg" aria-label="Rename deck" onClick={() => setDialog({ kind: 'rename-deck', deck })}><Icon name="Pencil" size={19} /></button>

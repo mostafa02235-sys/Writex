@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from '../react.js';
+import { LOGO } from '../brand.js';
 import { Icon } from '../icons.jsx';
 import { setupQuill, normalizeDelta, splitNewlines } from '../quillSetup.js';
 import { computePagination } from '../paginate.js';
 import { pageGeometry, DEFAULT_SETTINGS, fontByStack } from '../constants.js';
-import { debounce, countText, clamp, saveFile, safeFilename, readFileAs, downscaleImage, storage } from '../util.js';
+import { debounce, countText, clamp, saveFile, savedLabel, safeFilename, readFileAs, downscaleImage, storage } from '../util.js';
+import { isNative, nativeShare, BACKGROUND_EVENT } from '../platform.js';
 import { previewFromRoot } from '../quillHtml.js';
 import { docText, findAll } from '../find.js';
 import { exportPDF, exportDOCX, exportHTML, importDOCX } from '../exporters.js';
@@ -36,7 +38,7 @@ const PN_FORMATS = {
 
 let pgStyle = null;
 function pgStyleEl() {
-  if (!pgStyle) { pgStyle = document.createElement('style'); pgStyle.id = 'qalam-pagination'; document.head.appendChild(pgStyle); }
+  if (!pgStyle) { pgStyle = document.createElement('style'); pgStyle.id = 'writex-pagination'; document.head.appendChild(pgStyle); }
   return pgStyle;
 }
 
@@ -51,10 +53,10 @@ function mobileGeometry(s, workW) {
 export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, themeMode, setThemeMode, openDoc, onAsk }) {
   const isMobile = useIsMobile();
   const [sheet, setSheet] = useState(null);
-  const [toolbarHidden, setToolbarHiddenState] = useState(() => storage.get('qalam.mToolbarHidden', false));
-  const setToolbarHidden = (v) => { setToolbarHiddenState(v); storage.set('qalam.mToolbarHidden', v); };
+  const [toolbarHidden, setToolbarHiddenState] = useState(() => storage.get('writex.mToolbarHidden', false));
+  const setToolbarHidden = (v) => { setToolbarHiddenState(v); storage.set('writex.mToolbarHidden', v); };
   const [workW, setWorkW] = useState(() => window.innerWidth);
-  const [mScale, setMScale] = useState(() => storage.get('qalam.mScale', 1));
+  const [mScale, setMScale] = useState(() => storage.get('writex.mScale', 1));
   const [panel, setPanel] = useState(null); // ai | sources | paragraph | versions
   const [reading, setReading] = useState(null); // html snapshot
   const [drawing, setDrawing] = useState(null); // {initial, index}
@@ -64,7 +66,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const [recovery, setRecovery] = useState(null);
   const [listening, setListening] = useState(null); // {interim, lang}
   const [online, setOnline] = useState(() => navigator.onLine !== false);
-  const [customHL, setCustomHL] = useState(() => storage.get('qalam.customHighlights', []));
+  const [customHL, setCustomHL] = useState(() => storage.get('writex.customHighlights', []));
   const [doc, setDoc] = useState(null);
   const [title, setTitle] = useState('');
   const [settings, setSettingsState] = useState(DEFAULT_SETTINGS);
@@ -77,9 +79,9 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const [tab, setTab] = useState('home');
   const [zoom, setZoom] = useState(1);
   const [fit, setFit] = useState(() => window.innerWidth < 900);
-  const [viewMode, setViewModeState] = useState(() => (matches(MOBILE_QUERY) ? storage.get('qalam.mobileView', 'mobile') : 'print'));
-  const setViewMode = (v) => { setViewModeState(v); if (matches(MOBILE_QUERY)) storage.set('qalam.mobileView', v); };
-  const [darkPaper, setDarkPaper] = useState(() => storage.get('qalam.darkPaper', false));
+  const [viewMode, setViewModeState] = useState(() => (matches(MOBILE_QUERY) ? storage.get('writex.mobileView', 'mobile') : 'print'));
+  const setViewMode = (v) => { setViewModeState(v); if (matches(MOBILE_QUERY)) storage.set('writex.mobileView', v); };
+  const [darkPaper, setDarkPaper] = useState(() => storage.get('writex.darkPaper', false));
   const [focusMode, setFocusMode] = useState(false);
   const [find, setFind] = useState(null); // {mode}
   const [hits, setHits] = useState({ list: [], cur: -1 });
@@ -594,7 +596,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       if (mobileMode()) {
         if (stack) stack.style.transform = 'scale(1)';
         const v = Math.round(cur * 20) / 20;
-        setMScale(v); storage.set('qalam.mScale', v);
+        setMScale(v); storage.set('writex.mScale', v);
       } else {
         const v = Math.round(cur * 100) / 100;
         if (stack) stack.style.transform = `scale(${v})`;
@@ -624,7 +626,8 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     const hide = () => { saveSoon.cancel(); persist(); };
     document.addEventListener('visibilitychange', flush);
     window.addEventListener('pagehide', hide);
-    return () => { document.removeEventListener('visibilitychange', flush); window.removeEventListener('pagehide', hide); };
+    window.addEventListener(BACKGROUND_EVENT, hide);
+    return () => { document.removeEventListener('visibilitychange', flush); window.removeEventListener('pagehide', hide); window.removeEventListener(BACKGROUND_EVENT, hide); };
   }, [persist, saveSoon]);
 
   useEffect(() => {
@@ -913,7 +916,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   };
   const addCustomHighlight = (c) => {
     const next = [...customHL.filter((x) => x.toLowerCase() !== c.toLowerCase()), c].slice(-8);
-    setCustomHL(next); storage.set('qalam.customHighlights', next);
+    setCustomHL(next); storage.set('writex.customHighlights', next);
   };
 
   const undo = () => { const q = Q(); if (q) { q.history.undo(); after(); } };
@@ -944,21 +947,21 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
           setBusy(null);
         }
         const r = await saveFile(safeFilename(name, 'pdf'), blob);
-        if (r === 'saved') toast('PDF ready: ' + safeFilename(name, 'pdf'));
+        if (r === 'saved') toast(savedLabel('PDF ready: ' + safeFilename(name, 'pdf')));
       } else if (kind === 'docx') {
         setBusy({ text: 'Building Word document…' });
         let blob;
         try { blob = await exportDOCX({ delta: q.getContents(), settings: settingsRef.current, title: name }); } finally { setBusy(null); }
         const r = await saveFile(safeFilename(name, 'docx'), blob);
-        if (r === 'saved') toast('Word file ready: ' + safeFilename(name, 'docx'));
+        if (r === 'saved') toast(savedLabel('Word file ready: ' + safeFilename(name, 'docx')));
       } else if (kind === 'html') {
         const blob = exportHTML({ html: q.root.innerHTML, settings: settingsRef.current, title: name });
         const r = await saveFile(safeFilename(name, 'html'), blob);
-        if (r === 'saved') toast('Web page ready: ' + safeFilename(name, 'html'));
+        if (r === 'saved') toast(savedLabel('Web page ready: ' + safeFilename(name, 'html')));
       } else if (kind === 'txt') {
         const blob = new Blob([q.getText()], { type: 'text/plain' });
         const r = await saveFile(safeFilename(name, 'txt'), blob);
-        if (r === 'saved') toast('Text file ready: ' + safeFilename(name, 'txt'));
+        if (r === 'saved') toast(savedLabel('Text file ready: ' + safeFilename(name, 'txt')));
       }
     } catch (e) {
       setBusy(null);
@@ -1139,7 +1142,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     undo, redo, hist, inTable, imgSel, imageWidth, deleteImage,
     zoom: ez, setZoom: (z) => { if (viewMode === 'mobile') setViewMode('print'); setFit(false); setZoom(clamp(z, 0.3, 2)); },
     fit, setFit: (v) => { if (v && viewMode === 'mobile') setViewMode('print'); setFit(v); }, viewMode, setViewMode,
-    darkPaper, setDarkPaper: (v) => { setDarkPaper(v); storage.set('qalam.darkPaper', v); }, focusMode, setFocusMode,
+    darkPaper, setDarkPaper: (v) => { setDarkPaper(v); storage.set('writex.darkPaper', v); }, focusMode, setFocusMode,
     theme, toggleTheme, themeMode, setThemeMode,
     insertText: (text) => {
       const q = Q(); if (!q) return;
@@ -1187,7 +1190,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     <div className={'ed' + (isMobile ? ' m' : '') + (focusMode ? ' focus' : '') + (darkPaper ? ' dark-paper' : '') + (isMobile && toolbarHidden ? ' bar-hidden' : '')}>
       {!focusMode && (isMobile ? (
         <header className="ed-bar m">
-          <button type="button" className="tb lg" aria-label="Back to documents" onMouseDown={(e) => e.preventDefault()} onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
+          <button type="button" data-back className="tb lg" aria-label="Back to documents" onMouseDown={(e) => e.preventDefault()} onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
             <Icon name="ChevronLeft" size={24} />
           </button>
           <div className="m-title">
@@ -1213,10 +1216,10 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       ) : (
         <>
       <header className="ed-bar">
-        <button type="button" className="tb" aria-label="Back to documents" title="Back to documents" onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
+        <button type="button" data-back className="tb" aria-label="Back to documents" title="Back to documents" onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
           <Icon name="ArrowLeft" />
         </button>
-        <span className="brand-mark sm" aria-hidden="true">ق</span>
+        <img className="brand-mark sm" src={LOGO} alt="" aria-hidden="true" />
         <div className="title-wrap">
           {editingTitle ? (
             <input id="doc-title" className="title-input" dir="auto" autoFocus defaultValue={title} maxLength={160}
@@ -1386,13 +1389,17 @@ function ShareDialog({ title, build, onPdf, onClose, toast }) {
   const [file, setFile] = useState(null);
   const [kind, setKind] = useState('docx');
   const [busy, setBusy] = useState(false);
-  const canShare = typeof navigator.share === 'function';
+  const canShare = isNative || typeof navigator.share === 'function';
   const prepare = async () => {
     setBusy(true);
     try { const r = await build(kind); setFile(r); } catch (e) { toast('Could not prepare the file: ' + e.message, 'error'); } finally { setBusy(false); }
   };
   const share = async () => {
     if (!file) return;
+    if (isNative) {
+      try { const r = await nativeShare({ title, filename: file.name, blob: file.blob }); if (r === 'shared') onClose(); } catch (e) { toast('Sharing failed: ' + (e.message || e), 'error'); }
+      return;
+    }
     const f = new File([file.blob], file.name, { type: file.type });
     try {
       if (!canShare || (navigator.canShare && !navigator.canShare({ files: [f] }))) throw Object.assign(new Error('no-share'), { name: 'NotAllowedError' });

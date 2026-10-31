@@ -1,4 +1,10 @@
 // Shared helpers: ids, script loading, text analysis, downloads.
+import { isNative, nativeSave, nativeShare } from './platform.js';
+
+// Where the last native save landed (shown in the confirmation toast)
+export let lastSavedWhere = null;
+// Confirmation text after saveFile(): where the app put the file, or the given web text.
+export const savedLabel = (fallback) => (lastSavedWhere ? 'Saved to ' + lastSavedWhere : fallback);
 
 export const uid = (p = 'd') => p + '_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4);
 
@@ -81,8 +87,16 @@ async function getDownloads() {
 // Pre-warm so the first export is quick
 setTimeout(() => { getDownloads(); }, 1500);
 
-// Offer a file to the viewer. Returns 'saved' | 'declined' | throws.
+// Offer a file to the person. Returns 'saved' | 'declined' | throws.
+// In the Android app the file is written to Documents/Writex and a toast says where.
 export async function saveFile(filename, blob) {
+  if (isNative) {
+    const r = await nativeSave(filename, blob);
+    if (r.where) { lastSavedWhere = r.where + '/' + filename; return 'saved'; }
+    lastSavedWhere = null;
+    const s = await nativeShare({ title: filename, filename, blob });
+    return s === 'shared' ? 'saved' : 'declined';
+  }
   const dl = await getDownloads();
   if (dl) {
     try {
@@ -142,3 +156,16 @@ export const storage = {
 };
 
 export const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+// Settings saved before the rename to Writex used a "qalam." prefix; carry them over once.
+(function migrateLegacyKeys() {
+  try {
+    const old = [];
+    for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf('qalam.') === 0) old.push(k); }
+    for (const k of old) {
+      const nk = 'writex.' + k.slice(6);
+      if (localStorage.getItem(nk) == null) localStorage.setItem(nk, localStorage.getItem(k));
+      localStorage.removeItem(k);
+    }
+  } catch (e) { /* storage unavailable */ }
+})();

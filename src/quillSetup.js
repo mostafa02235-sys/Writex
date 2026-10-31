@@ -1,4 +1,4 @@
-// Registers Qalam's formats on top of Quill 2's built-ins.
+// Registers Writex's formats on top of Quill 2's built-ins.
 let done = false;
 
 export function setupQuill() {

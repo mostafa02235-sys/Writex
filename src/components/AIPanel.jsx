@@ -111,7 +111,7 @@ export function AIPanel({ open, onClose, quill, lastRange, toast, setTitle, init
   let body;
   let actions = null;
   if (page === 'settings') {
-    actions = <button type="button" className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setPage('tools')}><Icon name="ArrowLeft" size={20} /></button>;
+    actions = <button type="button" data-back className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setPage('tools')}><Icon name="ArrowLeft" size={20} /></button>;
     body = (
       <>
         <section className="msec">
@@ -134,7 +134,7 @@ export function AIPanel({ open, onClose, quill, lastRange, toast, setTitle, init
       </>
     );
   } else if (page === 'result') {
-    actions = !busy ? <button type="button" className="tb" aria-label="Back to tools" onMouseDown={nd} onClick={() => setPage('tools')}><Icon name="ArrowLeft" size={20} /></button> : null;
+    actions = !busy ? <button type="button" data-back className="tb" aria-label="Back to tools" onMouseDown={nd} onClick={() => setPage('tools')}><Icon name="ArrowLeft" size={20} /></button> : null;
     const canReplace = task && task.kind === 'replace' && state === 'done' && out;
     body = (
       <>

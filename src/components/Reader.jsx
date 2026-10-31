@@ -11,7 +11,7 @@ const THEMES = [
 ];
 
 export function Reader({ html, title, docId, dir, font, onClose }) {
-  const prefs = storage.get('qalam.reader', { size: 19, lh: 1.7, theme: 'night', rate: 1 });
+  const prefs = storage.get('writex.reader', { size: 19, lh: 1.7, theme: 'night', rate: 1 });
   const [size, setSize] = useState(prefs.size);
   const [lh, setLh] = useState(prefs.lh);
   const [theme, setTheme] = useState(prefs.theme);
@@ -27,12 +27,12 @@ export function Reader({ html, title, docId, dir, font, onClose }) {
   const speakIdx = useRef(0);
   const tts = typeof window.speechSynthesis !== 'undefined' && typeof window.SpeechSynthesisUtterance !== 'undefined';
 
-  useEffect(() => { storage.set('qalam.reader', { size, lh, theme, rate }); }, [size, lh, theme, rate]);
+  useEffect(() => { storage.set('writex.reader', { size, lh, theme, rate }); }, [size, lh, theme, rate]);
 
   // restore & remember reading position
   useEffect(() => {
     const el = scroller.current;
-    const pos = storage.get('qalam.readPos.' + docId, 0);
+    const pos = storage.get('writex.readPos.' + docId, 0);
     const t = setTimeout(() => { el.scrollTop = pos * (el.scrollHeight - el.clientHeight); }, 60);
     let raf = 0;
     const onScroll = () => {
@@ -41,7 +41,7 @@ export function Reader({ html, title, docId, dir, font, onClose }) {
         const max = el.scrollHeight - el.clientHeight;
         const p = max > 0 ? el.scrollTop / max : 0;
         setProgress(p);
-        storage.set('qalam.readPos.' + docId, Math.round(p * 1000) / 1000);
+        storage.set('writex.readPos.' + docId, Math.round(p * 1000) / 1000);
       });
     };
     el.addEventListener('scroll', onScroll, { passive: true });
@@ -142,7 +142,7 @@ export function Reader({ html, title, docId, dir, font, onClose }) {
   return (
     <div className={'reader theme-' + theme + (chrome ? '' : ' bare')} role="dialog" aria-label={'Reading ' + title}>
       <header className="r-bar">
-        <button type="button" className="tb lg" aria-label="Close reading mode" onClick={onClose}><Icon name="X" size={22} /></button>
+        <button type="button" data-close className="tb lg" aria-label="Close reading mode" onClick={onClose}><Icon name="X" size={22} /></button>
         <div className="r-title"><span dir="auto">{title}</span><small>{words.toLocaleString()} words · {minutesLeft} min left</small></div>
         <button type="button" className={'tb lg' + (panel === 'search' ? ' on' : '')} aria-label="Search in document" onClick={() => setPanel(panel === 'search' ? null : 'search')}><Icon name="Search" size={20} /></button>
         <button type="button" className={'tb lg' + (panel === 'type' ? ' on' : '')} aria-label="Text settings" onClick={() => setPanel(panel === 'type' ? null : 'type')}><Icon name="ALargeSmall" size={21} /></button>

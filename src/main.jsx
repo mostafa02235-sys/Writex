@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from './react.js';
+import { LOGO } from './brand.js';
+import { initNative, hideSplash, setSystemBars, setRootBack, setLayerBack } from './platform.js';
 import { Library } from './components/Library.jsx';
 import { ReadSection } from './components/ReadSection.jsx';
 import { ThinkSection } from './components/ThinkSection.jsx';
@@ -21,14 +23,36 @@ const SECTIONS = [
   { id: 'think', label: 'Think', icon: 'Brain' },
 ];
 
+// Closes whatever is on top: a menu, sheet, dialog or full-screen view, then any
+// in-page "Back" button (marked data-back). Returns true when something handled it.
+function layerBack() {
+  const z = (el) => { const v = parseInt(getComputedStyle(el).zIndex, 10); return Number.isNaN(v) ? 0 : v; };
+  const layers = [...document.querySelectorAll('.present, .pop, .scrim, .sheet-scrim:not(.out), .draw, .reader, .studio-page')];
+  if (layers.length) {
+    const top = layers.reduce((a, b) => (z(b) >= z(a) ? b : a));
+    const btn = top.querySelector('[data-back]') || top.querySelector('[data-close]');
+    if (btn) { btn.click(); return true; }
+    const esc = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true });
+    (document.activeElement || document.body).dispatchEvent(esc);
+    return true;
+  }
+  return false;
+}
+function pageBack() {
+  const visible = (el) => el.offsetParent !== null || getComputedStyle(el).position === 'fixed';
+  const back = [...document.querySelectorAll('[data-back]')].filter(visible).pop();
+  if (back) { back.click(); return true; }
+  return false;
+}
+
 function App() {
   const [ready, setReady] = useState(false);
   const [persistent, setPersistent] = useState(true);
   const [fatal, setFatal] = useState(null);
   const [view, setView] = useState({ name: 'library' });
   const [toasts, setToasts] = useState([]);
-  const [theme, setTheme] = useState(() => storage.get('qalam.theme', null) || systemTheme());
-  const explicit = useRef(!!storage.get('qalam.theme', null));
+  const [theme, setTheme] = useState(() => storage.get('writex.theme', null) || systemTheme());
+  const explicit = useRef(!!storage.get('writex.theme', null));
 
   useEffect(() => {
     if (explicit.current) document.documentElement.setAttribute('data-theme', theme);
@@ -42,18 +66,18 @@ function App() {
   }, []);
   const toggleTheme = useCallback(() => {
     explicit.current = true;
-    setTheme((t) => { const n = t === 'dark' ? 'light' : 'dark'; storage.set('qalam.theme', n); document.documentElement.setAttribute('data-theme', n); return n; });
+    setTheme((t) => { const n = t === 'dark' ? 'light' : 'dark'; storage.set('writex.theme', n); document.documentElement.setAttribute('data-theme', n); return n; });
   }, []);
   const themeMode = explicit.current ? theme : 'system';
   const setThemeMode = useCallback((mode) => {
     if (mode === 'system') {
       explicit.current = false;
-      storage.set('qalam.theme', null);
+      storage.set('writex.theme', null);
       document.documentElement.removeAttribute('data-theme');
       setTheme(systemTheme());
     } else {
       explicit.current = true;
-      storage.set('qalam.theme', mode);
+      storage.set('writex.theme', mode);
       document.documentElement.setAttribute('data-theme', mode);
       setTheme(mode);
     }
@@ -87,6 +111,7 @@ function App() {
     return { close: () => dismiss(id) };
   }, [dismiss]);
 
+  useEffect(() => { initNative({ theme }); }, []);
   useEffect(() => {
     (async () => {
       if (!window.Quill) { setFatal('The editor engine could not be loaded. Check your internet connection and reload.'); return; }
@@ -96,26 +121,42 @@ function App() {
     })();
   }, []);
 
-  const [section, setSectionState] = useState(() => storage.get('qalam.section', 'write'));
+  const [section, setSectionState] = useState(() => storage.get('writex.section', 'write'));
   const [think, setThink] = useState(null); // source handed to Think
   const [libKey, setLibKey] = useState('lib');
-  const setSection = useCallback((s) => { setSectionState(s); storage.set('qalam.section', s); }, []);
+  const setSection = useCallback((s) => { setSectionState(s); storage.set('writex.section', s); }, []);
   const openDoc = useCallback((id, extra) => setView({ name: 'editor', id, key: uid('v'), ...(extra || {}) }), []);
   const exit = useCallback(() => setView({ name: 'library', key: uid('v') }), []);
-  const openSettings = useCallback(() => { storage.set('qalam.libSection', 'settings'); setLibKey(uid('lib')); setSection('write'); }, [setSection]);
+  const openSettings = useCallback(() => { storage.set('writex.libSection', 'settings'); setLibKey(uid('lib')); setSection('write'); }, [setSection]);
+  // Android back button: close the topmost layer, then step back through screens
+  const navRef = useRef({});
+  navRef.current = { section, view, setSection };
+  useEffect(() => {
+    setLayerBack(layerBack);
+    setRootBack(() => {
+      if (pageBack()) return true;
+      const n = navRef.current;
+      if (n.view.name !== 'library') return false;
+      if (n.section !== 'write') { n.setSection('write'); return true; }
+      return false;
+    });
+  }, []);
+  useEffect(() => { setSystemBars(theme); }, [theme]);
+  useEffect(() => { if (ready || fatal) hideSplash(); }, [ready, fatal]);
+
   const askAbout = useCallback((ref) => { setThink({ ref, t: Date.now() }); setSection('think'); setView({ name: 'library', key: uid('v') }); }, [setSection]);
 
   if (fatal) {
     return <div className="ed-error"><Icon name="TriangleAlert" size={32} /><p>{fatal}</p><button type="button" className="btn primary" onClick={() => location.reload()}>Reload</button></div>;
   }
-  if (!ready) return <div className="splash"><span className="brand-mark" aria-hidden="true">ق</span><span className="spin" /></div>;
+  if (!ready) return <div className="splash"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="spin" /></div>;
 
   return (
     <>
       {view.name === 'library' ? (
         <div className="shell">
           <nav className="snav" aria-label="Main">
-            <div className="rail-brand"><span className="brand-mark" aria-hidden="true">ق</span><span className="brand-name">Qalam</span></div>
+            <div className="rail-brand"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="brand-name">Writex</span></div>
             {SECTIONS.map((n) => (
               <button type="button" key={n.id} className={'snav-item' + (section === n.id ? ' on' : '')} aria-current={section === n.id ? 'page' : undefined} onClick={() => setSection(n.id)}>
                 <span className="snav-ico"><Icon name={n.icon} size={22} stroke={section === n.id ? 2.1 : 1.7} /></span>

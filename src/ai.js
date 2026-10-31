@@ -47,9 +47,9 @@ export const PROVIDERS = [
   { id: 'gemini', label: 'Gemini', note: 'Needs your own server endpoint that holds the API key.' },
 ];
 export function getAIConfig() {
-  return storage.get('qalam.ai', { provider: 'claude', endpoints: { openai: '', gemini: '' } });
+  return storage.get('writex.ai', { provider: 'claude', endpoints: { openai: '', gemini: '' } });
 }
-export function setAIConfig(c) { storage.set('qalam.ai', c); }
+export function setAIConfig(c) { storage.set('writex.ai', c); }
 
 let sampleFn;
 export async function claudeSample() {

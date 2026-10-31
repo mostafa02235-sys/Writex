@@ -176,7 +176,7 @@ export function MobileSheets({ ed, sheet, setSheet, toolbarHidden, setToolbarHid
   const styleKey = f.blockquote ? 'quote' : f.header ? 'h' + f.header : 'normal';
   const pn = s.pageNumbers;
   const back = (label) => (
-    <button type="button" className="tb" aria-label={'Back to ' + label} onMouseDown={nd} onClick={() => setPage(null)}><Icon name="ArrowLeft" size={20} /></button>
+    <button type="button" data-back className="tb" aria-label={'Back to ' + label} onMouseDown={nd} onClick={() => setPage(null)}><Icon name="ArrowLeft" size={20} /></button>
   );
   const run = (fn) => () => { close(); setTimeout(fn, 220); };
 

@@ -1,0 +1,38 @@
+
+<div id="app"></div>
+<script>
+/*APP*/
+</script>
+<script>
+(function () {
+  var LIBS = [
+    { test: function () { return !!window.React; }, urls: ['https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js', 'https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js', 'https://unpkg.com/react@18.3.1/umd/react.production.min.js'] },
+    { test: function () { return !!window.ReactDOM; }, urls: ['https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js', 'https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js', 'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js'] },
+    { test: function () { return !!window.Quill; }, urls: ['https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.js', 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js', 'https://unpkg.com/quill@2.0.2/dist/quill.js'] },
+    { test: function () { return !!window.lucide; }, optional: true, urls: ['https://cdn.jsdelivr.net/npm/lucide@0.400.0/dist/umd/lucide.min.js', 'https://unpkg.com/lucide@0.400.0/dist/umd/lucide.min.js'] }
+  ];
+  var app = document.getElementById('app');
+  function fail() {
+    app.innerHTML = '<div class="ed-error"><p>Writex could not load its editor libraries. Check your internet connection, then reload this page.</p></div>';
+  }
+  function load(i) {
+    if (i >= LIBS.length) {
+      try { window.__startWritex(); } catch (e) { console.error(e); app.innerHTML = '<div class="ed-error"><p>Writex failed to start: ' + String(e && e.message || e).replace(/</g, '&lt;') + '</p></div>'; }
+      return;
+    }
+    var L = LIBS[i];
+    if (L.test()) { load(i + 1); return; }
+    var j = 0;
+    (function next() {
+      if (j >= L.urls.length) { if (L.optional) load(i + 1); else fail(); return; }
+      var s = document.createElement('script');
+      s.src = L.urls[j++];
+      s.onload = function () { if (L.test()) load(i + 1); else next(); };
+      s.onerror = function () { s.remove(); next(); };
+      document.head.appendChild(s);
+    })();
+  }
+  app.innerHTML = '<div class="splash"><span class="spin"></span></div>';
+  load(0);
+})();
+</script>
