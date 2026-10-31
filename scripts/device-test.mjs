@@ -134,8 +134,8 @@ async function goHome() {
 
   await check('Android back button leaves the editor', async () => {
     await page.evaluate(() => document.activeElement && document.activeElement.blur());
-    await back();
-    if (await page.$('.qwrap .ql-editor')) await back(); // first press may close the keyboard
+    // The first press may only close the keyboard; Android's own back is used, never a page button
+    for (let i = 0; i < 3 && !(await page.$('.shell')); i++) await back();
     await page.waitForSelector('.shell', { timeout: 10000 });
     await shot('03-after-back');
     return 'back on home';
