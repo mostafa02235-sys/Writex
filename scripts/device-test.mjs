@@ -203,6 +203,7 @@ async function goHome() {
   await check('Writex AI: conversation streams and completes', async () => {
     if (!(await page.$('#wx-input'))) { await goHome(); await page.locator('.snav-item').nth(3).click(); await sleep(800); await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(800); }
     await page.fill('#wx-input', 'Hello from Android, write two lines about rain');
+    await page.waitForSelector('.wx-composer .tb.accent:not([disabled])', { timeout: 10000 });
     await page.click('.wx-composer .tb.accent');
     await page.waitForSelector('.wx-msg.bot.completed', { timeout: 60000 });
     const t = await page.locator('.wx-msg.bot.completed .wx-md').last().innerText();
@@ -211,10 +212,12 @@ async function goHome() {
 
   await check('Writex AI: cancel a running task', async () => {
     await page.fill('#wx-input', '[slow] write a very long essay about the sea and the mountains and the rivers');
+    await page.waitForSelector('.wx-composer .tb.accent:not([disabled])', { timeout: 10000 });
     await page.click('.wx-composer .tb.accent');
     await page.waitForSelector('.wx-task .btn', { timeout: 30000 });
     await sleep(1500);
-    await page.click('.wx-task .btn');
+    // The message re-renders as text streams in, so press the button from inside the page
+    await page.evaluate(() => { const b = document.querySelector('.wx-task .btn'); if (b) b.click(); });
     await page.waitForSelector('.wx-msg.bot.cancelled', { timeout: 30000 });
     return 'cancelled';
   });
