@@ -36,6 +36,7 @@ export function createJobs({ db, registry, cfg, log = () => {} }) {
     update: db.prepare(`UPDATE jobs SET status = ?, stage = ?, progress_done = ?, progress_total = ?, model = COALESCE(?, model),
       updated_at = ?, started_at = COALESCE(started_at, ?) WHERE id = ?`),
     partial: db.prepare('UPDATE jobs SET result_text = ?, updated_at = ? WHERE id = ?'),
+    setModel: db.prepare('UPDATE jobs SET model = ? WHERE id = ?'),
     finish: db.prepare(`UPDATE jobs SET status = ?, stage = NULL, result_text = ?, result_json = ?, error = ?, error_code = ?,
       updated_at = ?, finished_at = ? WHERE id = ?`),
     requeue: db.prepare("UPDATE jobs SET status = 'waiting', stage = NULL, progress_done = 0, progress_total = 0, attempt = attempt + 1, updated_at = ? WHERE status IN ('processing', 'analyzing', 'generating')"),
@@ -119,31 +120,42 @@ export function createJobs({ db, registry, cfg, log = () => {} }) {
 
   /* ---------- model calls with retry ---------- */
   async function callModel(job, l, tier, { system, messages, json, stream }) {
-    const { provider, model } = registry.pick(tier);
-    l.model = `${provider.id}:${model}`;
     const inputChars = messages.reduce((n, m) => n + (typeof m.content === 'string' ? m.content.length : m.content.reduce((k, p) => k + (p.text || '').length, 0)), 0) + (system || '').length;
+    const options = registry.candidates(tier);
     let lastErr;
-    for (let attempt = 0; attempt < 3; attempt++) {
-      if (l.controller.signal.aborted) throw new JobError('Cancelled.', 'cancelled');
-      let streamed = '';
-      try {
-        const out = await provider.generate({
-          model, system, messages, json,
-          signal: l.controller.signal,
-          timeoutMs: cfg.limits.requestTimeoutMs,
-          onText: stream ? (d) => { streamed += d; l.text += d; emit(job.id, { type: 'delta', text: d }); savePartial(job.id, l); } : null,
-        });
-        q.usage.run(job.device_id, job.id, provider.id, model, inputChars, out.text.length, out.usage.inputTokens ?? null, out.usage.outputTokens ?? null, 1, now());
-        return out;
-      } catch (e) {
-        q.usage.run(job.device_id, job.id, provider.id, model, inputChars, 0, null, null, 0, now());
-        if (l.controller.signal.aborted || e.code === 'cancelled') throw new JobError('Cancelled.', 'cancelled');
-        lastErr = e;
-        if (!e.retryable) break;
-        if (stream && streamed) { l.text = l.text.slice(0, l.text.length - streamed.length); emit(job.id, { type: 'reset', text: l.text }); }
-        log(`job ${job.id}: retrying after ${e.code}`);
-        await new Promise((res) => setTimeout(res, [1000, 3000, 8000][attempt]));
+    for (let c = 0; c < options.length; c++) {
+      const { provider, model } = options[c];
+      l.model = `${provider.id}:${model}`;
+      const tries = options.length > 1 ? 2 : 3;
+      for (let attempt = 0; attempt < tries; attempt++) {
+        if (l.controller.signal.aborted) throw new JobError('Cancelled.', 'cancelled');
+        let streamed = '';
+        try {
+          const out = await provider.generate({
+            model, system, messages, json,
+            signal: l.controller.signal,
+            timeoutMs: cfg.limits.requestTimeoutMs,
+            onText: stream ? (d) => { streamed += d; l.text += d; emit(job.id, { type: 'delta', text: d }); savePartial(job.id, l); } : null,
+          });
+          q.usage.run(job.device_id, job.id, provider.id, model, inputChars, out.text.length, out.usage.inputTokens ?? null, out.usage.outputTokens ?? null, 1, now());
+          q.setModel.run(l.model, job.id);
+          return out;
+        } catch (e) {
+          q.usage.run(job.device_id, job.id, provider.id, model, inputChars, 0, null, null, 0, now());
+          if (l.controller.signal.aborted || e.code === 'cancelled') throw new JobError('Cancelled.', 'cancelled');
+          lastErr = e;
+          if (stream && streamed) { l.text = l.text.slice(0, l.text.length - streamed.length); emit(job.id, { type: 'reset', text: l.text }); }
+          if (!e.retryable) break;
+          log(`job ${job.id}: ${provider.id} ${e.code}, retrying`);
+          if (attempt < tries - 1) await new Promise((res) => setTimeout(res, [1000, 3000, 8000][attempt]));
+        }
       }
+      // Wrong key, model removed or provider down: try the next configured provider
+      if (lastErr && (lastErr.retryable || ['provider_auth', 'provider_error'].includes(lastErr.code)) && c < options.length - 1) {
+        log(`job ${job.id}: switching from ${provider.id} after ${lastErr.code}`);
+        continue;
+      }
+      break;
     }
     throw new JobError(lastErr ? lastErr.message : 'The AI provider failed.', lastErr ? lastErr.code : 'provider_error');
   }

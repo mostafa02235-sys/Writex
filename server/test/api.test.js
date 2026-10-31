@@ -213,3 +213,30 @@ test('interrupted jobs are queued again after a restart', async () => {
   assert.equal(row.status, 'completed');
   assert.equal(row.attempt, 2);
 });
+
+test('a busy free provider hands the task to the next one', async () => {
+  const mk = (fn) => new Promise((r) => { const s = http.createServer(fn); s.listen(0, () => r(s)); });
+  let busyHits = 0;
+  const busy = await mk((req, res) => { busyHits++; req.resume(); req.on('end', () => { res.writeHead(429); res.end('{"error":{"message":"rate limit"}}'); }); });
+  const good = await mk((req, res) => { req.resume(); req.on('end', () => {
+    res.writeHead(200, { 'content-type': 'text/event-stream' });
+    res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: 'Answer from the second provider' } }] })}\n\n`);
+    res.end('data: [DONE]\n\n');
+  }); });
+  const cfg = loadConfig({ WRITEX_DB_PATH: ':memory:', WRITEX_TOKEN_SECRET: 's',
+    GROQ_API_KEY: 'g', GROQ_BASE_URL: `http://127.0.0.1:${busy.address().port}/v1`,
+    OPENROUTER_API_KEY: 'o', OPENROUTER_BASE_URL: `http://127.0.0.1:${good.address().port}/v1` });
+  const a4 = createApp(cfg, { log: () => {} });
+  const port = await a4.listen(0);
+  const b = `http://127.0.0.1:${port}`;
+  const reg = await (await fetch(b + '/v1/devices', { method: 'POST' })).json();
+  const h = { authorization: 'Bearer ' + reg.token, 'content-type': 'application/json' };
+  const { job } = await (await fetch(b + '/v1/jobs', { method: 'POST', headers: h, body: JSON.stringify({ type: 'prompt', input: { prompt: 'hi' } }) })).json();
+  let j;
+  for (let i = 0; i < 200; i++) { j = (await (await fetch(b + '/v1/jobs/' + job.id, { headers: h })).json()).job; if (j.status === 'completed' || j.status === 'failed') break; await new Promise((r) => setTimeout(r, 100)); }
+  await a4.close(); busy.close(); good.close();
+  assert.equal(j.status, 'completed');
+  assert.equal(j.result, 'Answer from the second provider');
+  assert.match(j.model, /^openrouter:/);
+  assert.ok(busyHits >= 1);
+});

@@ -33,6 +33,10 @@ export function loadConfig(env = process.env) {
       openai: { apiKey: str('OPENAI_API_KEY'), baseUrl: str('OPENAI_BASE_URL', 'https://api.openai.com/v1') },
       gemini: { apiKey: str('GEMINI_API_KEY'), baseUrl: str('GEMINI_BASE_URL', 'https://generativelanguage.googleapis.com/v1beta') },
       selfhosted: { apiKey: str('SELFHOSTED_API_KEY'), baseUrl: str('SELFHOSTED_BASE_URL') },
+      // Free tiers (no credit card): Groq, OpenRouter ":free" models, Cerebras
+      groq: { apiKey: str('GROQ_API_KEY'), baseUrl: str('GROQ_BASE_URL', 'https://api.groq.com/openai/v1') },
+      openrouter: { apiKey: str('OPENROUTER_API_KEY'), baseUrl: str('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1') },
+      cerebras: { apiKey: str('CEREBRAS_API_KEY'), baseUrl: str('CEREBRAS_BASE_URL', 'https://api.cerebras.ai/v1') },
       test: { enabled: str('WRITEX_ENABLE_TEST_PROVIDER') === '1' && !production },
     },
     models: { fast: str('WRITEX_MODEL_FAST'), smart: str('WRITEX_MODEL_SMART'), vision: str('WRITEX_MODEL_VISION') },

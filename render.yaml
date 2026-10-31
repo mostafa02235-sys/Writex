@@ -1,0 +1,27 @@
+# One-click deployment of the Writex AI server on Render (free plan).
+# Render › New › Blueprint › pick this repository. Then add at least one free key
+# (GROQ_API_KEY or GEMINI_API_KEY) when Render asks for the values marked sync: false.
+services:
+  - type: web
+    name: writex-ai
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: echo "no dependencies to install"
+    startCommand: npm start
+    healthCheckPath: /v1/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22.13.0"
+      - key: NODE_ENV
+        value: production
+      - key: WRITEX_TOKEN_SECRET
+        generateValue: true
+      - key: WRITEX_DB_PATH
+        value: /tmp/writex.db
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false

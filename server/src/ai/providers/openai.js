@@ -11,14 +11,14 @@ function toOpenAI(messages, system) {
   return out;
 }
 
-export function createOpenAIProvider({ id = 'openai', label = 'OpenAI', apiKey, baseUrl, defaults }) {
+export function createOpenAIProvider({ id = 'openai', label = 'OpenAI', apiKey, baseUrl, defaults, jsonMode = true, headers: extraHeaders = {} }) {
   return {
     id, label, defaults,
     async generate({ model, system, messages, json, maxTokens, signal, onText, timeoutMs }) {
       const body = { model, messages: toOpenAI(messages, system), stream: true, stream_options: { include_usage: true } };
       if (maxTokens) body.max_tokens = maxTokens;
-      if (json) body.response_format = { type: 'json_object' };
-      const headers = apiKey ? { authorization: `Bearer ${apiKey}` } : {};
+      if (json && jsonMode) body.response_format = { type: 'json_object' };
+      const headers = { ...extraHeaders, ...(apiKey ? { authorization: `Bearer ${apiKey}` } : {}) };
       const res = await postJSON(`${baseUrl.replace(/\/$/, '')}/chat/completions`, body, { headers, signal, timeoutMs });
       let text = ''; let usage = {}; let finish = null;
       await readSSE(res, (data) => {
