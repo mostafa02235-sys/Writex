@@ -1,0 +1,21 @@
+node_modules/
+www/
+dist/
+.DS_Store
+*.log
+# Android build output and local machine files
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/app/release/
+android/captures/
+# Signing secrets never go into the repository
+*.jks
+*.keystore
+keystore.properties
+# iOS (not yet added)
+ios/App/Pods/
+ios/App/App/public/

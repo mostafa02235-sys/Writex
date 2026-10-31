@@ -1,0 +1,43 @@
+# One-time helper: generates the official Capacitor Android project and the npm
+# lockfile on GitHub's machines, then commits them. Run it from the Actions tab
+# only if the android/ folder is ever missing.
+name: Bootstrap Android project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Generate Capacitor Android project
+        run: |
+          mkdir -p www && echo '<!doctype html><title>Writex</title>' > www/index.html
+          if [ ! -d android ]; then npx cap add android; fi
+          npx cap sync android
+      - name: List installed package files the build script needs
+        run: |
+          for p in react react-dom quill lucide html2canvas jspdf mammoth docx pdfjs-dist pptxgenjs mathjax; do
+            echo "== $p $(node -p "require('./node_modules/$p/package.json').version")"
+          done
+          ls node_modules/react/umd node_modules/react-dom/umd node_modules/quill/dist node_modules/lucide/dist/umd \
+             node_modules/html2canvas/dist node_modules/jspdf/dist node_modules/mammoth node_modules/docx/dist \
+             node_modules/pdfjs-dist/build node_modules/pptxgenjs/dist node_modules/mathjax/es5 2>&1 | head -150
+          ls node_modules/@fontsource/
+          ls node_modules/@fontsource/lora | head -40
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android package-lock.json
+          git commit -m "Add generated Capacitor Android project and lockfile" || echo "Nothing to commit"
+          git push
