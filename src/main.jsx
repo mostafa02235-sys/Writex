@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from './react.js';
 import { LOGO } from './brand.js';
-import { initNative, hideSplash, setSystemBars, setRootBack, setLayerBack } from './platform.js';
+import { initNative, hideSplash, setSystemBars, setRootBack, setLayerBack, isNative } from './platform.js';
 import { Library } from './components/Library.jsx';
 import { ReadSection } from './components/ReadSection.jsx';
 import { ThinkSection } from './components/ThinkSection.jsx';
@@ -212,6 +212,9 @@ class Boundary extends React.Component {
 }
 
 applyLang();
+// The Android/iOS app opens in AMOLED black by default; Settings can switch to light or system.
+if (isNative && storage.get('writex.theme', null) == null) storage.set('writex.theme', 'dark');
+if (storage.get('writex.theme', null)) document.documentElement.setAttribute('data-theme', storage.get('writex.theme', null));
 window.__writex = Object.assign(window.__writex || {}, { setLang });
 const rootEl = document.getElementById('app');
 window.ReactDOM.createRoot(rootEl).render(<Boundary><App /></Boundary>);

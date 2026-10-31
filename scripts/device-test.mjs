@@ -95,14 +95,15 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   const STAMP = 'Writex device test ' + Date.now();
   await check('Create a document and type in it', async () => {
     await page.click('[data-test="new-doc"]');
-    await page.waitForSelector('.ql-editor', { timeout: 20000 });
+    await page.waitForSelector('.qwrap .ql-editor', { timeout: 20000 });
     await sleep(800);
-    await page.click('.ql-editor');
+    // A finger tap lands on the page sheet, which focuses the editor; do the same directly.
+    await page.evaluate(() => { const ed = document.querySelector('.qwrap .ql-editor'); ed.focus(); const r = document.createRange(); r.selectNodeContents(ed); r.collapse(false); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
     await page.keyboard.type(STAMP + '. ', { delay: 15 });
     await page.keyboard.type('مرحبا بالعالم', { delay: 15 });
     await sleep(1500);
     await shot('02-editor');
-    const txt = await page.textContent('.ql-editor');
+    const txt = await page.textContent('.qwrap .ql-editor');
     if (!txt.includes(STAMP)) throw new Error('typed text not found');
     return 'typed ' + txt.length + ' chars';
   });
@@ -127,7 +128,7 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   await check('Android back button leaves the editor', async () => {
     await page.evaluate(() => document.activeElement && document.activeElement.blur());
     await back();
-    if (await page.$('.ql-editor')) await back(); // first press may close the keyboard
+    if (await page.$('.qwrap .ql-editor')) await back(); // first press may close the keyboard
     await page.waitForSelector('.shell', { timeout: 10000 });
     await shot('03-after-back');
     return 'back on home';
@@ -163,6 +164,10 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
     const dir = await page.evaluate(() => document.documentElement.dir);
     await shot('04-arabic-home');
     if (dir !== 'rtl') throw new Error('dir is ' + dir);
+    for (const [i, name] of [[2, '06-arabic-create'], [1, '07-arabic-read']]) {
+      await page.locator('.snav-item').nth(i).click(); await sleep(900); await shot(name);
+    }
+    await page.locator('.snav-item').nth(0).click(); await sleep(700);
     return 'dir=rtl';
   }, { critical: false });
 

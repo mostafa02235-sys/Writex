@@ -138,7 +138,7 @@ export const TEMPLATES = [
       li('Call the bookshop about the order'),
       li('Review chapter 4 notes', 'bullet', { indent: 1 }),
       h(3, 'Ideas'),
-      p('A short video about how calligraphers cut a qalam (reed pen) — film close-ups of the nib.'),
+      p('A short video about how calligraphers cut a reed pen — film close-ups of the nib.'),
       p([['ملاحظة: ', { bold: true }], ['تذكّر شراء دفتر جديد للخط العربي.']]),
       { t: [['Small steps every day add up.', { italic: true }]], a: { blockquote: true } },
     ]),
