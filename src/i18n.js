@@ -1,9 +1,9 @@
 // Interface language (English / العربية).
 //
-// Strings are written in English in the code and wrapped in t(); the Arabic
+// Strings are written in English in the code and wrapped in tr(); the Arabic
 // catalogue in locales/ar.js maps each English string to its translation.
 // Placeholders {0}, {1}… are filled from the extra arguments:
-//   t('Page {0} of {1}', page, total)
+//   tr('Page {0} of {1}', page, total)
 // "npm run i18n:check" lists any string that still needs an Arabic translation.
 //
 // Document content is never translated or re-ordered: only the interface follows
@@ -36,7 +36,7 @@ export const locale = isArabic ? 'ar-u-nu-latn' : 'en';
 // 'system' when the person never chose, so Settings can show "Same as device".
 export const langPref = () => stored() || 'system';
 
-export function t(s, ...args) {
+export function tr(s, ...args) {
   let out = isArabic && Object.prototype.hasOwnProperty.call(AR, s) ? AR[s] : s;
   if (args.length) out = out.replace(/\{(\d+)\}/g, (m, i) => (args[i] == null ? '' : String(args[i])));
   return out;

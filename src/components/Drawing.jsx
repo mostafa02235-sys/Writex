@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from '../react.js';
 import { Icon } from '../icons.jsx';
+import { tr } from '../i18n.js';
 
 // Shapes & freehand drawing. Works with finger, mouse, or a stylus such as the
 // Samsung S Pen: pen input uses pressure (Pointer Events), and "Pen only"
@@ -7,13 +8,13 @@ import { Icon } from '../icons.jsx';
 const COLORS = ['#111827', '#1D4ED8', '#B42318', '#027A48', '#B54708', '#7C3AED', '#0E7490', '#FFFFFF'];
 const WIDTHS = [2, 4, 8];
 const TOOLS = [
-  { id: 'pen', icon: 'PenLine', label: 'Pen' },
-  { id: 'marker', icon: 'Highlighter', label: 'Highlighter' },
-  { id: 'line', icon: 'Minus', label: 'Line' },
-  { id: 'arrow', icon: 'MoveUpRight', label: 'Arrow' },
-  { id: 'rect', icon: 'Square', label: 'Rectangle' },
-  { id: 'ellipse', icon: 'Circle', label: 'Ellipse' },
-  { id: 'eraser', icon: 'Eraser', label: 'Eraser' },
+  { id: 'pen', icon: 'PenLine', label: tr('Pen') },
+  { id: 'marker', icon: 'Highlighter', label: tr('Highlighter') },
+  { id: 'line', icon: 'Minus', label: tr('Line') },
+  { id: 'arrow', icon: 'MoveUpRight', label: tr('Arrow') },
+  { id: 'rect', icon: 'Square', label: tr('Rectangle') },
+  { id: 'ellipse', icon: 'Circle', label: tr('Ellipse') },
+  { id: 'eraser', icon: 'Eraser', label: tr('Eraser') },
 ];
 
 function drawItem(ctx, it) {
@@ -167,31 +168,31 @@ export function DrawingEditor({ initial, onInsert, onClose, maxWidth }) {
   };
 
   return window.ReactDOM.createPortal(
-    <div className="draw" role="dialog" aria-label="Drawing">
+    <div className="draw" role="dialog" aria-label={tr('Drawing')}>
       <header className="draw-bar">
-        <button type="button" data-close className="tb lg" aria-label="Cancel drawing" onClick={onClose}><Icon name="X" size={22} /></button>
-        <span className="draw-title">Drawing</span>
-        <button type="button" className="tb lg" aria-label="Undo" disabled={!items.length} onClick={undo}><Icon name="Undo2" size={20} /></button>
-        <button type="button" className="tb lg" aria-label="Redo" disabled={!redo.length} onClick={redoIt}><Icon name="Redo2" size={20} /></button>
-        <button type="button" className="tb lg" aria-label="Clear drawing" disabled={!items.length} onClick={() => { setRedo([]); setItems([]); }}><Icon name="Trash2" size={20} /></button>
-        <button type="button" className="btn primary" onClick={insert}><Icon name="Check" size={18} />{initial ? 'Update' : 'Insert'}</button>
+        <button type="button" data-close className="tb lg" aria-label={tr('Cancel drawing')} onClick={onClose}><Icon name="X" size={22} /></button>
+        <span className="draw-title">{tr('Drawing')}</span>
+        <button type="button" className="tb lg" aria-label={tr('Undo')} disabled={!items.length} onClick={undo}><Icon name="Undo2" size={20} /></button>
+        <button type="button" className="tb lg" aria-label={tr('Redo')} disabled={!redo.length} onClick={redoIt}><Icon name="Redo2" size={20} /></button>
+        <button type="button" className="tb lg" aria-label={tr('Clear drawing')} disabled={!items.length} onClick={() => { setRedo([]); setItems([]); }}><Icon name="Trash2" size={20} /></button>
+        <button type="button" className="btn primary" onClick={insert}><Icon name="Check" size={18} />{initial ? tr('Update') : tr('Insert')}</button>
       </header>
       <div className="draw-canvas" ref={wrap}>
-        <canvas ref={canvas} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label="Drawing canvas" />
-        {!items.length && <p className="draw-hint">Draw with your finger, mouse or stylus. Pick a shape below to draw lines, arrows, boxes and circles.</p>}
+        <canvas ref={canvas} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label={tr('Drawing canvas')} />
+        {!items.length && <p className="draw-hint">{tr('Draw with your finger, mouse or stylus. Pick a shape below to draw lines, arrows, boxes and circles.')}</p>}
       </div>
       <footer className="draw-tools">
         <div className="draw-row">
           {TOOLS.map((t) => <button type="button" key={t.id} className={'mk' + (tool === t.id ? ' on' : '')} aria-label={t.label} title={t.label} aria-pressed={tool === t.id} onClick={() => setTool(t.id)}><Icon name={t.icon} size={20} /></button>)}
         </div>
         <div className="draw-row">
-          {COLORS.map((c) => <button type="button" key={c} className={'msw' + (color === c ? ' on' : '')} style={{ background: c }} aria-label={'Colour ' + c} onClick={() => setColor(c)} />)}
+          {COLORS.map((c) => <button type="button" key={c} className={'msw' + (color === c ? ' on' : '')} style={{ background: c }} aria-label={tr('Colour {0}', c)} onClick={() => setColor(c)} />)}
           <span className="rg-sep" />
-          {WIDTHS.map((w) => <button type="button" key={w} className={'mk wdot' + (width === w ? ' on' : '')} aria-label={'Thickness ' + w} onClick={() => setWidth(w)}><span style={{ width: w + 4, height: w + 4 }} /></button>)}
+          {WIDTHS.map((w) => <button type="button" key={w} className={'mk wdot' + (width === w ? ' on' : '')} aria-label={tr('Thickness {0}', w)} onClick={() => setWidth(w)}><span style={{ width: w + 4, height: w + 4 }} /></button>)}
         </div>
         <label className="draw-pen">
           <input type="checkbox" className="switch" checked={penOnly} onChange={(e) => setPenOnly(e.target.checked)} />
-          <span>Pen only{penSeen ? ' · stylus detected' : ''}<small>Ignore finger and palm touches while drawing with a stylus such as the S Pen.</small></span>
+          <span>{tr('Pen only')}{penSeen ? tr(' · stylus detected') : ''}<small>{tr('Ignore finger and palm touches while drawing with a stylus such as the S Pen.')}</small></span>
         </label>
       </footer>
     </div>,

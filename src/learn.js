@@ -2,6 +2,7 @@
 import * as db from './db.js';
 import { uid } from './util.js';
 import { dayKey } from './store.js';
+import { tr } from './i18n.js';
 
 const DAY = 86400000;
 const startOfToday = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); };
@@ -34,8 +35,8 @@ export function schedule(card, grade) {
 }
 export const nextLabel = (card, grade) => {
   const n = schedule(card, grade);
-  if (grade === 0) return '10 min';
-  return n.interval <= 1 ? '1 day' : n.interval < 30 ? `${n.interval} days` : `${Math.round(n.interval / 30)} mo`;
+  if (grade === 0) return tr('10 min');
+  return n.interval <= 1 ? tr('1 day') : n.interval < 30 ? `${n.interval} days` : `${Math.round(n.interval / 30)} mo`;
 };
 export const isDue = (c, now = Date.now()) => (c.due || 0) <= now;
 export const isNew = (c) => !c.reps && !c.lapses;

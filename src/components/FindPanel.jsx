@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from '../react.js';
 import { Icon } from '../icons.jsx';
 import { replaceAll, replaceOne } from '../find.js';
 import { storage } from '../util.js';
+import { tr } from '../i18n.js';
 
 export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onClose, toast }) {
   const [showReplace, setShowReplace] = useState(mode === 'replace');
@@ -47,7 +48,7 @@ export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onCl
     const q = quill(); if (!q || !n) return;
     const count = replaceAll(q, hits.list, repl);
     runFind(query, opts);
-    toast(`Replaced ${count} ${count === 1 ? 'match' : 'matches'}`);
+    toast(tr('Replaced {0} {1}', count, count === 1 ? 'match' : 'matches'));
   };
 
   const opt = (k, label, hint) => (
@@ -57,36 +58,36 @@ export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onCl
   return (
     <div className="find-panel" role="search" aria-label="Find and replace" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
       <div className="fp-row">
-        <button type="button" className="tb sm" aria-label={showReplace ? 'Hide replace' : 'Show replace'} aria-expanded={showReplace} onClick={() => setShowReplace((v) => !v)}>
+        <button type="button" className="tb sm" aria-label={showReplace ? tr('Hide replace') : tr('Show replace')} aria-expanded={showReplace} onClick={() => setShowReplace((v) => !v)}>
           <Icon name={showReplace ? 'ChevronDown' : 'ChevronRight'} size={16} />
         </button>
         <label className="fp-input">
           <Icon name="Search" size={14} />
-          <input id="find-input" ref={input} dir="auto" value={query} placeholder="Find in document" aria-label="Find"
+          <input id="find-input" ref={input} dir="auto" value={query} placeholder="Find in document" aria-label={tr('Find')}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); e.shiftKey ? prev() : next(); } }} />
-          <span className="fp-count tnum">{query ? (n ? `${hits.cur + 1} of ${n}` : 'No results') : ''}</span>
+          <span className="fp-count tnum">{query ? (n ? `${hits.cur + 1} of ${n}` : tr('No results')) : ''}</span>
         </label>
-        <button type="button" className="tb sm" aria-label="Previous match" disabled={!n} onClick={prev}><Icon name="ChevronUp" size={16} /></button>
-        <button type="button" className="tb sm" aria-label="Next match" disabled={!n} onClick={next}><Icon name="ChevronDown" size={16} /></button>
-        <button type="button" data-close className="tb sm" aria-label="Close find" onClick={onClose}><Icon name="X" size={16} /></button>
+        <button type="button" className="tb sm" aria-label={tr('Previous match')} disabled={!n} onClick={prev}><Icon name="ChevronUp" size={16} /></button>
+        <button type="button" className="tb sm" aria-label={tr('Next match')} disabled={!n} onClick={next}><Icon name="ChevronDown" size={16} /></button>
+        <button type="button" data-close className="tb sm" aria-label={tr('Close find')} onClick={onClose}><Icon name="X" size={16} /></button>
       </div>
       {showReplace && (
         <div className="fp-row">
           <span className="fp-spacer" />
           <label className="fp-input">
             <Icon name="Replace" size={14} />
-            <input id="replace-input" dir="auto" value={repl} placeholder="Replace with" aria-label="Replace with" onChange={(e) => setRepl(e.target.value)}
+            <input id="replace-input" dir="auto" value={repl} placeholder={tr('Replace with')} aria-label={tr('Replace with')} onChange={(e) => setRepl(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); doReplace(); } }} />
           </label>
-          <button type="button" className="btn sm" disabled={!n} onClick={doReplace}>Replace</button>
-          <button type="button" className="btn sm" disabled={!n} onClick={doReplaceAll}>All</button>
+          <button type="button" className="btn sm" disabled={!n} onClick={doReplace}>{tr('Replace')}</button>
+          <button type="button" className="btn sm" disabled={!n} onClick={doReplaceAll}>{tr('All')}</button>
         </div>
       )}
       <div className="fp-opts">
-        {opt('matchCase', 'Aa', 'Match case')}
-        {opt('wholeWord', 'Whole words', 'Match whole words only')}
-        {opt('arabicLoose', 'تشكيل', 'Ignore Arabic diacritics and alef/yaa/taa marbuta variants')}
+        {opt('matchCase', tr('Aa'), tr('Match case'))}
+        {opt('wholeWord', tr('Whole words'), tr('Match whole words only'))}
+        {opt('arabicLoose', 'تشكيل', tr('Ignore Arabic diacritics and alef/yaa/taa marbuta variants'))}
       </div>
     </div>
   );

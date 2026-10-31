@@ -12,16 +12,17 @@ import * as store from './store.js';
 import { setupQuill } from './quillSetup.js';
 import { storage, uid } from './util.js';
 import { Icon } from './icons.jsx';
+import { tr } from './i18n.js';
 
 function systemTheme() {
   try { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch (e) { return 'light'; }
 }
 
 const SECTIONS = [
-  { id: 'write', label: 'Write', icon: 'PenLine' },
-  { id: 'read', label: 'Read', icon: 'BookOpen' },
-  { id: 'create', label: 'Create', icon: 'Shapes' },
-  { id: 'think', label: 'Think', icon: 'Brain' },
+  { id: 'write', label: tr('Write'), icon: 'PenLine' },
+  { id: 'read', label: tr('Read'), icon: 'BookOpen' },
+  { id: 'create', label: tr('Create'), icon: 'Shapes' },
+  { id: 'think', label: tr('Think'), icon: 'Brain' },
 ];
 
 // Closes whatever is on top: a menu, sheet, dialog or full-screen view, then any
@@ -115,8 +116,8 @@ function App() {
   useEffect(() => { initNative({ theme }); }, []);
   useEffect(() => {
     (async () => {
-      if (!window.Quill) { setFatal('The editor engine could not be loaded. Check your internet connection and reload.'); return; }
-      try { setupQuill(); } catch (e) { setFatal('The editor could not start: ' + e.message); return; }
+      if (!window.Quill) { setFatal(tr('The editor engine could not be loaded. Check your internet connection and reload.')); return; }
+      try { setupQuill(); } catch (e) { setFatal(tr('The editor could not start: {0}', e.message)); return; }
       try { setPersistent(await seedIfNeeded()); } catch (e) { setPersistent(false); }
       setReady(true);
     })();
@@ -150,7 +151,7 @@ function App() {
     const hooks = (window.__writex = window.__writex || {});
     hooks.exportLatest = async (kind) => {
       const docs = await store.listDocs();
-      if (!docs.length) throw new Error('No documents');
+      if (!docs.length) throw new Error(tr('No documents'));
       openDoc(docs[0].id);
       for (let i = 0; i < 100 && !hooks.exportCurrent; i++) await new Promise((r) => setTimeout(r, 100));
       await new Promise((r) => setTimeout(r, 1500));
@@ -161,7 +162,7 @@ function App() {
   const askAbout = useCallback((ref) => { setThink({ ref, t: Date.now() }); setSection('think'); setView({ name: 'library', key: uid('v') }); }, [setSection]);
 
   if (fatal) {
-    return <div className="ed-error"><Icon name="TriangleAlert" size={32} /><p>{fatal}</p><button type="button" className="btn primary" onClick={() => location.reload()}>Reload</button></div>;
+    return <div className="ed-error"><Icon name="TriangleAlert" size={32} /><p>{fatal}</p><button type="button" className="btn primary" onClick={() => location.reload()}>{tr('Reload')}</button></div>;
   }
   if (!ready) return <div className="splash"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="spin" /></div>;
 
@@ -169,15 +170,15 @@ function App() {
     <>
       {view.name === 'library' ? (
         <div className="shell">
-          <nav className="snav" aria-label="Main">
-            <div className="rail-brand"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="brand-name">Writex</span></div>
+          <nav className="snav" aria-label={tr('Main')}>
+            <div className="rail-brand"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="brand-name">{tr('Writex')}</span></div>
             {SECTIONS.map((n) => (
               <button type="button" key={n.id} className={'snav-item' + (section === n.id ? ' on' : '')} aria-current={section === n.id ? 'page' : undefined} onClick={() => setSection(n.id)}>
                 <span className="snav-ico"><Icon name={n.icon} size={22} stroke={section === n.id ? 2.1 : 1.7} /></span>
                 <span className="snav-label">{n.label}</span>
               </button>
             ))}
-            <button type="button" className="snav-item rail-only" onClick={openSettings}><span className="snav-ico"><Icon name="Settings" size={22} stroke={1.7} /></span><span className="snav-label">Settings</span></button>
+            <button type="button" className="snav-item rail-only" onClick={openSettings}><span className="snav-ico"><Icon name="Settings" size={22} stroke={1.7} /></span><span className="snav-label">{tr('Settings')}</span></button>
           </nav>
           <div className="shell-main">
             {section === 'write' && <Library key={libKey + view.key} embedded openSettings={openSettings} openDoc={openDoc} toast={toast} theme={theme} toggleTheme={toggleTheme} themeMode={themeMode} setThemeMode={setThemeMode} persistent={persistent} />}
@@ -200,9 +201,9 @@ class Boundary extends React.Component {
     if (this.state.err) {
       return (
         <div className="ed-error">
-          <p>Something went wrong: {String(this.state.err.message || this.state.err)}</p>
-          <p className="muted-p">Your documents are safe in this browser.</p>
-          <button type="button" className="btn primary" onClick={() => this.setState({ err: null })}>Try again</button>
+          <p>{tr('Something went wrong:')}{' '}{String(this.state.err.message || this.state.err)}</p>
+          <p className="muted-p">{tr('Your documents are safe in this browser.')}</p>
+          <button type="button" className="btn primary" onClick={() => this.setState({ err: null })}>{tr('Try again')}</button>
         </div>
       );
     }

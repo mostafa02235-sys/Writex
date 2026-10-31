@@ -1,10 +1,11 @@
 // Shared helpers: ids, script loading, text analysis, downloads.
 import { isNative, nativeSave, nativeShare } from './platform.js';
+import { tr } from './i18n.js';
 
 // Where the last native save landed (shown in the confirmation toast)
 export let lastSavedWhere = null;
 // Confirmation text after saveFile(): where the app put the file, or the given web text.
-export const savedLabel = (fallback) => (lastSavedWhere ? 'Saved to ' + lastSavedWhere : fallback);
+export const savedLabel = (fallback) => (lastSavedWhere ? tr('Saved to {0}', lastSavedWhere) : fallback);
 
 export const uid = (p = 'd') => p + '_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4);
 
@@ -27,7 +28,7 @@ export function loadScript(urls, test) {
   loaded[key] = new Promise((resolve, reject) => {
     let i = 0;
     const next = () => {
-      if (i >= urls.length) { delete loaded[key]; reject(new Error('Could not load a required library. Check your connection and try again.')); return; }
+      if (i >= urls.length) { delete loaded[key]; reject(new Error(tr('Could not load a required library. Check your connection and try again.'))); return; }
       const s = document.createElement('script');
       s.src = urls[i++];
       s.async = true;
@@ -63,16 +64,16 @@ export function fmtDate(ts) {
   const d = new Date(ts);
   const now = new Date();
   const diff = (now - d) / 1000;
-  if (diff < 60) return 'Just now';
-  if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
-  if (d.toDateString() === now.toDateString()) return 'Today, ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (diff < 60) return tr('Just now');
+  if (diff < 3600) return tr('{0} min ago', Math.floor(diff / 60));
+  if (d.toDateString() === now.toDateString()) return tr('Today, {0}', d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
   const y = new Date(now); y.setDate(now.getDate() - 1);
-  if (d.toDateString() === y.toDateString()) return 'Yesterday';
+  if (d.toDateString() === y.toDateString()) return tr('Yesterday');
   return d.toLocaleDateString([], { day: 'numeric', month: 'short', year: d.getFullYear() === now.getFullYear() ? undefined : 'numeric' });
 }
 
 export function safeFilename(name, ext) {
-  const base = (name || 'Untitled').replace(/[\\/:*?"<>|\u0000-\u001F]/g, '').trim().slice(0, 120) || 'Untitled';
+  const base = (name || tr('Untitled')).replace(/[\\/:*?"<>|\u0000-\u001F]/g, '').trim().slice(0, 120) || tr('Untitled');
   return base + '.' + ext;
 }
 
@@ -104,11 +105,11 @@ export async function saveFile(filename, blob) {
       return 'saved';
     } catch (e) {
       if (e && e.code === 'declined') return 'declined';
-      if (e && e.code === 'rate_limited') throw new Error('A save prompt is already open. Finish it, then try again.');
+      if (e && e.code === 'rate_limited') throw new Error(tr('A save prompt is already open. Finish it, then try again.'));
       if (e && (e.code === 'unavailable' || e.code === 'not_granted' || e.code === 'capability_disabled' || e.code === 'capability_removed')) {
         // fall through to the browser fallback
       } else {
-        throw new Error((e && e.message) || 'The file could not be saved.');
+        throw new Error((e && e.message) || tr('The file could not be saved.'));
       }
     }
   }
@@ -125,7 +126,7 @@ export function readFileAs(file, how) {
   return new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = () => res(r.result);
-    r.onerror = () => rej(new Error('The file could not be read.'));
+    r.onerror = () => rej(new Error(tr('The file could not be read.')));
     if (how === 'buffer') r.readAsArrayBuffer(file); else if (how === 'text') r.readAsText(file); else r.readAsDataURL(file);
   });
 }

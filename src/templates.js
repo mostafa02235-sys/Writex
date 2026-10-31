@@ -1,5 +1,6 @@
 // Ready-made documents, expressed as Quill deltas.
 import { DEFAULT_SETTINGS, FONTS } from './constants.js';
+import { tr } from './i18n.js';
 
 const font = (n) => FONTS.find((f) => f.name === n).stack;
 
@@ -46,16 +47,16 @@ const S = (over) => ({ ...DEFAULT_SETTINGS, ...over, margins: { ...DEFAULT_SETTI
 
 export const TEMPLATES = [
   {
-    id: 'blank', name: 'Blank document', lang: 'EN', desc: 'A clean A4 page.',
+    id: 'blank', name: tr('Blank document'), lang: 'EN', desc: tr('A clean A4 page.'),
     settings: () => S(), delta: () => ({ ops: [{ insert: '\n', attributes: { dir: 'auto' } }] }),
   },
   {
-    id: 'blank-ar', name: 'مستند فارغ', lang: 'AR', desc: 'Right-to-left page with an Arabic font.',
+    id: 'blank-ar', name: 'مستند فارغ', lang: 'AR', desc: tr('Right-to-left page with an Arabic font.'),
     settings: () => S({ dir: 'rtl', font: font('Noto Naskh Arabic'), fontSize: 14, lineHeight: 1.5 }),
     delta: () => ({ ops: [{ insert: '\n', attributes: { dir: 'auto' } }] }),
   },
   {
-    id: 'school-research', name: 'بحث مدرسي', lang: 'AR', desc: 'Cover page, introduction, sections and references.',
+    id: 'school-research', name: 'بحث مدرسي', lang: 'AR', desc: tr('Cover page, introduction, sections and references.'),
     settings: () => S({
       dir: 'rtl', font: font('Noto Naskh Arabic'), fontSize: 14, lineHeight: 1.6,
       header: { text: 'بحث مدرسي · {title}', align: 'center' },
@@ -94,7 +95,7 @@ export const TEMPLATES = [
     ]),
   },
   {
-    id: 'academic-report', name: 'Academic Report', lang: 'EN', desc: 'Abstract, numbered sections, a results table.',
+    id: 'academic-report', name: tr('Academic Report'), lang: 'EN', desc: tr('Abstract, numbered sections, a results table.'),
     settings: () => S({
       font: font('Source Serif 4'), fontSize: 11, lineHeight: 1.5,
       header: { text: '{title}', align: 'right' },
@@ -127,7 +128,7 @@ export const TEMPLATES = [
     ]),
   },
   {
-    id: 'personal-notes', name: 'Personal Notes', lang: 'EN', desc: 'Dated notes, to-dos and ideas in both languages.',
+    id: 'personal-notes', name: tr('Personal Notes'), lang: 'EN', desc: tr('Dated notes, to-dos and ideas in both languages.'),
     settings: () => S({ font: font('Lato'), fontSize: 12, lineHeight: 1.4, margins: { t: 72, b: 72, l: 72, r: 72 }, marginPreset: 'custom' }),
     delta: () => build([
       h(1, 'Notes'),
@@ -143,7 +144,7 @@ export const TEMPLATES = [
     ]),
   },
   {
-    id: 'story', name: 'كتابة قصة', lang: 'AR', desc: 'Chapter layout with generous spacing for fiction.',
+    id: 'story', name: 'كتابة قصة', lang: 'AR', desc: tr('Chapter layout with generous spacing for fiction.'),
     settings: () => S({
       dir: 'rtl', font: font('Amiri'), fontSize: 16, lineHeight: 1.9,
       margins: { t: 110, b: 110, l: 110, r: 110 }, marginPreset: 'custom',
@@ -161,7 +162,7 @@ export const TEMPLATES = [
     ]),
   },
   {
-    id: 'letter', name: 'Professional Letter', lang: 'EN', desc: 'Sender block, date, subject line and sign-off.',
+    id: 'letter', name: tr('Professional Letter'), lang: 'EN', desc: tr('Sender block, date, subject line and sign-off.'),
     settings: () => S({ font: font('Open Sans'), fontSize: 11, lineHeight: 1.4 }),
     delta: () => build([
       p([['Your Name', { bold: true }]], { align: 'right' }),
@@ -223,7 +224,7 @@ export const WELCOME = {
 const todayStr = () => new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
 export const STUDY_TEMPLATES = [
   {
-    id: 'study-class-notes', name: 'Class Notes', lang: 'EN', studyType: 'notes', desc: 'Cornell layout: cues, notes and a summary.',
+    id: 'study-class-notes', name: tr('Class Notes'), lang: 'EN', studyType: 'notes', desc: tr('Cornell layout: cues, notes and a summary.'),
     settings: () => S({ font: font('Lato'), fontSize: 11, lineHeight: 1.4, margins: { t: 72, b: 72, l: 72, r: 72 }, marginPreset: 'custom' }),
     delta: () => buildWithTables([
       h(1, 'Lesson title'),
@@ -239,7 +240,7 @@ export const STUDY_TEMPLATES = [
     ]),
   },
   {
-    id: 'study-class-notes-ar', name: 'ملاحظات الحصة', lang: 'AR', studyType: 'notes', desc: 'Cornell layout in Arabic.',
+    id: 'study-class-notes-ar', name: 'ملاحظات الحصة', lang: 'AR', studyType: 'notes', desc: tr('Cornell layout in Arabic.'),
     settings: () => S({ dir: 'rtl', font: font('IBM Plex Sans Arabic'), fontSize: 12, lineHeight: 1.6, margins: { t: 72, b: 72, l: 72, r: 72 }, marginPreset: 'custom' }),
     delta: () => buildWithTables([
       h(1, 'عنوان الدرس'),
@@ -255,7 +256,7 @@ export const STUDY_TEMPLATES = [
     ]),
   },
   {
-    id: 'study-summary', name: 'Chapter Summary', lang: 'EN', studyType: 'summary', desc: 'Key ideas, terms and one-line takeaways.',
+    id: 'study-summary', name: tr('Chapter Summary'), lang: 'EN', studyType: 'summary', desc: tr('Key ideas, terms and one-line takeaways.'),
     settings: () => S({ font: font('Source Serif 4'), fontSize: 11.5, lineHeight: 1.45 }),
     delta: () => build([
       h(1, 'Chapter summary'),
@@ -272,7 +273,7 @@ export const STUDY_TEMPLATES = [
     ]),
   },
   {
-    id: 'study-revision', name: 'Revision Sheet', lang: 'EN', studyType: 'revision', desc: 'Terms table, formulas and practice questions.',
+    id: 'study-revision', name: tr('Revision Sheet'), lang: 'EN', studyType: 'revision', desc: tr('Terms table, formulas and practice questions.'),
     settings: () => S({ font: font('Lato'), fontSize: 11, lineHeight: 1.35, margins: { t: 60, b: 60, l: 60, r: 60 }, marginPreset: 'custom' }),
     delta: () => buildWithTables([
       h(1, 'Revision: topic'),
@@ -292,7 +293,7 @@ export const STUDY_TEMPLATES = [
     ]),
   },
   {
-    id: 'study-assignment', name: 'Assignment', lang: 'EN', studyType: 'assignment', desc: 'Task, requirements checklist, plan and submission.',
+    id: 'study-assignment', name: tr('Assignment'), lang: 'EN', studyType: 'assignment', desc: tr('Task, requirements checklist, plan and submission.'),
     settings: () => S({ font: font('Open Sans'), fontSize: 11, lineHeight: 1.4, pageNumbers: { on: true, where: 'footer', align: 'center', format: 'n' } }),
     delta: () => build([
       h(1, 'Assignment title'),
@@ -310,7 +311,7 @@ export const STUDY_TEMPLATES = [
     ]),
   },
   {
-    id: 'study-exam', name: 'Exam Preparation', lang: 'EN', studyType: 'exam', desc: 'Topics with confidence levels and a study schedule.',
+    id: 'study-exam', name: tr('Exam Preparation'), lang: 'EN', studyType: 'exam', desc: tr('Topics with confidence levels and a study schedule.'),
     settings: () => S({ font: font('Lato'), fontSize: 11, lineHeight: 1.35 }),
     delta: () => buildWithTables([
       h(1, 'Exam preparation'),
@@ -331,7 +332,7 @@ export const STUDY_TEMPLATES = [
     ]),
   },
   {
-    id: 'study-research', name: 'Research Notes', lang: 'EN', studyType: 'research', desc: 'Question, sources, findings and conclusion.',
+    id: 'study-research', name: tr('Research Notes'), lang: 'EN', studyType: 'research', desc: tr('Question, sources, findings and conclusion.'),
     settings: () => S({ font: font('Source Serif 4'), fontSize: 11.5, lineHeight: 1.5, pageNumbers: { on: true, where: 'footer', align: 'center', format: 'n' } }),
     delta: () => build([
       h(1, 'Research question'),

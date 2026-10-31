@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo } from '../react.js';
 import { Icon } from '../icons.jsx';
 import { storage, AR_RE, firstStrongDir } from '../util.js';
+import { tr } from '../i18n.js';
 
 // Distraction-free reading with adjustable type, search, text-to-speech and
 // a remembered reading position.
 const THEMES = [
-  { id: 'night', label: 'Black' },
-  { id: 'sepia', label: 'Sepia' },
-  { id: 'day', label: 'Paper' },
+  { id: 'night', label: tr('Black') },
+  { id: 'sepia', label: tr('Sepia') },
+  { id: 'day', label: tr('Paper') },
 ];
 
 export function Reader({ html, title, docId, dir, font, onClose }) {
@@ -140,38 +141,38 @@ export function Reader({ html, title, docId, dir, font, onClose }) {
   const minutesLeft = Math.max(1, Math.round((words * (1 - progress)) / 200));
 
   return (
-    <div className={'reader theme-' + theme + (chrome ? '' : ' bare')} role="dialog" aria-label={'Reading ' + title}>
+    <div className={'reader theme-' + theme + (chrome ? '' : ' bare')} role="dialog" aria-label={tr('Reading {0}', title)}>
       <header className="r-bar">
-        <button type="button" data-close className="tb lg" aria-label="Close reading mode" onClick={onClose}><Icon name="X" size={22} /></button>
-        <div className="r-title"><span dir="auto">{title}</span><small>{words.toLocaleString()} words · {minutesLeft} min left</small></div>
-        <button type="button" className={'tb lg' + (panel === 'search' ? ' on' : '')} aria-label="Search in document" onClick={() => setPanel(panel === 'search' ? null : 'search')}><Icon name="Search" size={20} /></button>
-        <button type="button" className={'tb lg' + (panel === 'type' ? ' on' : '')} aria-label="Text settings" onClick={() => setPanel(panel === 'type' ? null : 'type')}><Icon name="ALargeSmall" size={21} /></button>
+        <button type="button" data-close className="tb lg" aria-label={tr('Close reading mode')} onClick={onClose}><Icon name="X" size={22} /></button>
+        <div className="r-title"><span dir="auto">{title}</span><small>{words.toLocaleString()}{' '}{tr('words ·')}{' '}{minutesLeft}{' '}{tr('min left')}</small></div>
+        <button type="button" className={'tb lg' + (panel === 'search' ? ' on' : '')} aria-label={tr('Search in document')} onClick={() => setPanel(panel === 'search' ? null : 'search')}><Icon name="Search" size={20} /></button>
+        <button type="button" className={'tb lg' + (panel === 'type' ? ' on' : '')} aria-label={tr('Text settings')} onClick={() => setPanel(panel === 'type' ? null : 'type')}><Icon name="ALargeSmall" size={21} /></button>
       </header>
       <div className="r-progress" style={{ transform: `scaleX(${progress})` }} />
       {panel === 'search' && (
         <div className="r-panel">
           <label className="search">
             <Icon name="Search" size={18} />
-            <input id="reader-search" autoFocus dir="auto" type="search" placeholder="Search in document" value={q} onChange={(e) => setQ(e.target.value)}
+            <input id="reader-search" autoFocus dir="auto" type="search" placeholder={tr('Search in document')} value={q} onChange={(e) => setQ(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter' && hits.n) setHits((h) => ({ ...h, cur: (h.cur + (e.shiftKey ? -1 : 1) + h.n) % h.n })); }} />
             <span className="fp-count tnum">{q ? (hits.n ? `${hits.cur + 1}/${hits.n}` : '0') : ''}</span>
           </label>
-          <button type="button" className="tb lg" aria-label="Previous result" disabled={!hits.n} onClick={() => setHits((h) => ({ ...h, cur: (h.cur - 1 + h.n) % h.n }))}><Icon name="ChevronUp" size={20} /></button>
-          <button type="button" className="tb lg" aria-label="Next result" disabled={!hits.n} onClick={() => setHits((h) => ({ ...h, cur: (h.cur + 1) % h.n }))}><Icon name="ChevronDown" size={20} /></button>
+          <button type="button" className="tb lg" aria-label={tr('Previous result')} disabled={!hits.n} onClick={() => setHits((h) => ({ ...h, cur: (h.cur - 1 + h.n) % h.n }))}><Icon name="ChevronUp" size={20} /></button>
+          <button type="button" className="tb lg" aria-label={tr('Next result')} disabled={!hits.n} onClick={() => setHits((h) => ({ ...h, cur: (h.cur + 1) % h.n }))}><Icon name="ChevronDown" size={20} /></button>
         </div>
       )}
       {panel === 'type' && (
         <div className="r-panel col">
-          <div className="r-row"><span>Size</span>
-            <div className="mstep"><button type="button" aria-label="Smaller text" onClick={() => setSize((v) => Math.max(13, v - 1))}><Icon name="Minus" size={18} /></button><span className="tnum">{size}</span><button type="button" aria-label="Larger text" onClick={() => setSize((v) => Math.min(34, v + 1))}><Icon name="Plus" size={18} /></button></div>
+          <div className="r-row"><span>{tr('Size')}</span>
+            <div className="mstep"><button type="button" aria-label={tr('Smaller text')} onClick={() => setSize((v) => Math.max(13, v - 1))}><Icon name="Minus" size={18} /></button><span className="tnum">{size}</span><button type="button" aria-label={tr('Larger text')} onClick={() => setSize((v) => Math.min(34, v + 1))}><Icon name="Plus" size={18} /></button></div>
           </div>
-          <div className="r-row"><span>Line spacing</span>
+          <div className="r-row"><span>{tr('Line spacing')}</span>
             <div className="mchips">{[1.4, 1.6, 1.8, 2.1].map((v) => <button type="button" key={v} className={'mchip' + (lh === v ? ' on' : '')} onClick={() => setLh(v)}>{v}</button>)}</div>
           </div>
-          <div className="r-row"><span>Background</span>
+          <div className="r-row"><span>{tr('Background')}</span>
             <div className="mchips">{THEMES.map((t) => <button type="button" key={t.id} className={'mchip' + (theme === t.id ? ' on' : '')} onClick={() => setTheme(t.id)}>{t.label}</button>)}</div>
           </div>
-          {tts && <div className="r-row"><span>Reading speed</span>
+          {tts && <div className="r-row"><span>{tr('Reading speed')}</span>
             <div className="mchips">{[0.8, 1, 1.25, 1.5].map((v) => <button type="button" key={v} className={'mchip' + (rate === v ? ' on' : '')} onClick={() => setRate(v)}>{v}×</button>)}</div>
           </div>}
         </div>
@@ -186,11 +187,11 @@ export function Reader({ html, title, docId, dir, font, onClose }) {
         {tts ? (
           <div className="r-tts">
             {speaking === 'playing'
-              ? <button type="button" className="btn" onClick={pause}><Icon name="Pause" size={18} />Pause</button>
-              : <button type="button" className="btn primary" onClick={play}><Icon name="Play" size={18} />{speaking === 'paused' ? 'Resume' : 'Read aloud'}</button>}
-            {speaking && <button type="button" className="tb lg" aria-label="Stop reading" onClick={stopSpeak}><Icon name="Square" size={18} /></button>}
+              ? <button type="button" className="btn" onClick={pause}><Icon name="Pause" size={18} />{tr('Pause')}</button>
+              : <button type="button" className="btn primary" onClick={play}><Icon name="Play" size={18} />{speaking === 'paused' ? tr('Resume') : tr('Read aloud')}</button>}
+            {speaking && <button type="button" className="tb lg" aria-label={tr('Stop reading')} onClick={stopSpeak}><Icon name="Square" size={18} /></button>}
           </div>
-        ) : <span className="r-note">Read aloud is not supported in this browser.</span>}
+        ) : <span className="r-note">{tr('Read aloud is not supported in this browser.')}</span>}
         <span className="r-pct tnum">{Math.round(progress * 100)}%</span>
       </footer>
     </div>

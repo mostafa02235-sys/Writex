@@ -3,6 +3,7 @@ import * as db from './db.js';
 import { uid } from './util.js';
 import { TEMPLATES, WELCOME, allTemplates } from './templates.js';
 import { DEFAULT_SETTINGS } from './constants.js';
+import { tr } from './i18n.js';
 
 export async function listDocs() {
   const docs = await db.getAll('docs');
@@ -14,7 +15,7 @@ export const getDoc = (id) => db.get('docs', id);
 export async function createDoc({ title, delta, settings, folderId = null, preview = '', text = '', ...extra }) {
   const now = Date.now();
   const doc = {
-    id: uid('doc'), title: title || 'Untitled document', folderId,
+    id: uid('doc'), title: title || tr('Untitled document'), folderId,
     delta: delta || { ops: [{ insert: '\n', attributes: { dir: 'auto' } }] },
     settings: { ...DEFAULT_SETTINGS, ...(settings || {}) },
     preview, text, words: 0, createdAt: now, updatedAt: now, openedAt: now,
@@ -26,13 +27,13 @@ export async function createDoc({ title, delta, settings, folderId = null, previ
 
 export async function fromTemplate(tid, folderId = null, extra) {
   const t = allTemplates().find((x) => x.id === tid) || TEMPLATES[0];
-  const title = tid === 'blank' ? 'Untitled document' : tid === 'blank-ar' ? 'مستند بدون عنوان' : t.name;
+  const title = tid === 'blank' ? tr('Untitled document') : tid === 'blank-ar' ? 'مستند بدون عنوان' : t.name;
   return createDoc({ title, delta: t.delta(), settings: t.settings(), folderId, ...(extra || {}) });
 }
 
 export async function updateDoc(id, patch) {
   const cur = await db.get('docs', id);
-  if (!cur) throw new Error('This document no longer exists.');
+  if (!cur) throw new Error(tr('This document no longer exists.'));
   const next = { ...cur, ...patch, updatedAt: patch.updatedAt || Date.now() };
   await db.put('docs', next);
   return next;
@@ -40,7 +41,7 @@ export async function updateDoc(id, patch) {
 
 export async function duplicateDoc(id) {
   const cur = await db.get('docs', id);
-  if (!cur) throw new Error('This document no longer exists.');
+  if (!cur) throw new Error(tr('This document no longer exists.'));
   const now = Date.now();
   const copy = { ...cur, id: uid('doc'), title: cur.title + ' (copy)', createdAt: now, updatedAt: now };
   await db.put('docs', copy);
@@ -147,6 +148,6 @@ export async function getStats() { return (await db.get('meta', 'stats')) || { k
 /* ---------- create from a stored template ---------- */
 export async function fromCustomTemplate(id, extra) {
   const t = await db.get('templates', id);
-  if (!t) throw new Error('This template no longer exists.');
+  if (!t) throw new Error(tr('This template no longer exists.'));
   return createDoc({ title: t.name, delta: t.delta, settings: t.settings, ...(extra || {}) });
 }

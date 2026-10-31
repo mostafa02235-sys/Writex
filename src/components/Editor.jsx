@@ -26,11 +26,12 @@ import { Reader } from './Reader.jsx';
 import { DrawingEditor } from './Drawing.jsx';
 import { EquationDialog } from './EquationDialog.jsx';
 import { FootnoteDialog, SourcesSheet, CoverDialog, ParagraphSheet, VersionsSheet, PasswordDialog } from './Tools.jsx';
+import { tr } from '../i18n.js';
 
 const ROOT_SEL = '.qwrap .ql-editor';
 const PN_FORMATS = {
   n: (k) => String(k),
-  pageof: (k, n) => `Page ${k} of ${n}`,
+  pageof: (k, n) => tr('Page {0} of {1}', k, n),
   slash: (k, n) => `${k} / ${n}`,
   dash: (k) => `— ${k} —`,
   ar: (k, n) => `صفحة ${k} من ${n}`,
@@ -133,7 +134,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       const text = docText(q);
       const c = countText(text);
       let patch = {
-        title: titleRef.current || 'Untitled document',
+        title: titleRef.current || tr('Untitled document'),
         delta: q.getContents(),
         settings: settingsRef.current,
         preview: previewFromRoot(q.root),
@@ -163,7 +164,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     } catch (e) {
       dirty.current = true;
       setSaveState('error');
-      toast('Saving failed: ' + e.message, 'error');
+      toast(tr('Saving failed: {0}', e.message), 'error');
     }
   }, [toast]);
   const saveSoon = useMemo(() => debounce(() => persist(), 650), [persist]);
@@ -255,8 +256,8 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     const q = quillRef.current; if (!q) return;
     const at = (lastRange.current || { index: 0 }).index;
     const r = refsLib.insertOrUpdateTOC(q, at, { geo: geoRef.current, viewMode: viewRef.current });
-    toast(r === 'updated' ? 'Table of contents updated' : 'Table of contents inserted. Tap it any time to update.');
-    if (viewRef.current !== 'print') toast('Switch to Page view to see page numbers in the table of contents.');
+    toast(r === 'updated' ? tr('Table of contents updated') : tr('Table of contents inserted. Tap it any time to update.'));
+    if (viewRef.current !== 'print') toast(tr('Switch to Page view to see page numbers in the table of contents.'));
   };
 
   /* ---------- voice typing (browser speech recognition) ---------- */
@@ -264,11 +265,11 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const stopDictation = () => { if (recognizer.current) { try { recognizer.current.stop(); } catch (e) { /* ignore */ } } recognizer.current = null; setListening(null); };
   const startDictation = (lang) => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { toast('Voice typing is not supported in this browser. Try your keyboard’s microphone button instead.', 'error'); return; }
+    if (!SR) { toast(tr('Voice typing is not supported in this browser. Try your keyboard’s microphone button instead.'), 'error'); return; }
     if (recognizer.current) stopDictation();
     const l = lang || (settingsRef.current.dir === 'rtl' ? 'ar-SA' : (navigator.language || 'en-US'));
     let rec;
-    try { rec = new SR(); } catch (e) { toast('Voice typing could not start here.', 'error'); return; }
+    try { rec = new SR(); } catch (e) { toast(tr('Voice typing could not start here.'), 'error'); return; }
     rec.lang = l; rec.interimResults = true; rec.continuous = true;
     rec.onresult = (ev) => {
       const q = quillRef.current; if (!q) return;
@@ -291,12 +292,12 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     rec.onerror = (ev) => {
       const msg = ev.error === 'not-allowed' || ev.error === 'service-not-allowed'
         ? 'Microphone access is not available here. Inside the Claude app the page cannot use your microphone; your keyboard’s voice input still works.'
-        : ev.error === 'no-speech' ? 'No speech was heard.' : ev.error === 'network' ? 'Voice typing needs an internet connection.' : 'Voice typing stopped: ' + ev.error;
+        : ev.error === 'no-speech' ? tr('No speech was heard.') : ev.error === 'network' ? tr('Voice typing needs an internet connection.') : tr('Voice typing stopped: {0}', ev.error);
       toast(msg, 'error');
       recognizer.current = null; setListening(null);
     };
     rec.onend = () => { if (recognizer.current === rec) { recognizer.current = null; setListening(null); } };
-    try { rec.start(); recognizer.current = rec; setListening({ interim: '', lang: l }); } catch (e) { toast('Voice typing could not start here.', 'error'); }
+    try { rec.start(); recognizer.current = rec; setListening({ interim: '', lang: l }); } catch (e) { toast(tr('Voice typing could not start here.'), 'error'); }
   };
 
   /* ---------- UI sync ---------- */
@@ -402,16 +403,16 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     let disposed = false;
     let ro = null;
     const Quill = setupQuill();
-    if (!Quill) { setError('The editor engine did not load. Check your connection and reload the page.'); return undefined; }
+    if (!Quill) { setError(tr('The editor engine did not load. Check your connection and reload the page.')); return undefined; }
     (async () => {
       let d;
       try { d = await store.getDoc(docId); } catch (e) { d = null; }
       if (d && d.locked && !importHtml) { /* decrypted copy comes from the unlock step */ }
       if (disposed) return;
-      if (!d) { setError('This document could not be found. It may have been deleted.'); return; }
+      if (!d) { setError(tr('This document could not be found. It may have been deleted.')); return; }
       if (d.locked) {
         const sk = sessionKeys.get(d.id);
-        if (!sk || !sk.plain) { setError('This document is password protected. Go back and open it again to enter the password.'); return; }
+        if (!sk || !sk.plain) { setError(tr('This document is password protected. Go back and open it again to enter the password.')); return; }
         d = { ...d, delta: sk.plain.delta };
         setLocked(true);
       }
@@ -442,11 +443,11 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
             },
           },
         },
-        placeholder: 'Start writing…  ابدأ الكتابة…',
+        placeholder: tr('Start writing…  ابدأ الكتابة…'),
       });
       quillRef.current = q;
       q.root.setAttribute('spellcheck', s.spellcheck ? 'true' : 'false');
-      q.root.setAttribute('aria-label', 'Document body');
+      q.root.setAttribute('aria-label', tr('Document body'));
       try {
         if (importHtml) {
           const delta = importHtml.text != null ? textToDelta(importHtml.text) : q.clipboard.convert({ html: importHtml });
@@ -455,11 +456,11 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
           q.setContents(normalizeDelta(splitNewlines(d.delta)), 'api');
         }
       } catch (e) {
-        toast('Part of this document could not be displayed.', 'error');
+        toast(tr('Part of this document could not be displayed.'), 'error');
       }
       q.history.clear();
       if (d.readOnly) q.enable(false);
-      if (importHtml) { dirty.current = true; persist(); toast('Imported “' + d.title + '”'); }
+      if (importHtml) { dirty.current = true; persist(); toast(tr('Imported “{0}”', d.title)); }
 
       q.on('editor-change', (name, a) => {
         if (name === 'selection-change') {
@@ -696,7 +697,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   };
   const insertImageFile = async (file, replaceIndex) => {
     if (!file) return;
-    if (!/^image\//.test(file.type)) { toast('Choose an image file (PNG, JPG, GIF, WebP or SVG).', 'error'); return; }
+    if (!/^image\//.test(file.type)) { toast(tr('Choose an image file (PNG, JPG, GIF, WebP or SVG).'), 'error'); return; }
     try {
       const raw = await readFileAs(file, 'dataurl');
       const url = file.type === 'image/svg+xml' ? raw : await downscaleImage(raw);
@@ -719,18 +720,18 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     const q = Q(); if (!q) return;
     const r = ensureRange();
     const t = q.getModule('table');
-    if (!t) { toast('Tables are not available in this editor build.', 'error'); return; }
+    if (!t) { toast(tr('Tables are not available in this editor build.'), 'error'); return; }
     // tables start on their own line
     const [, offset] = q.getLine(r.index);
     if (offset > 0) { q.insertText(r.index, '\n', 'user'); q.setSelection(r.index + 1, 0, 'silent'); }
-    try { t.insertTable(rows, cols); } catch (e) { toast('The table could not be inserted here.', 'error'); }
+    try { t.insertTable(rows, cols); } catch (e) { toast(tr('The table could not be inserted here.'), 'error'); }
     after();
   };
   const tableOp = (op) => {
     const q = Q(); if (!q) return;
     ensureRange();
     const t = q.getModule('table');
-    try { t[op](); } catch (e) { toast('That table action is not available here.', 'error'); }
+    try { t[op](); } catch (e) { toast(tr('That table action is not available here.'), 'error'); }
     after();
   };
   const insertLink = (url, text) => {
@@ -821,14 +822,14 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     const sel = imgRef.current; if (!sel) return;
     const alt = sel.el.getAttribute('alt') || '';
     if (alt.startsWith('latex:')) setEquation({ initial: alt.slice(6), index: sel.index });
-    else if (alt.startsWith('drawing:')) { try { setDrawing({ initial: JSON.parse(alt.slice(8)), index: sel.index }); } catch (e) { toast('This drawing can no longer be edited.', 'error'); } }
+    else if (alt.startsWith('drawing:')) { try { setDrawing({ initial: JSON.parse(alt.slice(8)), index: sel.index }); } catch (e) { toast(tr('This drawing can no longer be edited.'), 'error'); } }
   };
   const insertCover = (style, v) => {
     const q = Q(); if (!q) return;
     const Delta = window.Quill.import('delta');
     q.updateContents(new Delta(coverOps(style, { ...v, rtl: settingsRef.current.dir === 'rtl' })), 'user');
     if (workRef.current) workRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-    toast('Cover page added at the start');
+    toast(tr('Cover page added at the start'));
   };
   const insertFootnoteText = (text) => {
     const q = Q(); if (!q) return;
@@ -850,10 +851,10 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const insertBibliography = () => {
     const q = Q(); if (!q) return;
     const refs = settingsRef.current.refs || {};
-    if (!(refs.items || []).length) { toast('Add a source and cite it first.', 'error'); return; }
+    if (!(refs.items || []).length) { toast(tr('Add a source and cite it first.'), 'error'); return; }
     const at = (lastRange.current || { index: q.getLength() - 1 }).index;
     const r = refsLib.insertBibliography(q, at, refs);
-    toast(r === 'updated' ? 'Bibliography updated' : 'Bibliography inserted');
+    toast(r === 'updated' ? tr('Bibliography updated') : tr('Bibliography inserted'));
   };
 
   /* ---------- protection ---------- */
@@ -862,10 +863,10 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     const v = !readOnly;
     setReadOnly(v); q.enable(!v);
     try { docRef.current = await store.updateDoc(docRef.current.id, { readOnly: v, updatedAt: docRef.current.updatedAt }); } catch (e) { /* ignore */ }
-    toast(v ? 'Editing locked. Tap Unlock to make changes.' : 'Editing unlocked');
+    toast(v ? tr('Editing locked. Tap Unlock to make changes.') : tr('Editing unlocked'));
   };
   const setPassword = async (pw, hint) => {
-    if (!cryptoAvailable()) { toast('Encryption is not available in this browser.', 'error'); return; }
+    if (!cryptoAvailable()) { toast(tr('Encryption is not available in this browser.'), 'error'); return; }
     const d = docRef.current; if (!d) return;
     const { key, salt } = await deriveKey(pw);
     sessionKeys.set(d.id, { key, salt, plain: null });
@@ -875,7 +876,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     await persist();
     try { await store.deleteVersionsFor(d.id); await store.clearRecovery(d.id); } catch (e) { /* ignore */ }
     setDialog(null);
-    toast('Password protection is on. You will be asked for it next time.');
+    toast(tr('Password protection is on. You will be asked for it next time.'));
   };
   const removePassword = async () => {
     const d = docRef.current; if (!d) return;
@@ -884,7 +885,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     setLocked(false);
     dirty.current = true;
     await persist({ locked: null });
-    toast('Password removed');
+    toast(tr('Password removed'));
   };
 
   /* ---------- versions ---------- */
@@ -893,13 +894,13 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     dirty.current = true; await persist();
     await store.saveVersion({ ...docRef.current, delta: q.getContents(), words: wordsRef.current }, 'manual');
     lastVersionAt.current = Date.now(); editsSinceVersion.current = false;
-    toast('Version saved');
+    toast(tr('Version saved'));
   };
   const restoreVersion = async (v) => {
     const q = Q(); if (!q) return;
     await store.saveVersion({ ...docRef.current, delta: q.getContents(), words: wordsRef.current }, 'restore');
     q.setContents(normalizeDelta(splitNewlines(v.delta)), 'user');
-    toast('Version restored. The text from before is saved in version history.');
+    toast(tr('Version restored. The text from before is saved in version history.'));
   };
   const copyVersion = async (v) => {
     const d = await store.createDoc({ title: `${titleRef.current} (${new Date(v.at).toLocaleDateString()})`, delta: v.delta, settings: settingsRef.current, folderId: docRef.current.folderId });
@@ -908,7 +909,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const saveAsTemplate = async (name) => {
     const q = Q(); if (!q) return;
     await store.saveCustomTemplate({ name, delta: q.getContents(), settings: settingsRef.current, lang: settingsRef.current.dir === 'rtl' ? 'AR' : 'EN' });
-    toast('Saved “' + name + '” to your templates');
+    toast(tr('Saved “{0}” to your templates', name));
   };
   const openReader = () => {
     const q = Q(); if (!q) return;
@@ -933,10 +934,10 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const runExport = async (kind) => {
     const q = Q(); if (!q) return;
     await persist();
-    const name = titleRef.current || 'Untitled document';
+    const name = titleRef.current || tr('Untitled document');
     try {
       if (kind === 'pdf') {
-        setBusy({ text: 'Preparing PDF…' });
+        setBusy({ text: tr('Preparing PDF…') });
         const prevZoom = zoomRef.current; const prevFit = fit; const prevView = viewRef.current;
         setFit(false); setZoom(1); zoomRef.current = 1;
         if (prevView !== 'print') { setViewMode('print'); viewRef.current = 'print'; }
@@ -947,32 +948,32 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
         await new Promise((r) => setTimeout(r, 60));
         let blob;
         try {
-          blob = await exportPDF({ stackEl: stackRef.current, settings: settingsRef.current, pages: res.pages, onProgress: (k, n) => setBusy({ text: `Rendering page ${k} of ${n}…` }) });
+          blob = await exportPDF({ stackEl: stackRef.current, settings: settingsRef.current, pages: res.pages, onProgress: (k, n) => setBusy({ text: tr('Rendering page {0} of {1}…', k, n) }) });
         } finally {
           if (prevView !== 'print') setViewMode(prevView);
           if (prevFit) setFit(true); else setZoom(prevZoom);
           setBusy(null);
         }
         const r = await saveFile(safeFilename(name, 'pdf'), blob);
-        if (r === 'saved') toast(savedLabel('PDF ready: ' + safeFilename(name, 'pdf')));
+        if (r === 'saved') toast(savedLabel(tr('PDF ready: {0}', safeFilename(name, 'pdf'))));
       } else if (kind === 'docx') {
-        setBusy({ text: 'Building Word document…' });
+        setBusy({ text: tr('Building Word document…') });
         let blob;
         try { blob = await exportDOCX({ delta: q.getContents(), settings: settingsRef.current, title: name }); } finally { setBusy(null); }
         const r = await saveFile(safeFilename(name, 'docx'), blob);
-        if (r === 'saved') toast(savedLabel('Word file ready: ' + safeFilename(name, 'docx')));
+        if (r === 'saved') toast(savedLabel(tr('Word file ready: {0}', safeFilename(name, 'docx'))));
       } else if (kind === 'html') {
         const blob = exportHTML({ html: q.root.innerHTML, settings: settingsRef.current, title: name });
         const r = await saveFile(safeFilename(name, 'html'), blob);
-        if (r === 'saved') toast(savedLabel('Web page ready: ' + safeFilename(name, 'html')));
+        if (r === 'saved') toast(savedLabel(tr('Web page ready: {0}', safeFilename(name, 'html'))));
       } else if (kind === 'txt') {
         const blob = new Blob([q.getText()], { type: 'text/plain' });
         const r = await saveFile(safeFilename(name, 'txt'), blob);
-        if (r === 'saved') toast(savedLabel('Text file ready: ' + safeFilename(name, 'txt')));
+        if (r === 'saved') toast(savedLabel(tr('Text file ready: {0}', safeFilename(name, 'txt'))));
       }
     } catch (e) {
       setBusy(null);
-      toast('Export failed: ' + e.message, 'error');
+      toast(tr('Export failed: {0}', e.message), 'error');
     }
   };
 
@@ -985,18 +986,18 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
         const text = await readFileAs(file, 'text');
         const d = await store.createDoc({ title: file.name.replace(/\.txt$/i, ''), folderId: docRef.current ? docRef.current.folderId : null });
         openDoc(d.id, { importHtml: { text } });
-      } catch (e) { toast('Import failed: ' + e.message, 'error'); }
+      } catch (e) { toast(tr('Import failed: {0}', e.message), 'error'); }
       return;
     }
-    if (!/\.docx$/i.test(file.name)) { toast('Choose a Word (.docx) or text (.txt) file.', 'error'); return; }
-    setBusy({ text: 'Importing ' + file.name + '…' });
+    if (!/\.docx$/i.test(file.name)) { toast(tr('Choose a Word (.docx) or text (.txt) file.'), 'error'); return; }
+    setBusy({ text: tr('Importing {0}…', file.name) });
     try {
       const buf = await readFileAs(file, 'buffer');
       const { html } = await importDOCX(buf);
       const d = await store.createDoc({ title: file.name.replace(/\.docx$/i, ''), folderId: docRef.current ? docRef.current.folderId : null });
       setBusy(null);
       openDoc(d.id, { importHtml: html });
-    } catch (e) { setBusy(null); toast('Import failed: ' + e.message, 'error'); }
+    } catch (e) { setBusy(null); toast(tr('Import failed: {0}', e.message), 'error'); }
   };
 
   const newDoc = async (tid) => {
@@ -1007,7 +1008,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const duplicate = async () => {
     await persist();
     const d = await store.duplicateDoc(docRef.current.id);
-    toast('Opened a copy: ' + d.title);
+    toast(tr('Opened a copy: {0}', d.title));
     openDoc(d.id);
   };
 
@@ -1053,7 +1054,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       const k = e.key.toLowerCase();
       if (k === 'f' && !e.shiftKey) { e.preventDefault(); setFind({ mode: 'find', t: Date.now() }); }
       else if (k === 'h') { e.preventDefault(); setFind({ mode: 'replace', t: Date.now() }); }
-      else if (k === 's') { e.preventDefault(); saveSoon.cancel(); persist(); toast('All changes are saved in this browser'); }
+      else if (k === 's') { e.preventDefault(); saveSoon.cancel(); persist(); toast(tr('All changes are saved in this browser')); }
       else if (k === 'p') { e.preventDefault(); runExport('pdf'); }
     };
     window.addEventListener('keydown', key);
@@ -1115,10 +1116,10 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     if (where === 'header') style.top = hfTop; else style.bottom = hfBottom;
     return (
       <div className={'hf ' + where + (text || num ? '' : ' empty')} style={style} dir={settings.dir}
-        onDoubleClick={() => setDialog({ kind: 'hf', focus: where })} title={`Double-click to edit the ${where}`}>
+        onDoubleClick={() => setDialog({ kind: 'hf', focus: where })} title={tr('Double-click to edit the {0}', where)}>
         {text && <div className="hf-line" dir="auto" style={{ textAlign: cfg.align || 'center' }}>{text}</div>}
         {num && <div className="hf-line" dir="auto" style={{ textAlign: pn.align }}>{num}</div>}
-        {!text && !num && <div className="hf-hint">{where === 'header' ? 'Double-click to add a header' : 'Double-click to add a footer'}</div>}
+        {!text && !num && <div className="hf-hint">{where === 'header' ? tr('Double-click to add a header') : tr('Double-click to add a footer')}</div>}
       </div>
     );
   };
@@ -1188,54 +1189,54 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       <div className="ed-error">
         <Icon name="FileX2" size={32} />
         <p>{error}</p>
-        <button type="button" className="btn primary" onClick={onExit}>Back to documents</button>
+        <button type="button" className="btn primary" onClick={onExit}>{tr('Back to documents')}</button>
       </div>
     );
   }
 
-  const saveLabel = saveState === 'saving' ? 'Saving…' : saveState === 'error' ? 'Not saved' : 'Saved';
+  const saveLabel = saveState === 'saving' ? tr('Saving…') : saveState === 'error' ? tr('Not saved') : tr('Saved');
 
   return (
     <div className={'ed' + (isMobile ? ' m' : '') + (focusMode ? ' focus' : '') + (darkPaper ? ' dark-paper' : '') + (isMobile && toolbarHidden ? ' bar-hidden' : '')}>
       {!focusMode && (isMobile ? (
         <header className="ed-bar m">
-          <button type="button" data-back className="tb lg" aria-label="Back to documents" onMouseDown={(e) => e.preventDefault()} onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
+          <button type="button" data-back className="tb lg" aria-label={tr('Back to documents')} onMouseDown={(e) => e.preventDefault()} onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
             <Icon name="ChevronLeft" size={24} />
           </button>
           <div className="m-title">
             {editingTitle ? (
               <input id="doc-title-m" className="title-input" dir="auto" autoFocus defaultValue={title} maxLength={160}
-                onBlur={(e) => { const v = e.target.value.trim() || 'Untitled document'; setTitle(v); titleRef.current = v; setEditingTitle(false); markDirty(); }}
+                onBlur={(e) => { const v = e.target.value.trim() || tr('Untitled document'); setTitle(v); titleRef.current = v; setEditingTitle(false); markDirty(); }}
                 onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); if (e.key === 'Escape') { e.target.value = title; e.target.blur(); } }} />
             ) : (
-              <button type="button" className="m-title-btn" dir="auto" onClick={() => setEditingTitle(true)} aria-label={'Rename ' + (title || 'document')}>{title || 'Untitled document'}</button>
+              <button type="button" className="m-title-btn" dir="auto" onClick={() => setEditingTitle(true)} aria-label={tr('Rename {0}', title || 'document')}>{title || tr('Untitled document')}</button>
             )}
             <span className={'m-sub ' + saveState}>
-              {saveState === 'saving' ? 'Saving…' : saveState === 'error' ? 'Not saved' : 'Saved'}
-              {' · '}{viewMode === 'print' ? `Page ${Math.min(curPage, nPages)} of ${nPages}` : `${stats.words.toLocaleString()} words`}
+              {saveState === 'saving' ? tr('Saving…') : saveState === 'error' ? tr('Not saved') : tr('Saved')}
+              {' · '}{viewMode === 'print' ? tr('Page {0} of {1}', Math.min(curPage, nPages), nPages) : `${stats.words.toLocaleString()} words`}
             </span>
           </div>
-          <button type="button" className="tb lg" aria-label={viewMode === 'mobile' ? 'Switch to page view' : 'Switch to mobile view'} title={viewMode === 'mobile' ? 'Page view' : 'Mobile view'}
+          <button type="button" className="tb lg" aria-label={viewMode === 'mobile' ? tr('Switch to page view') : tr('Switch to mobile view')} title={viewMode === 'mobile' ? tr('Page view') : tr('Mobile view')}
             onMouseDown={(e) => e.preventDefault()} onClick={() => { setViewMode(viewMode === 'mobile' ? 'print' : 'mobile'); if (viewMode === 'mobile') setFit(true); }}>
             <Icon name={viewMode === 'mobile' ? 'Files' : 'Smartphone'} size={21} />
           </button>
           <button type="button" className="tb lg" aria-label="Find and replace" onMouseDown={(e) => e.preventDefault()} onClick={() => setFind({ mode: 'find', t: Date.now() })}><Icon name="Search" size={21} /></button>
-          <button type="button" className="tb lg" aria-label="Document menu" onMouseDown={(e) => e.preventDefault()} onClick={() => setSheet('more')}><Icon name="Ellipsis" size={22} /></button>
+          <button type="button" className="tb lg" aria-label={tr('Document menu')} onMouseDown={(e) => e.preventDefault()} onClick={() => setSheet('more')}><Icon name="Ellipsis" size={22} /></button>
         </header>
       ) : (
         <>
       <header className="ed-bar">
-        <button type="button" data-back className="tb" aria-label="Back to documents" title="Back to documents" onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
+        <button type="button" data-back className="tb" aria-label={tr('Back to documents')} title={tr('Back to documents')} onClick={async () => { saveSoon.cancel(); await persist(); onExit(); }}>
           <Icon name="ArrowLeft" />
         </button>
         <img className="brand-mark sm" src={LOGO} alt="" aria-hidden="true" />
         <div className="title-wrap">
           {editingTitle ? (
             <input id="doc-title" className="title-input" dir="auto" autoFocus defaultValue={title} maxLength={160}
-              onBlur={(e) => { const v = e.target.value.trim() || 'Untitled document'; setTitle(v); titleRef.current = v; setEditingTitle(false); markDirty(); }}
+              onBlur={(e) => { const v = e.target.value.trim() || tr('Untitled document'); setTitle(v); titleRef.current = v; setEditingTitle(false); markDirty(); }}
               onKeyDown={(e) => { if (e.key === 'Enter') e.target.blur(); if (e.key === 'Escape') { e.target.value = title; e.target.blur(); } }} />
           ) : (
-            <button type="button" className="title-btn" dir="auto" title="Rename document" onClick={() => setEditingTitle(true)}>{title || 'Untitled document'}</button>
+            <button type="button" className="title-btn" dir="auto" title={tr('Rename document')} onClick={() => setEditingTitle(true)}>{title || tr('Untitled document')}</button>
           )}
           <span className={'save-state ' + saveState} aria-live="polite">
             {saveState === 'saving' ? <span className="dot" /> : <Icon name={saveState === 'error' ? 'CloudOff' : 'CloudCheck'} size={14} />}
@@ -1243,11 +1244,11 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
           </span>
         </div>
         <div className="ed-bar-actions">
-          <button type="button" className="tb" aria-label="Undo" title="Undo (Ctrl+Z)" disabled={!hist.undo} onMouseDown={(e) => e.preventDefault()} onClick={undo}><Icon name="Undo2" /></button>
-          <button type="button" className="tb" aria-label="Redo" title="Redo (Ctrl+Y)" disabled={!hist.redo} onMouseDown={(e) => e.preventDefault()} onClick={redo}><Icon name="Redo2" /></button>
+          <button type="button" className="tb" aria-label={tr('Undo')} title={tr('Undo (Ctrl+Z)')} disabled={!hist.undo} onMouseDown={(e) => e.preventDefault()} onClick={undo}><Icon name="Undo2" /></button>
+          <button type="button" className="tb" aria-label={tr('Redo')} title={tr('Redo (Ctrl+Y)')} disabled={!hist.redo} onMouseDown={(e) => e.preventDefault()} onClick={redo}><Icon name="Redo2" /></button>
           <button type="button" className="tb hide-sm" aria-label="Find and replace" title="Find and replace (Ctrl+F)" onClick={() => setFind({ mode: 'find', t: Date.now() })}><Icon name="Search" /></button>
-          <button type="button" className="tb hide-sm" aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'} onClick={toggleTheme}><Icon name={theme === 'dark' ? 'Sun' : 'Moon'} /></button>
-          {focusMode && <button type="button" className="btn sm" onClick={() => setFocusMode(false)}><Icon name="Minimize2" size={16} />Exit focus</button>}
+          <button type="button" className="tb hide-sm" aria-label={theme === 'dark' ? tr('Light mode') : tr('Dark mode')} title={theme === 'dark' ? tr('Light mode') : tr('Dark mode')} onClick={toggleTheme}><Icon name={theme === 'dark' ? 'Sun' : 'Moon'} /></button>
+          {focusMode && <button type="button" className="btn sm" onClick={() => setFocusMode(false)}><Icon name="Minimize2" size={16} />{tr('Exit focus')}</button>}
           <ExportButton run={runExport} />
         </div>
       </header>
@@ -1257,19 +1258,19 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       ))}
 
       <div className="ed-work" ref={workRef}>
-        {!doc ? <div className="empty"><span className="spin" /> Opening document…</div> : null}
+        {!doc ? <div className="empty"><span className="spin" />{' '}{tr('Opening document…')}</div> : null}
         {recovery && (
           <div className="banner warn" role="alert">
             <Icon name="LifeBuoy" size={18} />
-            <span>Unsaved changes from {new Date(recovery.at).toLocaleString()} were found after the app closed unexpectedly.</span>
-            <button type="button" className="btn sm primary" onClick={() => { const q = Q(); if (q && recovery.delta) { q.setContents(normalizeDelta(splitNewlines(recovery.delta)), 'user'); } setRecovery(null); toast('Recovered your unsaved changes'); }}>Recover</button>
-            <button type="button" className="btn sm" onClick={() => { if (docRef.current) store.clearRecovery(docRef.current.id).catch(() => {}); setRecovery(null); }}>Discard</button>
+            <span>{tr('Unsaved changes from')}{' '}{new Date(recovery.at).toLocaleString()}{' '}{tr('were found after the app closed unexpectedly.')}</span>
+            <button type="button" className="btn sm primary" onClick={() => { const q = Q(); if (q && recovery.delta) { q.setContents(normalizeDelta(splitNewlines(recovery.delta)), 'user'); } setRecovery(null); toast(tr('Recovered your unsaved changes')); }}>{tr('Recover')}</button>
+            <button type="button" className="btn sm" onClick={() => { if (docRef.current) store.clearRecovery(docRef.current.id).catch(() => {}); setRecovery(null); }}>{tr('Discard')}</button>
           </div>
         )}
         {readOnly && (
           <div className="banner" role="status">
-            <Icon name="Lock" size={18} /><span>Editing is locked for this document.</span>
-            <button type="button" className="btn sm" onClick={toggleReadOnly}>Unlock editing</button>
+            <Icon name="Lock" size={18} /><span>{tr('Editing is locked for this document.')}</span>
+            <button type="button" className="btn sm" onClick={toggleReadOnly}>{tr('Unlock editing')}</button>
           </div>
         )}
         <div className="zoom-box" style={{ width: W * ez, height: stackH * ez }}>
@@ -1285,7 +1286,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
             {frame && (
               <div className="img-frame" style={{ left: frame.left, top: frame.top, width: frame.width, height: frame.height }}>
                 <span className="img-size">{Math.round(frame.width)} × {Math.round(frame.height)}</span>
-                <button type="button" className="img-handle" aria-label="Resize image" onPointerDown={startResize} />
+                <button type="button" className="img-handle" aria-label={tr('Resize image')} onPointerDown={startResize} />
               </div>
             )}
           </div>
@@ -1303,16 +1304,16 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
 
       {focusMode && (
         <div className="focus-pill" role="status">
-          <span className="tnum">{stats.words.toLocaleString()} words</span>
-          <button type="button" className="btn sm" onMouseDown={(e) => e.preventDefault()} onClick={() => setFocusMode(false)}><Icon name="Minimize2" size={15} />Exit focus</button>
+          <span className="tnum">{stats.words.toLocaleString()}{' '}{tr('words')}</span>
+          <button type="button" className="btn sm" onMouseDown={(e) => e.preventDefault()} onClick={() => setFocusMode(false)}><Icon name="Minimize2" size={15} />{tr('Exit focus')}</button>
         </div>
       )}
       {listening && (
         <div className="dictate-pill" role="status" aria-live="polite">
           <span className="rec-dot" />
-          <span className="dict-text" dir="auto">{listening.interim || (listening.lang.startsWith('ar') ? 'أستمع… تحدّث الآن' : 'Listening… speak now')}</span>
+          <span className="dict-text" dir="auto">{listening.interim || (listening.lang.startsWith('ar') ? 'أستمع… تحدّث الآن' : tr('Listening… speak now'))}</span>
           <button type="button" className="btn sm" onMouseDown={(e) => e.preventDefault()} onClick={() => startDictation(listening.lang.startsWith('ar') ? 'en-US' : 'ar-SA')}>{listening.lang.startsWith('ar') ? 'EN' : 'عربي'}</button>
-          <button type="button" className="btn sm primary" onMouseDown={(e) => e.preventDefault()} onClick={stopDictation}>Done</button>
+          <button type="button" className="btn sm primary" onMouseDown={(e) => e.preventDefault()} onClick={stopDictation}>{tr('Done')}</button>
         </div>
       )}
       {isMobile && (
@@ -1323,17 +1324,17 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       )}
 
       {!isMobile && !focusMode && <footer className="status">
-        <span>Page {Math.min(curPage, nPages)} of {nPages}</span>
-        <button type="button" className="st-btn" onClick={() => setDialog({ kind: 'count' })} title="Word count">{stats.words.toLocaleString()} words</button>
-        <span className="hide-sm">{stats.chars.toLocaleString()} characters</span>
-        <span className="hide-sm st-lang">{stats.arabic && stats.latin ? 'Arabic + English' : stats.arabic ? 'Arabic' : stats.latin ? 'English' : '—'}</span>
+        <span>{tr('Page')}{' '}{Math.min(curPage, nPages)}{' '}{tr('of')}{' '}{nPages}</span>
+        <button type="button" className="st-btn" onClick={() => setDialog({ kind: 'count' })} title={tr('Word count')}>{stats.words.toLocaleString()}{' '}{tr('words')}</button>
+        <span className="hide-sm">{stats.chars.toLocaleString()}{' '}{tr('characters')}</span>
+        <span className="hide-sm st-lang">{stats.arabic && stats.latin ? tr('Arabic + English') : stats.arabic ? tr('Arabic') : stats.latin ? tr('English') : '—'}</span>
         <span className="st-grow" />
-        <span className="hide-sm">{fontByStack(settings.font).name} · {settings.fontSize} pt</span>
+        <span className="hide-sm">{tr('{0} · {1} pt', fontByStack(settings.font).name, settings.fontSize)}</span>
         <div className="zoom-ctl">
-          <button type="button" className="tb sm" aria-label="Zoom out" onClick={() => ed.setZoom(Math.round((ez - 0.1) * 10) / 10)}><Icon name="Minus" size={14} /></button>
-          <input id="zoom-range" type="range" min="30" max="200" step="5" value={Math.round(ez * 100)} aria-label="Zoom" onChange={(e) => ed.setZoom(+e.target.value / 100)} />
-          <button type="button" className="tb sm" aria-label="Zoom in" onClick={() => ed.setZoom(Math.round((ez + 0.1) * 10) / 10)}><Icon name="Plus" size={14} /></button>
-          <button type="button" className="st-btn zoom-pct" title="Fit page width" onClick={() => ed.setFit(true)}>{Math.round(ez * 100)}%</button>
+          <button type="button" className="tb sm" aria-label={tr('Zoom out')} onClick={() => ed.setZoom(Math.round((ez - 0.1) * 10) / 10)}><Icon name="Minus" size={14} /></button>
+          <input id="zoom-range" type="range" min="30" max="200" step="5" value={Math.round(ez * 100)} aria-label={tr('Zoom')} onChange={(e) => ed.setZoom(+e.target.value / 100)} />
+          <button type="button" className="tb sm" aria-label={tr('Zoom in')} onClick={() => ed.setZoom(Math.round((ez + 0.1) * 10) / 10)}><Icon name="Plus" size={14} /></button>
+          <button type="button" className="st-btn zoom-pct" title={tr('Fit page width')} onClick={() => ed.setFit(true)}>{Math.round(ez * 100)}%</button>
         </div>
       </footer>}
 
@@ -1346,11 +1347,11 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       {dialog && dialog.kind === 'link' && <LinkDialog initial={formats.link || ''} hasSelection={!!(lastRange.current && lastRange.current.length)} onSave={insertLink} onRemove={formats.link ? removeLink : null} onClose={() => { setDialog(null); const q = Q(); if (q) q.focus(); }} />}
       {dialog && dialog.kind === 'margins' && <MarginsDialog settings={settings} onSave={(p) => setSettings(p)} onClose={() => setDialog(null)} />}
       {dialog && dialog.kind === 'delete' && (
-        <ConfirmDialog title="Delete document?" message={`“${title}” will be permanently removed from this browser. This can't be undone.`} onClose={() => setDialog(null)}
-          onConfirm={async () => { saveSoon.cancel(); const id = docRef.current.id; docRef.current = null; await store.deleteDoc(id); toast('Deleted “' + title + '”'); onExit(); }} />
+        <ConfirmDialog title={tr('Delete document?')} message={`“${title}” will be permanently removed from this browser. This can't be undone.`} onClose={() => setDialog(null)}
+          onConfirm={async () => { saveSoon.cancel(); const id = docRef.current.id; docRef.current = null; await store.deleteDoc(id); toast(tr('Deleted “{0}”', title)); onExit(); }} />
       )}
       {dialog && dialog.kind === 'alt' && (
-        <PromptDialog title="Alternative text" label="Describe the image for screen readers" initial={(imgSel && imgSel.el.getAttribute('alt')) || ''} onClose={() => setDialog(null)}
+        <PromptDialog title={tr('Alternative text')} label={tr('Describe the image for screen readers')} initial={(imgSel && imgSel.el.getAttribute('alt')) || ''} onClose={() => setDialog(null)}
           onSubmit={(v) => { const q = Q(); if (q && imgRef.current) q.formatText(imgRef.current.index, 1, 'alt', v, 'user'); }} />
       )}
 
@@ -1375,11 +1376,11 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
               const probe = await encryptJSON({ ok: 1 }, sk.key);
               await decryptJSON(probe, key);
               await removePassword(); setDialog(null);
-            } catch (e) { setDialog({ ...dialog, error: 'That password is not correct.' }); }
+            } catch (e) { setDialog({ ...dialog, error: tr('That password is not correct.') }); }
           }} />
       )}
       {dialog && dialog.kind === 'save-template' && (
-        <PromptDialog title="Save as template" label="Template name" initial={title} confirmLabel="Save template" onClose={() => setDialog(null)} onSubmit={saveAsTemplate} />
+        <PromptDialog title={tr('Save as template')} label={tr('Template name')} initial={title} confirmLabel={tr('Save template')} onClose={() => setDialog(null)} onSubmit={saveAsTemplate} />
       )}
       {dialog && dialog.kind === 'share' && <ShareDialog title={title} build={async (kind) => {
         const q = Q();
@@ -1401,12 +1402,12 @@ function ShareDialog({ title, build, onPdf, onClose, toast }) {
   const canShare = isNative || typeof navigator.share === 'function';
   const prepare = async () => {
     setBusy(true);
-    try { const r = await build(kind); setFile(r); } catch (e) { toast('Could not prepare the file: ' + e.message, 'error'); } finally { setBusy(false); }
+    try { const r = await build(kind); setFile(r); } catch (e) { toast(tr('Could not prepare the file: {0}', e.message), 'error'); } finally { setBusy(false); }
   };
   const share = async () => {
     if (!file) return;
     if (isNative) {
-      try { const r = await nativeShare({ title, filename: file.name, blob: file.blob }); if (r === 'shared') onClose(); } catch (e) { toast('Sharing failed: ' + (e.message || e), 'error'); }
+      try { const r = await nativeShare({ title, filename: file.name, blob: file.blob }); if (r === 'shared') onClose(); } catch (e) { toast(tr('Sharing failed: {0}', e.message || e), 'error'); }
       return;
     }
     const f = new File([file.blob], file.name, { type: file.type });
@@ -1417,23 +1418,23 @@ function ShareDialog({ title, build, onPdf, onClose, toast }) {
     } catch (e) {
       if (e && e.name === 'AbortError') return;
       const r = await saveFile(file.name, file.blob).catch(() => null);
-      toast(r === 'saved' ? 'The share menu isn’t available here, so the file was saved instead. Share it from your Files app.' : 'Sharing isn’t available here.', r === 'saved' ? undefined : 'error');
+      toast(r === 'saved' ? tr('The share menu isn’t available here, so the file was saved instead. Share it from your Files app.') : tr('Sharing isn’t available here.'), r === 'saved' ? undefined : 'error');
       onClose();
     }
   };
   return (
-    <Modal title="Share document" onClose={onClose} width={420} footer={
+    <Modal title={tr('Share document')} onClose={onClose} width={420} footer={
       <>
-        <button type="button" className="btn ghost" onClick={onClose}>Cancel</button>
-        {file ? <button type="button" className="btn primary" onClick={share}><Icon name="Share2" size={16} />{canShare ? 'Share…' : 'Save file'}</button>
-          : <button type="button" className="btn primary" disabled={busy} onClick={prepare}>{busy ? 'Preparing…' : 'Prepare file'}</button>}
+        <button type="button" className="btn ghost" onClick={onClose}>{tr('Cancel')}</button>
+        {file ? <button type="button" className="btn primary" onClick={share}><Icon name="Share2" size={16} />{canShare ? tr('Share…') : tr('Save file')}</button>
+          : <button type="button" className="btn primary" disabled={busy} onClick={prepare}>{busy ? tr('Preparing…') : tr('Prepare file')}</button>}
       </>
     }>
       <div className="form-stack">
-        <Seg label="File type" value={kind} onChange={(v) => { setKind(v); setFile(null); }} options={[{ value: 'docx', label: 'Word' }, { value: 'txt', label: 'Text' }]} />
-        <button type="button" className="link-btn" onClick={onPdf}>Need a PDF? Export it from the menu instead.</button>
-        <p className="hint">{canShare ? 'Your device’s share menu opens with the file, so you can send it to WhatsApp, email, Drive and more. Some views (including the Claude app preview) block the share menu; then the file is saved instead.' : 'This browser has no share menu, so the file will be saved and you can share it from your Files app.'}</p>
-        {file && <p className="muted-p">Ready: {file.name}</p>}
+        <Seg label={tr('File type')} value={kind} onChange={(v) => { setKind(v); setFile(null); }} options={[{ value: 'docx', label: tr('Word') }, { value: 'txt', label: tr('Text') }]} />
+        <button type="button" className="link-btn" onClick={onPdf}>{tr('Need a PDF? Export it from the menu instead.')}</button>
+        <p className="hint">{canShare ? 'Your device’s share menu opens with the file, so you can send it to WhatsApp, email, Drive and more. Some views (including the Claude app preview) block the share menu; then the file is saved instead.' : tr('This browser has no share menu, so the file will be saved and you can share it from your Files app.')}</p>
+        {file && <p className="muted-p">{tr('Ready: {0}', file.name)}</p>}
       </div>
     </Modal>
   );
@@ -1452,14 +1453,14 @@ function ExportButton({ run }) {
   return (
     <div className="export-btn" ref={ref}>
       <button type="button" className="btn primary sm" aria-haspopup="true" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
-        <Icon name="Download" size={16} /><span className="hide-xs">Export</span><Icon name="ChevronDown" size={14} />
+        <Icon name="Download" size={16} /><span className="hide-xs">{tr('Export')}</span><Icon name="ChevronDown" size={14} />
       </button>
       {open && (
         <div className="pop export-pop" role="menu">
-          <button type="button" className="mi" onClick={() => pick('pdf')}><span className="mi-ico"><Icon name="FileText" size={16} /></span><span className="mi-text">PDF document<small>Pages exactly as shown</small></span></button>
-          <button type="button" className="mi" onClick={() => pick('docx')}><span className="mi-ico"><Icon name="FileType" size={16} /></span><span className="mi-text">Word document (.docx)<small>Editable in Word and Google Docs</small></span></button>
-          <button type="button" className="mi" onClick={() => pick('html')}><span className="mi-ico"><Icon name="Globe" size={16} /></span><span className="mi-text">Web page (.html)</span></button>
-          <button type="button" className="mi" onClick={() => pick('txt')}><span className="mi-ico"><Icon name="AlignLeft" size={16} /></span><span className="mi-text">Plain text (.txt)</span></button>
+          <button type="button" className="mi" onClick={() => pick('pdf')}><span className="mi-ico"><Icon name="FileText" size={16} /></span><span className="mi-text">{tr('PDF document')}<small>{tr('Pages exactly as shown')}</small></span></button>
+          <button type="button" className="mi" onClick={() => pick('docx')}><span className="mi-ico"><Icon name="FileType" size={16} /></span><span className="mi-text">{tr('Word document (.docx)')}<small>{tr('Editable in Word and Google Docs')}</small></span></button>
+          <button type="button" className="mi" onClick={() => pick('html')}><span className="mi-ico"><Icon name="Globe" size={16} /></span><span className="mi-text">{tr('Web page (.html)')}</span></button>
+          <button type="button" className="mi" onClick={() => pick('txt')}><span className="mi-ico"><Icon name="AlignLeft" size={16} /></span><span className="mi-text">{tr('Plain text (.txt)')}</span></button>
         </div>
       )}
     </div>

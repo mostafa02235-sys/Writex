@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from '../react.js';
 import { Icon } from '../icons.jsx';
+import { tr } from '../i18n.js';
 
 const portal = (node) => window.ReactDOM.createPortal(node, document.body);
 
@@ -103,7 +104,7 @@ export function Modal({ title, children, onClose, footer, width = 440, className
       <div className={'modal ' + (className || '')} role="dialog" aria-modal="true" aria-label={title} style={{ width }}>
         <div className="modal-head">
           <h2>{title}</h2>
-          {onClose && <button type="button" data-close className="tb" aria-label="Close" onClick={onClose}><Icon name="X" size={18} /></button>}
+          {onClose && <button type="button" data-close className="tb" aria-label={tr('Close')} onClick={onClose}><Icon name="X" size={18} /></button>}
         </div>
         <div className="modal-body">{children}</div>
         {footer && <div className="modal-foot">{footer}</div>}
@@ -112,11 +113,11 @@ export function Modal({ title, children, onClose, footer, width = 440, className
   );
 }
 
-export function ConfirmDialog({ title, message, confirmLabel = 'Delete', danger = true, onConfirm, onClose }) {
+export function ConfirmDialog({ title, message, confirmLabel = tr('Delete'), danger = true, onConfirm, onClose }) {
   return (
     <Modal title={title} onClose={onClose} width={400} footer={
       <>
-        <button type="button" className="btn ghost" onClick={onClose}>Cancel</button>
+        <button type="button" className="btn ghost" onClick={onClose}>{tr('Cancel')}</button>
         <button type="button" className={'btn ' + (danger ? 'danger' : 'primary')} autoFocus onClick={() => { onConfirm(); onClose(); }}>{confirmLabel}</button>
       </>
     }>
@@ -125,7 +126,7 @@ export function ConfirmDialog({ title, message, confirmLabel = 'Delete', danger 
   );
 }
 
-export function PromptDialog({ title, label, initial = '', confirmLabel = 'Save', onSubmit, onClose, placeholder }) {
+export function PromptDialog({ title, label, initial = '', confirmLabel = tr('Save'), onSubmit, onClose, placeholder }) {
   const [v, setV] = useState(initial);
   const ref = useRef(null);
   useEffect(() => { const t = setTimeout(() => { if (ref.current) { ref.current.focus(); ref.current.select(); } }, 30); return () => clearTimeout(t); }, []);
@@ -133,7 +134,7 @@ export function PromptDialog({ title, label, initial = '', confirmLabel = 'Save'
   return (
     <Modal title={title} onClose={onClose} width={420} footer={
       <>
-        <button type="button" className="btn ghost" onClick={onClose}>Cancel</button>
+        <button type="button" className="btn ghost" onClick={onClose}>{tr('Cancel')}</button>
         <button type="button" className="btn primary" disabled={!v.trim()} onClick={submit}>{confirmLabel}</button>
       </>
     }>
@@ -154,7 +155,7 @@ export function Toasts({ items, dismiss }) {
         <div key={t.id} className={'toast ' + (t.kind || '')}>
           {t.kind === 'error' ? <Icon name="CircleAlert" size={16} /> : t.kind === 'busy' ? <span className="spin" /> : <Icon name="Check" size={16} />}
           <span>{t.text}</span>
-          {t.kind !== 'busy' && <button type="button" aria-label="Dismiss" onClick={() => dismiss(t.id)}><Icon name="X" size={14} /></button>}
+          {t.kind !== 'busy' && <button type="button" aria-label={tr('Dismiss')} onClick={() => dismiss(t.id)}><Icon name="X" size={14} /></button>}
         </div>
       ))}
     </div>,
@@ -217,7 +218,7 @@ export function Sheet({ open, onClose, title, children, className, actions }) {
             <h2>{title}</h2>
             <div className="bs-actions">
               {actions}
-              <button type="button" data-close className="tb" aria-label="Close" onClick={onClose}><Icon name="X" size={20} /></button>
+              <button type="button" data-close className="tb" aria-label={tr('Close')} onClick={onClose}><Icon name="X" size={20} /></button>
             </div>
           </div>
         </div>

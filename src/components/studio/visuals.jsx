@@ -1,6 +1,7 @@
 import React, { useMemo } from '../../react.js';
 import { loadLib } from '../../exporters.js';
 import { AR_RE } from '../../util.js';
+import { tr } from '../../i18n.js';
 
 export const PALETTE = ['#5B7CFA', '#22A06B', '#E5484D', '#F5A524', '#9B5DE5', '#12A4B5', '#E8638C', '#7A869A'];
 const FONT = "'IBM Plex Sans Arabic', 'Geist', system-ui, sans-serif";
@@ -30,9 +31,9 @@ export function svgToPng(svgEl, scale = 2) {
       c.width = Math.round(w * scale); c.height = Math.round(h * scale);
       const ctx = c.getContext('2d');
       ctx.drawImage(img, 0, 0, c.width, c.height);
-      c.toBlob((b) => (b ? resolve({ blob: b, url: c.toDataURL('image/png'), w, h }) : reject(new Error('Could not create the image.'))), 'image/png');
+      c.toBlob((b) => (b ? resolve({ blob: b, url: c.toDataURL('image/png'), w, h }) : reject(new Error(tr('Could not create the image.')))), 'image/png');
     };
-    img.onerror = () => reject(new Error('Could not create the image.'));
+    img.onerror = () => reject(new Error(tr('Could not create the image.')));
     img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(text)));
   });
 }
@@ -71,7 +72,7 @@ export function MindMapView({ data, svgRef }) {
     });
   }, [data]);
   return (
-    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="viz-svg" role="img" aria-label={'Mind map: ' + (data.center || '')}>
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="viz-svg" role="img" aria-label={tr('Mind map: {0}', data.center || '')}>
       <rect width={W} height={H} fill="#FFFFFF" />
       {layout.map((b, i) => (
         <g key={i}>
@@ -118,7 +119,7 @@ export function DiagramView({ data, svgRef }) {
   }, [data]);
   const { W, H, pos } = lay;
   return (
-    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="viz-svg" role="img" aria-label={'Diagram: ' + (data.title || '')}>
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="viz-svg" role="img" aria-label={tr('Diagram: ') + (data.title || '')}>
       <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7A869A" /></marker></defs>
       <rect width={W} height={H} fill="#FFFFFF" />
       {edges.map((e, i) => {
@@ -169,7 +170,7 @@ export function ChartView({ data, svgRef }) {
         {vals.map((v, i) => {
           const a1 = a0 + (Math.max(0, v) / total) * Math.PI * 2;
           const large = a1 - a0 > Math.PI ? 1 : 0;
-          const p = `M${cx},${cy} L${cx + r * Math.cos(a0)},${cy + r * Math.sin(a0)} A${r},${r} 0 ${large} 1 ${cx + r * Math.cos(a1)},${cy + r * Math.sin(a1)} Z`;
+          const p = tr('M{0},{1} L{2},{3} A{4},{5} 0 {6} 1 {7},{8} Z', cx, cy, cx + r * Math.cos(a0), cy + r * Math.sin(a0), r, r, large, cx + r * Math.cos(a1), cy + r * Math.sin(a1));
           a0 = a1;
           return <path key={i} d={p} fill={PALETTE[i % PALETTE.length]} stroke="#fff" strokeWidth="2" />;
         })}
@@ -209,7 +210,7 @@ export function ChartView({ data, svgRef }) {
       }))}
       {labels.map((l, i) => <T key={i} x={pad.l + gw * (i + 0.5)} y={H - pad.b + 24} lines={wrap(l, 14)} size={12.5} fill="#374151" />)}
       {series.length > 1 && series.map((s, si) => (
-        <g key={'lg' + si}><rect x={pad.l + si * 170} y={H - 28} width="14" height="14" rx="3" fill={PALETTE[si % PALETTE.length]} /><T x={pad.l + si * 170 + 22} y={H - 21} lines={[s.name || 'Series ' + (si + 1)]} size={13} anchor="start" /></g>
+        <g key={'lg' + si}><rect x={pad.l + si * 170} y={H - 28} width="14" height="14" rx="3" fill={PALETTE[si % PALETTE.length]} /><T x={pad.l + si * 170 + 22} y={H - 21} lines={[s.name || tr('Series {0}{1}', si, 1)]} size={13} anchor="start" /></g>
       ))}
     </svg>
   );
@@ -221,7 +222,7 @@ export function InfographicView({ data, nodeRef }) {
   const rtl = isAr(data.title + ' ' + (data.points || []).join(' '));
   return (
     <div ref={nodeRef} className="ig" dir={rtl ? 'rtl' : 'ltr'} style={{ '--ig': accent }}>
-      <div className="ig-head"><span className="ig-kicker">{rtl ? 'إنفوجرافيك' : 'Infographic'}</span><h2>{data.title}</h2>{data.subtitle && <p>{data.subtitle}</p>}</div>
+      <div className="ig-head"><span className="ig-kicker">{rtl ? 'إنفوجرافيك' : tr('Infographic')}</span><h2>{data.title}</h2>{data.subtitle && <p>{data.subtitle}</p>}</div>
       <div className="ig-stats">{(data.stats || []).slice(0, 6).map((s, i) => <div key={i} className="ig-stat"><b>{s.value}</b><span>{s.label}</span></div>)}</div>
       <ol className="ig-points">{(data.points || []).slice(0, 6).map((p, i) => <li key={i}><i>{i + 1}</i><span>{p}</span></li>)}</ol>
       {data.source && <div className="ig-foot">{data.source}</div>}
@@ -231,7 +232,7 @@ export function InfographicView({ data, nodeRef }) {
 
 /* ---------- book cover ---------- */
 export const COVER_STYLES = [
-  { id: 'classic', label: 'Classic' }, { id: 'modern', label: 'Modern' }, { id: 'minimal', label: 'Minimal' }, { id: 'bold', label: 'Bold' }, { id: 'photo', label: 'Photo' },
+  { id: 'classic', label: tr('Classic') }, { id: 'modern', label: tr('Modern') }, { id: 'minimal', label: tr('Minimal') }, { id: 'bold', label: tr('Bold') }, { id: 'photo', label: tr('Photo') },
 ];
 export function CoverView({ data, nodeRef }) {
   const rtl = isAr(data.title + ' ' + data.author);
@@ -240,7 +241,7 @@ export function CoverView({ data, nodeRef }) {
       <div className="bc-shade" />
       <div className="bc-inner">
         {data.kicker && <span className="bc-kicker">{data.kicker}</span>}
-        <h1 className="bc-title">{data.title || (rtl ? 'العنوان' : 'Title')}</h1>
+        <h1 className="bc-title">{data.title || (rtl ? 'العنوان' : tr('Title'))}</h1>
         {data.subtitle && <p className="bc-sub">{data.subtitle}</p>}
         <span className="bc-rule" />
         <span className="bc-author">{data.author}</span>

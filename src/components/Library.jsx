@@ -14,8 +14,10 @@ import { deltaToHTML, previewFromHTML } from '../quillHtml.js';
 import { fmtDate, readFileAs, storage } from '../util.js';
 import { importDOCX } from '../exporters.js';
 import { fontByStack } from '../constants.js';
+import { tr } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
+// Stored on documents in English; shown with tr()
 export const CATEGORIES = ['Personal', 'Work', 'School', 'Creative', 'Other'];
 
 function Paper({ html, settings, className }) {
@@ -46,18 +48,18 @@ function Paper({ html, settings, className }) {
 
 function greeting() {
   const h = new Date().getHours();
-  if (h < 5) return 'Working late';
-  if (h < 12) return 'Good morning';
-  if (h < 18) return 'Good afternoon';
-  return 'Good evening';
+  if (h < 5) return tr('Working late');
+  if (h < 12) return tr('Good morning');
+  if (h < 18) return tr('Good afternoon');
+  return tr('Good evening');
 }
 
 const NAV = [
-  { id: 'home', label: 'Home', icon: 'House' },
-  { id: 'docs', label: 'Documents', icon: 'FileText' },
-  { id: 'study', label: 'Study', icon: 'GraduationCap' },
-  { id: 'templates', label: 'Templates', icon: 'LayoutTemplate' },
-  { id: 'settings', label: 'Settings', icon: 'Settings' },
+  { id: 'home', label: tr('Home'), icon: 'House' },
+  { id: 'docs', label: tr('Documents'), icon: 'FileText' },
+  { id: 'study', label: tr('Study'), icon: 'GraduationCap' },
+  { id: 'templates', label: tr('Templates'), icon: 'LayoutTemplate' },
+  { id: 'settings', label: tr('Settings'), icon: 'Settings' },
 ];
 
 export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThemeMode, persistent, embedded, openSettings }) {
@@ -112,7 +114,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       setDocs(d); setFolders(f);
     } catch (e) {
       setDocs([]);
-      toast('Your documents could not be loaded: ' + e.message, 'error');
+      toast(tr('Your documents could not be loaded: {0}', e.message), 'error');
     }
   };
   useEffect(() => { refresh(); }, []);
@@ -160,7 +162,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       sessionKeys.set(d.id, { key, salt, plain });
       setUnlock(null);
       openDoc(d.id);
-    } catch (e) { setUnlock({ doc: d, error: ((e && e.message) || 'That password is not correct.') + (d.locked.hint ? ' Hint: ' + d.locked.hint : '') }); }
+    } catch (e) { setUnlock({ doc: d, error: ((e && e.message) || tr('That password is not correct.')) + (d.locked.hint ? tr(' Hint: ') + d.locked.hint : '') }); }
   };
   const patchDoc = async (d, patch) => { await store.updateDoc(d.id, { ...patch, updatedAt: d.updatedAt }); refresh(); };
 
@@ -169,7 +171,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
     try {
       const d = tid.startsWith('custom:') ? await store.fromCustomTemplate(tid.slice(7), { folderId: targetFolder() }) : await store.fromTemplate(tid, targetFolder());
       openDoc(d.id);
-    } catch (e) { toast('Could not create the document: ' + e.message, 'error'); }
+    } catch (e) { toast(tr('Could not create the document: {0}', e.message), 'error'); }
   };
 
   const onImport = async (e) => {
@@ -181,11 +183,11 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
         const text = await readFileAs(file, 'text');
         const d = await store.createDoc({ title: file.name.replace(/\.txt$/i, ''), folderId: targetFolder() });
         openDoc(d.id, { importHtml: { text } });
-      } catch (err) { toast('Import failed: ' + err.message, 'error'); }
+      } catch (err) { toast(tr('Import failed: {0}', err.message), 'error'); }
       return;
     }
-    if (!/\.docx$/i.test(file.name)) { toast('Choose a Word (.docx) or text (.txt) file.', 'error'); return; }
-    const busy = toast('Importing ' + file.name + '…', 'busy');
+    if (!/\.docx$/i.test(file.name)) { toast(tr('Choose a Word (.docx) or text (.txt) file.'), 'error'); return; }
+    const busy = toast(tr('Importing {0}…', file.name), 'busy');
     try {
       const buf = await readFileAs(file, 'buffer');
       const { html } = await importDOCX(buf);
@@ -194,7 +196,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       openDoc(d.id, { importHtml: html });
     } catch (err) {
       busy.close();
-      toast('Import failed: ' + err.message, 'error');
+      toast(tr('Import failed: {0}', err.message), 'error');
     }
   };
 
@@ -206,30 +208,30 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
 
   const docRow = (d) => (
     <article className="drow" key={d.id}>
-      <button type="button" className="drow-main" onClick={() => openSafe(d)} aria-label={'Open ' + d.title}>
+      <button type="button" className="drow-main" onClick={() => openSafe(d)} aria-label={tr('Open {0}', d.title)}>
         {d.locked ? <span className="lock-thumb sm" aria-hidden="true"><Icon name="Lock" size={18} /></span> : <Paper html={d.preview} settings={d.settings} className="sm" />}
         <span className="drow-text">
           <span className="drow-title" dir="auto">{d.favorite && <Icon name="Star" size={13} className="fav-ico" />}{d.title}</span>
           <span className="drow-meta">
-            {fmtDate(d.updatedAt)}{d.words ? ` · ${d.words.toLocaleString()} words` : ''}
+            {fmtDate(d.updatedAt)}{d.words ? tr(' · {0} words', d.words.toLocaleString()) : ''}
           </span>
           {(d.example || d.category || d.subjectId || d.locked || (d.folderId && folderName(d.folderId))) && (
             <span className="chips">
-              {d.example && <span className="chip">Example</span>}
-              {d.locked && <span className="chip"><Icon name="Lock" size={11} />Private</span>}
-              {d.category && <span className="chip">{d.category}</span>}
+              {d.example && <span className="chip">{tr('Example')}</span>}
+              {d.locked && <span className="chip"><Icon name="Lock" size={11} />{tr('Private')}</span>}
+              {d.category && <span className="chip">{tr(d.category)}</span>}
               {d.subjectId && subjects.find((x) => x.id === d.subjectId) && <span className="chip" style={{ '--sc': subjects.find((x) => x.id === d.subjectId).color }}><i className="chip-dot" /><span dir="auto">{subjects.find((x) => x.id === d.subjectId).name}</span></span>}
               {d.folderId && folderName(d.folderId) && <span className="chip"><Icon name="Folder" size={12} /><span dir="auto">{folderName(d.folderId)}</span></span>}
             </span>
           )}
         </span>
       </button>
-      <button type="button" className="tb lg" aria-label={'Options for ' + d.title} onClick={() => openActions(d)}><Icon name="Ellipsis" size={20} /></button>
+      <button type="button" className="tb lg" aria-label={tr('Options for {0}', d.title)} onClick={() => openActions(d)}><Icon name="Ellipsis" size={20} /></button>
     </article>
   );
   const docCard = (d) => (
     <article className="doc-card" key={d.id}>
-      <button type="button" className="doc-open" onClick={() => openSafe(d)} aria-label={'Open ' + d.title}>
+      <button type="button" className="doc-open" onClick={() => openSafe(d)} aria-label={tr('Open {0}', d.title)}>
         {d.locked ? <span className="lock-thumb" aria-hidden="true"><Icon name="Lock" size={26} /></span> : <Paper html={d.preview} settings={d.settings} />}
       </button>
       <div className="doc-info">
@@ -237,7 +239,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           <h3 dir="auto" title={d.title}>{d.title}</h3>
           <p>{fmtDate(d.updatedAt)}</p>
         </div>
-        <button type="button" className="tb" aria-label={'Options for ' + d.title} onClick={() => openActions(d)}><Icon name="Ellipsis" size={18} /></button>
+        <button type="button" className="tb" aria-label={tr('Options for {0}', d.title)} onClick={() => openActions(d)}><Icon name="Ellipsis" size={18} /></button>
       </div>
     </article>
   );
@@ -248,8 +250,8 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   const searchBox = (id) => (
     <label className="search">
       <Icon name="Search" size={18} />
-      <input id={id} type="search" dir="auto" placeholder="Search documents" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search documents" enterKeyHint="search" />
-      {q && <button type="button" className="search-clear" aria-label="Clear search" onClick={() => setQ('')}><Icon name="X" size={16} /></button>}
+      <input id={id} type="search" dir="auto" placeholder={tr('Search documents')} value={q} onChange={(e) => setQ(e.target.value)} aria-label={tr('Search documents')} enterKeyHint="search" />
+      {q && <button type="button" className="search-clear" aria-label={tr('Clear search')} onClick={() => setQ('')}><Icon name="X" size={16} /></button>}
     </label>
   );
 
@@ -275,39 +277,39 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
         <header className="home-head">
           <div className="brand">
             <img className="brand-mark" src={LOGO} alt="" aria-hidden="true" />
-            <span className="brand-name">Writex</span>
+            <span className="brand-name">{tr('Writex')}</span>
           </div>
-          <button type="button" className="tb lg" aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} onClick={toggleTheme}>
+          <button type="button" className="tb lg" aria-label={theme === 'dark' ? tr('Switch to light mode') : tr('Switch to dark mode')} onClick={toggleTheme}>
             <Icon name={theme === 'dark' ? 'Sun' : 'Moon'} size={20} />
           </button>
         </header>
         <section className="hero">
           <h1>{greeting()}<span className="hero-ar" lang="ar"> · أهلًا</span></h1>
-          <p>Write in Arabic, English, or both. Everything saves to this device as you type.</p>
+          <p>{tr('Write in Arabic, English, or both. Everything saves to this device as you type.')}</p>
         </section>
         {searchBox('home-search')}
         {homeResults ? (
           <section className="sec">
-            <div className="sec-head"><h2>Results</h2><span className="sec-note">{homeResults.length}</span></div>
-            {homeResults.length ? docList(homeResults) : <div className="empty sm"><Icon name="SearchX" size={24} /><p>Nothing matches “{q}”.</p></div>}
+            <div className="sec-head"><h2>{tr('Results')}</h2><span className="sec-note">{homeResults.length}</span></div>
+            {homeResults.length ? docList(homeResults) : <div className="empty sm"><Icon name="SearchX" size={24} /><p>{tr('Nothing matches “{0}”.', q)}</p></div>}
           </section>
         ) : (
           <>
             <section className="new-block">
               <button type="button" data-test="new-doc" className="btn primary xl" onClick={() => newFromTemplate('blank')}>
-                <Icon name="Plus" size={22} /><span>New document</span>
+                <Icon name="Plus" size={22} /><span>{tr('New document')}</span>
               </button>
               <div className="new-row">
                 <button type="button" className="btn" onClick={() => newFromTemplate('blank-ar')}><Icon name="PilcrowLeft" size={18} /><span lang="ar">مستند عربي</span></button>
-                <button type="button" className="btn" onClick={() => fileRef.current && fileRef.current.click()}><Icon name="Upload" size={18} />Import .docx</button>
+                <button type="button" className="btn" onClick={() => fileRef.current && fileRef.current.click()}><Icon name="Upload" size={18} />{tr('Import .docx')}</button>
               </div>
             </section>
-            <section className="stats-card" aria-label="Writing statistics">
+            <section className="stats-card" aria-label={tr('Writing statistics')}>
               <div className="st-nums">
-                <div><b className="tnum">{wordsToday.toLocaleString()}</b><span>words today</span></div>
-                <div><b className="tnum">{weekWords.toLocaleString()}</b><span>this week</span></div>
-                <div><b className="tnum">{streak}</b><span>{streak === 1 ? 'day streak' : 'day streak'}</span></div>
-                <div><b className="tnum">{totalWords.toLocaleString()}</b><span>words in all</span></div>
+                <div><b className="tnum">{wordsToday.toLocaleString()}</b><span>{tr('words today')}</span></div>
+                <div><b className="tnum">{weekWords.toLocaleString()}</b><span>{tr('this week')}</span></div>
+                <div><b className="tnum">{streak}</b><span>{streak === 1 ? tr('day streak') : tr('day streak')}</span></div>
+                <div><b className="tnum">{totalWords.toLocaleString()}</b><span>{tr('words in all')}</span></div>
               </div>
               <div className="st-week" aria-hidden="true">
                 {week.map((w) => <div key={w.k} className={'st-day' + (w.k === today ? ' today' : '')}><i style={{ height: Math.max(3, Math.round((w.n / weekMax) * 40)) + 'px' }} /><span>{w.d}</span></div>)}
@@ -315,14 +317,14 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
             </section>
             {favorites.length > 0 && (
               <section className="sec">
-                <div className="sec-head"><h2>Favorites</h2></div>
+                <div className="sec-head"><h2>{tr('Favorites')}</h2></div>
                 {docList(favorites.slice(0, 4))}
               </section>
             )}
             <section className="sec">
               <div className="sec-head">
-                <h2>Templates</h2>
-                <button type="button" className="link-btn" onClick={() => setSection('templates')}>See all</button>
+                <h2>{tr('Templates')}</h2>
+                <button type="button" className="link-btn" onClick={() => setSection('templates')}>{tr('See all')}</button>
               </div>
               <div className="tpl-row">
                 {TEMPLATES.filter((t) => !t.id.startsWith('blank')).map((t) => (
@@ -335,12 +337,12 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
             </section>
             <section className="sec">
               <div className="sec-head">
-                <h2>Recent</h2>
-                <Seg label="Recent documents" value={recentMode} onChange={setRecentMode} options={[{ value: 'edited', label: 'Edited' }, { value: 'opened', label: 'Opened' }]} />
+                <h2>{tr('Recent')}</h2>
+                <Seg label={tr('Recent documents')} value={recentMode} onChange={setRecentMode} options={[{ value: 'edited', label: tr('Edited') }, { value: 'opened', label: tr('Opened') }]} />
               </div>
-              {loading ? <div className="empty sm"><span className="spin" /> Loading…</div>
+              {loading ? <div className="empty sm"><span className="spin" />{' '}{tr('Loading…')}</div>
                 : recent.length ? docList(recent)
-                  : <div className="empty sm"><Icon name="FilePlus2" size={24} /><p>No documents yet. Tap New document to start.</p></div>}
+                  : <div className="empty sm"><Icon name="FilePlus2" size={24} /><p>{tr('No documents yet. Tap New document to start.')}</p></div>}
             </section>
           </>
         )}
@@ -350,53 +352,53 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
     content = (
       <>
         <header className="sec-top">
-          <h1>Documents</h1>
+          <h1>{tr('Documents')}</h1>
           <div className="sec-top-actions">
-            <button type="button" className="tb lg" aria-label={layout === 'grid' ? 'Show as list' : 'Show as grid'} onClick={() => setLayout(layout === 'grid' ? 'list' : 'grid')}>
+            <button type="button" className="tb lg" aria-label={layout === 'grid' ? tr('Show as list') : tr('Show as grid')} onClick={() => setLayout(layout === 'grid' ? 'list' : 'grid')}>
               <Icon name={layout === 'grid' ? 'List' : 'LayoutGrid'} size={20} />
             </button>
-            <button type="button" className="tb lg" aria-label="New folder" onClick={() => setDialog({ kind: 'new-folder' })}><Icon name="FolderPlus" size={20} /></button>
-            <button type="button" className="tb lg accent" aria-label="New document" onClick={() => newFromTemplate('blank')}><Icon name="Plus" size={22} /></button>
+            <button type="button" className="tb lg" aria-label={tr('New folder')} onClick={() => setDialog({ kind: 'new-folder' })}><Icon name="FolderPlus" size={20} /></button>
+            <button type="button" className="tb lg accent" aria-label={tr('New document')} onClick={() => newFromTemplate('blank')}><Icon name="Plus" size={22} /></button>
           </div>
         </header>
         {searchBox('docs-search')}
-        <div className="fchips" role="tablist" aria-label="Folders">
-          <button type="button" role="tab" aria-selected={folder === 'all'} className={'fchip' + (folder === 'all' ? ' on' : '')} onClick={() => setFolder('all')}>All <em>{count('all')}</em></button>
-          {(docs || []).some((d) => d.example) && <button type="button" role="tab" aria-selected={folder === 'examples'} className={'fchip' + (folder === 'examples' ? ' on' : '')} onClick={() => setFolder('examples')}>Examples <em>{count('examples')}</em></button>}
+        <div className="fchips" role="tablist" aria-label={tr('Folders')}>
+          <button type="button" role="tab" aria-selected={folder === 'all'} className={'fchip' + (folder === 'all' ? ' on' : '')} onClick={() => setFolder('all')}>{tr('All')}{' '}<em>{count('all')}</em></button>
+          {(docs || []).some((d) => d.example) && <button type="button" role="tab" aria-selected={folder === 'examples'} className={'fchip' + (folder === 'examples' ? ' on' : '')} onClick={() => setFolder('examples')}>{tr('Examples')}{' '}<em>{count('examples')}</em></button>}
           {folders.map((f) => (
             <button type="button" role="tab" key={f.id} aria-selected={folder === f.id} className={'fchip' + (folder === f.id ? ' on' : '')} onClick={() => setFolder(f.id)}>
               <Icon name={folder === f.id ? 'FolderOpen' : 'Folder'} size={14} /><span dir="auto">{f.name}</span> <em>{count(f.id)}</em>
             </button>
           ))}
-          <button type="button" className="fchip add" onClick={() => setDialog({ kind: 'new-folder' })}><Icon name="Plus" size={14} />Folder</button>
+          <button type="button" className="fchip add" onClick={() => setDialog({ kind: 'new-folder' })}><Icon name="Plus" size={14} />{tr('Folder')}</button>
         </div>
-        <div className="fchips sm" role="group" aria-label="Filter">
-          {[['none', 'Everything'], ['fav', '★ Favorites'], ['private', 'Private'], ...CATEGORIES.map((c) => ['cat:' + c, c])].map(([k, l]) => (
+        <div className="fchips sm" role="group" aria-label={tr('Filter')}>
+          {[['none', tr('Everything')], ['fav', tr('★ Favorites')], ['private', tr('Private')], ...CATEGORIES.map((c) => ['cat:' + c, tr(c)])].map(([k, l]) => (
             <button type="button" key={k} className={'fchip' + (filter === k ? ' on' : '')} aria-pressed={filter === k} onClick={() => setFilter(k)}>{l}</button>
           ))}
         </div>
         <div className="list-tools">
           {folder !== 'all' && folder !== 'examples' && folderName(folder) ? (
             <div className="folder-tools">
-              <button type="button" className="link-btn" onClick={() => setDialog({ kind: 'rename-folder', folder: folders.find((f) => f.id === folder) })}><Icon name="Pencil" size={14} />Rename</button>
-              <button type="button" className="link-btn danger-text" onClick={() => setDialog({ kind: 'delete-folder', folder: folders.find((f) => f.id === folder) })}><Icon name="Trash2" size={14} />Delete folder</button>
+              <button type="button" className="link-btn" onClick={() => setDialog({ kind: 'rename-folder', folder: folders.find((f) => f.id === folder) })}><Icon name="Pencil" size={14} />{tr('Rename')}</button>
+              <button type="button" className="link-btn danger-text" onClick={() => setDialog({ kind: 'delete-folder', folder: folders.find((f) => f.id === folder) })}><Icon name="Trash2" size={14} />{tr('Delete folder')}</button>
             </div>
           ) : <span className="sec-note">{filtered.length} {filtered.length === 1 ? 'document' : 'documents'}</span>}
           <label className="sort">
             <Icon name="ArrowUpDown" size={14} />
-            <select id="lib-sort" value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort documents">
-              <option value="updated">Last modified</option>
-              <option value="created">Date created</option>
-              <option value="title">Title</option>
+            <select id="lib-sort" value={sort} onChange={(e) => setSort(e.target.value)} aria-label={tr('Sort documents')}>
+              <option value="updated">{tr('Last modified')}</option>
+              <option value="created">{tr('Date created')}</option>
+              <option value="title">{tr('Title')}</option>
             </select>
           </label>
         </div>
-        {loading ? <div className="empty"><span className="spin" /> Loading documents…</div>
+        {loading ? <div className="empty"><span className="spin" />{' '}{tr('Loading documents…')}</div>
           : filtered.length === 0 ? (
             <div className="empty">
               <Icon name={q ? 'SearchX' : 'FilePlus2'} size={28} />
-              <p>{q ? `Nothing matches “${q}”.` : folder === 'all' ? 'No documents yet. Tap + to create one.' : 'This folder is empty. Create a document here, or move one in from its ⋯ menu.'}</p>
-              {!q && <button type="button" className="btn primary" onClick={() => newFromTemplate('blank')}><Icon name="Plus" size={18} />New document</button>}
+              <p>{q ? tr('Nothing matches “{0}”.', q) : folder === 'all' ? tr('No documents yet. Tap + to create one.') : tr('This folder is empty. Create a document here, or move one in from its ⋯ menu.')}</p>
+              {!q && <button type="button" className="btn primary" onClick={() => newFromTemplate('blank')}><Icon name="Plus" size={18} />{tr('New document')}</button>}
             </div>
           ) : docList(filtered, layout === 'grid')}
       </>
@@ -406,25 +408,25 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   } else if (section === 'templates') {
     content = (
       <>
-        <header className="sec-top"><h1>Templates</h1></header>
-        <p className="sec-lead">Each template opens as a new document you can change freely. Save any document as a template from its menu.</p>
+        <header className="sec-top"><h1>{tr('Templates')}</h1></header>
+        <p className="sec-lead">{tr('Each template opens as a new document you can change freely. Save any document as a template from its menu.')}</p>
         {customTpls.length > 0 && (
           <section className="sec">
-            <div className="sec-head"><h2>My templates</h2></div>
+            <div className="sec-head"><h2>{tr('My templates')}</h2></div>
             <div className="tpl-grid">
               {customTpls.map((t) => (
                 <div key={t.id} className="tpl custom">
-                  <button type="button" className="tpl-open" onClick={() => newFromTemplate('custom:' + t.id)} aria-label={'New from ' + t.name}><Paper html={customPreviews[t.id]} settings={t.settings} /></button>
+                  <button type="button" className="tpl-open" onClick={() => newFromTemplate('custom:' + t.id)} aria-label={tr('New from {0}', t.name)}><Paper html={customPreviews[t.id]} settings={t.settings} /></button>
                   <span className="tpl-name" dir="auto">{t.name}</span>
                   <span className="tpl-meta"><b className={'lang ' + (t.lang || 'EN').toLowerCase()}>{t.lang || 'EN'}</b>
-                    <button type="button" className="link-btn danger-text" onClick={() => setDialog({ kind: 'delete-tpl', tpl: t })}>Delete</button></span>
+                    <button type="button" className="link-btn danger-text" onClick={() => setDialog({ kind: 'delete-tpl', tpl: t })}>{tr('Delete')}</button></span>
                 </div>
               ))}
             </div>
           </section>
         )}
         <section className="sec">
-          <div className="sec-head"><h2>Study</h2></div>
+          <div className="sec-head"><h2>{tr('Study')}</h2></div>
           <div className="tpl-grid">
             {STUDY_TEMPLATES.map((t) => (
               <button type="button" key={t.id} className="tpl" onClick={() => newFromTemplate(t.id)}>
@@ -435,7 +437,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
             ))}
           </div>
         </section>
-        <div className="sec-head"><h2>Documents</h2></div>
+        <div className="sec-head"><h2>{tr('Documents')}</h2></div>
         <div className="tpl-grid">
           {TEMPLATES.map((t) => {
             const st = t.settings();
@@ -454,44 +456,44 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   } else {
     content = (
       <>
-        <header className="sec-top"><h1>Settings</h1></header>
+        <header className="sec-top"><h1>{tr('Settings')}</h1></header>
         <section className="set-group">
-          <h2>Appearance</h2>
+          <h2>{tr('Appearance')}</h2>
           <div className="set-card">
             <div className="set-row col">
-              <span className="set-label">Theme<small>Dark uses true black, which saves battery on OLED screens.</small></span>
-              <Seg label="Theme" value={themeMode} onChange={setThemeMode} options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light', icon: 'Sun' }, { value: 'dark', label: 'Dark', icon: 'Moon' }]} />
+              <span className="set-label">{tr('Theme')}<small>{tr('Dark uses true black, which saves battery on OLED screens.')}</small></span>
+              <Seg label={tr('Theme')} value={themeMode} onChange={setThemeMode} options={[{ value: 'system', label: tr('System') }, { value: 'light', label: tr('Light'), icon: 'Sun' }, { value: 'dark', label: tr('Dark'), icon: 'Moon' }]} />
             </div>
             <label className="set-row">
-              <span className="set-label">Dark paper<small>Show pages in a dark colour while editing. Exports stay white.</small></span>
+              <span className="set-label">{tr('Dark paper')}<small>{tr('Show pages in a dark colour while editing. Exports stay white.')}</small></span>
               <input id="set-darkpaper" type="checkbox" className="switch" checked={prefs.darkPaper} onChange={(e) => setPref('darkPaper', e.target.checked, 'writex.darkPaper')} />
             </label>
           </div>
         </section>
         <section className="set-group">
-          <h2>Editing on phones</h2>
+          <h2>{tr('Editing on phones')}</h2>
           <div className="set-card">
             <div className="set-row col">
-              <span className="set-label">Open documents in<small>Mobile view reflows text to your screen. Page view shows real A4 pages.</small></span>
-              <Seg label="Default view on phones" value={prefs.mobileView} onChange={(v) => setPref('mobileView', v, 'writex.mobileView')} options={[{ value: 'mobile', label: 'Mobile view', icon: 'Smartphone' }, { value: 'print', label: 'Page view', icon: 'Files' }]} />
+              <span className="set-label">{tr('Open documents in')}<small>{tr('Mobile view reflows text to your screen. Page view shows real A4 pages.')}</small></span>
+              <Seg label={tr('Default view on phones')} value={prefs.mobileView} onChange={(v) => setPref('mobileView', v, 'writex.mobileView')} options={[{ value: 'mobile', label: tr('Mobile view'), icon: 'Smartphone' }, { value: 'print', label: tr('Page view'), icon: 'Files' }]} />
             </div>
             <label className="set-row">
-              <span className="set-label">Formatting toolbar<small>When off, a floating Aa button opens formatting.</small></span>
+              <span className="set-label">{tr('Formatting toolbar')}<small>{tr('When off, a floating Aa button opens formatting.')}</small></span>
               <input id="set-toolbar" type="checkbox" className="switch" checked={!prefs.toolbarHidden} onChange={(e) => setPref('toolbarHidden', !e.target.checked, 'writex.mToolbarHidden')} />
             </label>
           </div>
         </section>
         <section className="set-group">
-          <h2>Highlight colours</h2>
+          <h2>{tr('Highlight colours')}</h2>
           <div className="set-card">
             <div className="set-row col">
-              <span className="set-label">Your colours<small>These appear next to the built-in highlight colours when you format text.</small></span>
+              <span className="set-label">{tr('Your colours')}<small>{tr('These appear next to the built-in highlight colours when you format text.')}</small></span>
               <div className="mswatches">
                 {HIGHLIGHTS.map((c) => <span key={c} className="msw static" style={{ background: c }} />)}
                 {customHL.map((c) => (
-                  <button type="button" key={c} className="msw removable" style={{ background: c }} aria-label={'Remove colour ' + c} onClick={() => { const n = customHL.filter((x) => x !== c); setCustomHL(n); storage.set('writex.customHighlights', n); }}><Icon name="X" size={12} /></button>
+                  <button type="button" key={c} className="msw removable" style={{ background: c }} aria-label={tr('Remove colour {0}', c)} onClick={() => { const n = customHL.filter((x) => x !== c); setCustomHL(n); storage.set('writex.customHighlights', n); }}><Icon name="X" size={12} /></button>
                 ))}
-                <label className="msw add" aria-label="Add colour"><Icon name="Plus" size={16} />
+                <label className="msw add" aria-label={tr('Add colour')}><Icon name="Plus" size={16} />
                   <input id="set-hl" type="color" defaultValue="#FFD6E7" onChange={(e) => { const c = e.target.value; const n = [...customHL.filter((x) => x !== c), c].slice(-8); setCustomHL(n); storage.set('writex.customHighlights', n); }} />
                 </label>
               </div>
@@ -499,48 +501,48 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           </div>
         </section>
         <section className="set-group">
-          <h2>Writing assistant</h2>
+          <h2>{tr('Writing assistant')}</h2>
           <div className="set-card">
             <button type="button" className="set-row btn-row" onClick={async () => { setAiState('checking'); setAiState(await providerStatus(getAIConfig())); }}>
-              <span className="set-label">Provider: {(PROVIDERS.find((p) => p.id === getAIConfig().provider) || PROVIDERS[0]).label}
-                <small>{aiState === 'checking' ? 'Checking…' : aiState ? (aiState.ready ? (aiState.warning || 'Ready to use.') : aiState.message) : 'Tap to check whether AI is available. Change providers from the assistant inside a document.'}</small></span>
+              <span className="set-label">{tr('Provider:')}{' '}{(PROVIDERS.find((p) => p.id === getAIConfig().provider) || PROVIDERS[0]).label}
+                <small>{aiState === 'checking' ? tr('Checking…') : aiState ? (aiState.ready ? (aiState.warning || tr('Ready to use.')) : aiState.message) : tr('Tap to check whether AI is available. Change providers from the assistant inside a document.')}</small></span>
               <Icon name="Sparkles" size={18} />
             </button>
           </div>
         </section>
         <section className="set-group">
-          <h2>Sync & offline</h2>
+          <h2>{tr('Sync & offline')}</h2>
           <div className="set-card">
-            <div className="set-row"><span className="set-label">{online ? 'Online' : 'Offline'}<small>Documents live on this device, so you can keep editing without a connection. The writing assistant and exports that load extra tools need the internet.</small></span><Icon name={online ? 'Wifi' : 'WifiOff'} size={18} /></div>
-            <div className="set-row"><span className="set-label">Cloud sync: not set up<small>Sync and shared editing need a server account. The app keeps a revision timestamp on every document so sync can be added later without changing your files.</small></span><Icon name="CloudOff" size={18} /></div>
+            <div className="set-row"><span className="set-label">{online ? tr('Online') : tr('Offline')}<small>{tr('Documents live on this device, so you can keep editing without a connection. The writing assistant and exports that load extra tools need the internet.')}</small></span><Icon name={online ? 'Wifi' : 'WifiOff'} size={18} /></div>
+            <div className="set-row"><span className="set-label">{tr('Cloud sync: not set up')}<small>{tr('Sync and shared editing need a server account. The app keeps a revision timestamp on every document so sync can be added later without changing your files.')}</small></span><Icon name="CloudOff" size={18} /></div>
           </div>
         </section>
         <section className="set-group">
-          <h2>Keyboard shortcuts</h2>
+          <h2>{tr('Keyboard shortcuts')}</h2>
           <div className="set-card kbd-list">
-            {[['Ctrl + B / I / U', 'Bold, italic, underline'], ['Ctrl + Z / Y', 'Undo, redo'], ['Ctrl + F', 'Find'], ['Ctrl + H', 'Replace'], ['Ctrl + Enter', 'Page break'], ['Ctrl + S', 'Confirm saved'], ['Ctrl + P', 'Export PDF'], ['Tab / Shift + Tab', 'Indent lists']].map(([k, v]) => (
+            {[[tr('Ctrl + B / I / U'), tr('Bold, italic, underline')], [tr('Ctrl + Z / Y'), tr('Undo, redo')], [tr('Ctrl + F'), tr('Find')], [tr('Ctrl + H'), tr('Replace')], [tr('Ctrl + Enter'), tr('Page break')], [tr('Ctrl + S'), tr('Confirm saved')], [tr('Ctrl + P'), tr('Export PDF')], [tr('Tab / Shift + Tab'), tr('Indent lists')]].map(([k, v]) => (
               <div key={k} className="set-row"><span className="set-label">{v}</span><kbd>{k}</kbd></div>
             ))}
           </div>
         </section>
         <section className="set-group">
-          <h2>Storage</h2>
+          <h2>{tr('Storage')}</h2>
           <div className="set-card">
             <div className="set-row">
               <span className="set-label">{(docs || []).length} {(docs || []).length === 1 ? 'document' : 'documents'} · {folders.length} {folders.length === 1 ? 'folder' : 'folders'}
-                <small>{persistent ? 'Saved on this device in this browser. Export to PDF or Word to keep a copy elsewhere.' : "This view can't keep data, so documents last until you close it."}</small>
+                <small>{persistent ? tr('Saved on this device in this browser. Export to PDF or Word to keep a copy elsewhere.') : "This view can't keep data, so documents last until you close it."}</small>
               </span>
               <Icon name={persistent ? 'HardDrive' : 'TriangleAlert'} size={20} />
             </div>
             <button type="button" className="set-row btn-row" onClick={() => fileRef.current && fileRef.current.click()}>
-              <span className="set-label">Import a Word or text file</span><Icon name="Upload" size={18} />
+              <span className="set-label">{tr('Import a Word or text file')}</span><Icon name="Upload" size={18} />
             </button>
           </div>
         </section>
         <section className="set-group">
-          <h2>About</h2>
+          <h2>{tr('About')}</h2>
           <div className="set-card">
-            <div className="set-row"><span className="set-label">Writex<small>A writing, reading and learning workspace for Arabic and English. Pages, tables, images, equations, references, study notebooks, a reader, a studio and a writing assistant, with PDF and Word export.</small></span></div>
+            <div className="set-row"><span className="set-label">{tr('Writex')}<small>{tr('A writing, reading and learning workspace for Arabic and English. Pages, tables, images, equations, references, study notebooks, a reader, a studio and a writing assistant, with PDF and Word export.')}</small></span></div>
           </div>
         </section>
       </>
@@ -551,8 +553,8 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   return (
     <div className={'lib' + (embedded ? ' embedded' : '')}>
       {!embedded && (
-        <nav className="bnav" aria-label="Main">
-          <div className="rail-brand"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="brand-name">Writex</span></div>
+        <nav className="bnav" aria-label={tr('Main')}>
+          <div className="rail-brand"><img className="brand-mark" src={LOGO} alt="" aria-hidden="true" /><span className="brand-name">{tr('Writex')}</span></div>
           {NAV.map((n) => (
             <button type="button" key={n.id} className={'bnav-item' + (section === n.id ? ' on' : '')} aria-current={section === n.id ? 'page' : undefined} onClick={() => setSection(n.id)}>
               <span className="bnav-ico"><Icon name={n.icon} size={22} stroke={section === n.id ? 2.1 : 1.7} /></span>
@@ -563,100 +565,100 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       )}
       <main className="lib-main" ref={mainRef}>
         {embedded && (
-          <div className="subtabs" role="tablist" aria-label="Write">
+          <div className="subtabs" role="tablist" aria-label={tr('Write')}>
             {NAV.filter((n) => n.id !== 'settings').map((n) => (
               <button type="button" role="tab" key={n.id} aria-selected={section === n.id} className={'subtab' + (section === n.id ? ' on' : '')} onClick={() => setSection(n.id)}>
                 <Icon name={n.icon} size={16} />{n.label}
               </button>
             ))}
-            <button type="button" role="tab" aria-selected={section === 'settings'} aria-label="Settings" className={'subtab icon' + (section === 'settings' ? ' on' : '')} onClick={() => setSection('settings')}><Icon name="Settings" size={17} /></button>
+            <button type="button" role="tab" aria-selected={section === 'settings'} aria-label={tr('Settings')} className={'subtab icon' + (section === 'settings' ? ' on' : '')} onClick={() => setSection('settings')}><Icon name="Settings" size={17} /></button>
           </div>
         )}
         <div className="lib-inner" key={section}>{content}</div>
       </main>
       <input ref={fileRef} id="import-docx" type="file" accept=".docx,.txt,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden onChange={onImport} />
 
-      <Sheet open={!!ad} onClose={closeActions} title={ad ? ({ move: 'Move to folder', category: 'Category', subject: 'Study subject' }[actionPage] || ad.title) : ''}
-        actions={actionPage ? <button type="button" data-back className="tb" aria-label="Back" onMouseDown={nd} onClick={() => setActionPage(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
+      <Sheet open={!!ad} onClose={closeActions} title={ad ? ({ move: tr('Move to folder'), category: tr('Category'), subject: tr('Study subject') }[actionPage] || ad.title) : ''}
+        actions={actionPage ? <button type="button" data-back className="tb" aria-label={tr('Back')} onMouseDown={nd} onClick={() => setActionPage(null)}><Icon name="ArrowLeft" size={20} /></button> : null}>
         {ad && actionPage === 'category' && (
           <div className="mlist">
             {[null, ...CATEGORIES].map((c) => (
               <button type="button" key={c || 'none'} className={'mrow' + ((ad.category || null) === c ? ' on' : '')} onClick={() => { patchDoc(ad, { category: c }); closeActions(); }}>
-                <span className="mrow-label">{c || 'No category'}</span>{(ad.category || null) === c && <Icon name="Check" size={18} />}
+                <span className="mrow-label">{c ? tr(c) : tr('No category')}</span>{(ad.category || null) === c && <Icon name="Check" size={18} />}
               </button>
             ))}
           </div>
         )}
         {ad && actionPage === 'subject' && (
           <div className="mlist">
-            {[{ id: null, name: 'Not a study document' }, ...subjects].map((sub) => (
+            {[{ id: null, name: tr('Not a study document') }, ...subjects].map((sub) => (
               <button type="button" key={sub.id || 'none'} className={'mrow' + ((ad.subjectId || null) === sub.id ? ' on' : '')} onClick={() => { patchDoc(ad, { subjectId: sub.id, studyType: sub.id ? (ad.studyType || 'notes') : null }); closeActions(); }}>
                 {sub.color && <span className="subj-dot" style={{ background: sub.color }} />}<span className="mrow-label" dir="auto">{sub.name}</span>{(ad.subjectId || null) === sub.id && <Icon name="Check" size={18} />}
               </button>
             ))}
             {ad.subjectId && (
               <div className="mrow col-row">
-                <span className="mrow-label">Type</span>
+                <span className="mrow-label">{tr('Type')}</span>
                 <div className="mchips">{STUDY_TYPES.map((t) => <button type="button" key={t.id} className={'mchip' + (ad.studyType === t.id ? ' on' : '')} onClick={() => { patchDoc(ad, { studyType: t.id }); closeActions(); }}>{t.label}</button>)}</div>
               </div>
             )}
-            {!subjects.length && <p className="mnote" style={{ padding: '0 14px 12px' }}>Create a subject in the Study tab first.</p>}
+            {!subjects.length && <p className="mnote" style={{ padding: '0 14px 12px' }}>{tr('Create a subject in the Study tab first.')}</p>}
           </div>
         )}
         {ad && !['move', 'category', 'subject'].includes(actionPage) && (
           <div className="mlist">
-            <button type="button" className="mrow" onClick={() => { closeActions(); openSafe(ad); }}><span className="mrow-ico"><Icon name="FolderOpen" size={19} /></span><span className="mrow-label">Open</span></button>
-            <button type="button" className="mrow" onClick={() => { patchDoc(ad, { favorite: !ad.favorite }); closeActions(); }}><span className="mrow-ico"><Icon name="Star" size={19} /></span><span className="mrow-label">{ad.favorite ? 'Remove from favorites' : 'Add to favorites'}</span></button>
-            <button type="button" className="mrow" onClick={() => setActionPage('category')}><span className="mrow-ico"><Icon name="Tag" size={19} /></span><span className="mrow-label">Category</span><span className="mrow-val">{ad.category || 'None'}</span><Icon name="ChevronRight" size={16} className="mrow-chev" /></button>
-            <button type="button" className="mrow" onClick={() => setActionPage('subject')}><span className="mrow-ico"><Icon name="GraduationCap" size={19} /></span><span className="mrow-label">Study subject</span><span className="mrow-val" dir="auto">{(subjects.find((x) => x.id === ad.subjectId) || {}).name || 'None'}</span><Icon name="ChevronRight" size={16} className="mrow-chev" /></button>
-            <button type="button" className="mrow" onClick={() => later(() => setDialog({ kind: 'rename', doc: ad }))}><span className="mrow-ico"><Icon name="Pencil" size={19} /></span><span className="mrow-label">Rename</span></button>
-            <button type="button" className="mrow" onClick={async () => { closeActions(); try { await store.duplicateDoc(ad.id); await refresh(); toast('Duplicated “' + ad.title + '”'); } catch (e) { toast(e.message, 'error'); } }}><span className="mrow-ico"><Icon name="Copy" size={19} /></span><span className="mrow-label">Duplicate</span></button>
-            <button type="button" className="mrow" onClick={() => setActionPage('move')}><span className="mrow-ico"><Icon name="FolderInput" size={19} /></span><span className="mrow-label">Move to folder</span><span className="mrow-val" dir="auto">{folderName(ad.folderId) || 'None'}</span><Icon name="ChevronRight" size={16} className="mrow-chev" /></button>
-            <button type="button" className="mrow danger" onClick={() => later(() => setDialog({ kind: 'delete', doc: ad }))}><span className="mrow-ico"><Icon name="Trash2" size={19} /></span><span className="mrow-label">Delete</span></button>
+            <button type="button" className="mrow" onClick={() => { closeActions(); openSafe(ad); }}><span className="mrow-ico"><Icon name="FolderOpen" size={19} /></span><span className="mrow-label">{tr('Open')}</span></button>
+            <button type="button" className="mrow" onClick={() => { patchDoc(ad, { favorite: !ad.favorite }); closeActions(); }}><span className="mrow-ico"><Icon name="Star" size={19} /></span><span className="mrow-label">{ad.favorite ? tr('Remove from favorites') : tr('Add to favorites')}</span></button>
+            <button type="button" className="mrow" onClick={() => setActionPage('category')}><span className="mrow-ico"><Icon name="Tag" size={19} /></span><span className="mrow-label">{tr('Category')}</span><span className="mrow-val">{ad.category || tr('None')}</span><Icon name="ChevronRight" size={16} className="mrow-chev" /></button>
+            <button type="button" className="mrow" onClick={() => setActionPage('subject')}><span className="mrow-ico"><Icon name="GraduationCap" size={19} /></span><span className="mrow-label">{tr('Study subject')}</span><span className="mrow-val" dir="auto">{(subjects.find((x) => x.id === ad.subjectId) || {}).name || tr('None')}</span><Icon name="ChevronRight" size={16} className="mrow-chev" /></button>
+            <button type="button" className="mrow" onClick={() => later(() => setDialog({ kind: 'rename', doc: ad }))}><span className="mrow-ico"><Icon name="Pencil" size={19} /></span><span className="mrow-label">{tr('Rename')}</span></button>
+            <button type="button" className="mrow" onClick={async () => { closeActions(); try { await store.duplicateDoc(ad.id); await refresh(); toast(tr('Duplicated “{0}”', ad.title)); } catch (e) { toast(e.message, 'error'); } }}><span className="mrow-ico"><Icon name="Copy" size={19} /></span><span className="mrow-label">{tr('Duplicate')}</span></button>
+            <button type="button" className="mrow" onClick={() => setActionPage('move')}><span className="mrow-ico"><Icon name="FolderInput" size={19} /></span><span className="mrow-label">{tr('Move to folder')}</span><span className="mrow-val" dir="auto">{folderName(ad.folderId) || tr('None')}</span><Icon name="ChevronRight" size={16} className="mrow-chev" /></button>
+            <button type="button" className="mrow danger" onClick={() => later(() => setDialog({ kind: 'delete', doc: ad }))}><span className="mrow-ico"><Icon name="Trash2" size={19} /></span><span className="mrow-label">{tr('Delete')}</span></button>
           </div>
         )}
         {ad && actionPage === 'move' && (
           <div className="mlist">
-            {[{ id: null, name: 'No folder' }, ...folders].map((f) => (
+            {[{ id: null, name: tr('No folder') }, ...folders].map((f) => (
               <button type="button" key={f.id || 'none'} className={'mrow' + ((ad.folderId || null) === f.id ? ' on' : '')}
-                onClick={async () => { await store.updateDoc(ad.id, { folderId: f.id, updatedAt: ad.updatedAt }); closeActions(); refresh(); if (f.id) toast('Moved to ' + f.name); }}>
+                onClick={async () => { await store.updateDoc(ad.id, { folderId: f.id, updatedAt: ad.updatedAt }); closeActions(); refresh(); if (f.id) toast(tr('Moved to {0}', f.name)); }}>
                 <span className="mrow-ico"><Icon name={f.id ? 'Folder' : 'FileText'} size={19} /></span><span className="mrow-label" dir="auto">{f.name}</span>
                 {(ad.folderId || null) === f.id && <Icon name="Check" size={18} />}
               </button>
             ))}
-            <button type="button" className="mrow accent" onClick={() => later(() => setDialog({ kind: 'new-folder-move', doc: ad }))}><span className="mrow-ico"><Icon name="FolderPlus" size={19} /></span><span className="mrow-label">New folder…</span></button>
+            <button type="button" className="mrow accent" onClick={() => later(() => setDialog({ kind: 'new-folder-move', doc: ad }))}><span className="mrow-ico"><Icon name="FolderPlus" size={19} /></span><span className="mrow-label">{tr('New folder…')}</span></button>
           </div>
         )}
       </Sheet>
 
       {dialog && dialog.kind === 'rename' && (
-        <PromptDialog title="Rename document" label="Document name" initial={dialog.doc.title} onClose={() => setDialog(null)}
-          onSubmit={async (v) => { await store.updateDoc(dialog.doc.id, { title: v, updatedAt: dialog.doc.updatedAt }); refresh(); toast('Renamed to “' + v + '”'); }} />
+        <PromptDialog title={tr('Rename document')} label={tr('Document name')} initial={dialog.doc.title} onClose={() => setDialog(null)}
+          onSubmit={async (v) => { await store.updateDoc(dialog.doc.id, { title: v, updatedAt: dialog.doc.updatedAt }); refresh(); toast(tr('Renamed to “{0}”', v)); }} />
       )}
       {dialog && dialog.kind === 'delete' && (
-        <ConfirmDialog title="Delete document?" message={`“${dialog.doc.title}” will be permanently removed from this device. This can't be undone.`}
-          onClose={() => setDialog(null)} onConfirm={async () => { await store.deleteDoc(dialog.doc.id); refresh(); toast('Deleted “' + dialog.doc.title + '”'); }} />
+        <ConfirmDialog title={tr('Delete document?')} message={`“${dialog.doc.title}” will be permanently removed from this device. This can't be undone.`}
+          onClose={() => setDialog(null)} onConfirm={async () => { await store.deleteDoc(dialog.doc.id); refresh(); toast(tr('Deleted “{0}”', dialog.doc.title)); }} />
       )}
       {dialog && dialog.kind === 'new-folder' && (
-        <PromptDialog title="New folder" label="Folder name" placeholder="e.g. School, Stories" confirmLabel="Create" onClose={() => setDialog(null)}
+        <PromptDialog title={tr('New folder')} label={tr('Folder name')} placeholder={tr('e.g. School, Stories')} confirmLabel={tr('Create')} onClose={() => setDialog(null)}
           onSubmit={async (v) => { const f = await store.createFolder(v); await refresh(); setSection('docs'); setFolder(f.id); }} />
       )}
       {dialog && dialog.kind === 'rename-folder' && dialog.folder && (
-        <PromptDialog title="Rename folder" label="Folder name" initial={dialog.folder.name} onClose={() => setDialog(null)}
+        <PromptDialog title={tr('Rename folder')} label={tr('Folder name')} initial={dialog.folder.name} onClose={() => setDialog(null)}
           onSubmit={async (v) => { await store.renameFolder(dialog.folder.id, v); refresh(); }} />
       )}
       {dialog && dialog.kind === 'delete-folder' && dialog.folder && (
-        <ConfirmDialog title="Delete folder?" message={`“${dialog.folder.name}” will be removed. Its documents stay in All.`}
+        <ConfirmDialog title={tr('Delete folder?')} message={tr('“{0}” will be removed. Its documents stay in All.', dialog.folder.name)}
           onClose={() => setDialog(null)} onConfirm={async () => { await store.deleteFolder(dialog.folder.id); setFolder('all'); refresh(); }} />
       )}
       {dialog && dialog.kind === 'delete-tpl' && (
-        <ConfirmDialog title="Delete template?" message={`“${dialog.tpl.name}” will be removed from your templates. Documents made from it are not affected.`}
+        <ConfirmDialog title={tr('Delete template?')} message={tr('“{0}” will be removed from your templates. Documents made from it are not affected.', dialog.tpl.name)}
           onClose={() => setDialog(null)} onConfirm={async () => { await store.deleteCustomTemplate(dialog.tpl.id); refresh(); }} />
       )}
       {unlock && <PasswordDialog mode="unlock" error={unlock.error} onClose={() => setUnlock(null)} onSubmit={tryUnlock} />}
       {dialog && dialog.kind === 'new-folder-move' && (
-        <PromptDialog title="New folder" label="Folder name" confirmLabel="Create and move" onClose={() => setDialog(null)}
-          onSubmit={async (v) => { const f = await store.createFolder(v); await store.updateDoc(dialog.doc.id, { folderId: f.id, updatedAt: dialog.doc.updatedAt }); refresh(); toast('Moved to ' + v); }} />
+        <PromptDialog title={tr('New folder')} label={tr('Folder name')} confirmLabel="Create and move" onClose={() => setDialog(null)}
+          onSubmit={async (v) => { const f = await store.createFolder(v); await store.updateDoc(dialog.doc.id, { folderId: f.id, updatedAt: dialog.doc.updatedAt }); refresh(); toast(tr('Moved to {0}', v)); }} />
       )}
     </div>
   );

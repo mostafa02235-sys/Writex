@@ -8,6 +8,7 @@ import * as learn from '../learn.js';
 import { complete, clip, providerStatus, getAIConfig, aiErrorText } from '../ai.js';
 import { fmtDate, uid } from '../util.js';
 import { textToDelta } from '../exporters.js';
+import { tr } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 
@@ -26,13 +27,13 @@ ${text}
 """`;
 
 export const TOOLS = [
-  { id: 'summary', label: 'Summary', icon: 'ListChecks' },
-  { id: 'facts', label: 'Key facts', icon: 'ScanSearch' },
-  { id: 'qa', label: 'Q&A', icon: 'MessageCircleQuestion' },
-  { id: 'important', label: 'Important parts', icon: 'Star' },
-  { id: 'repeated', label: 'Repeated points', icon: 'Repeat' },
-  { id: 'insights', label: 'Insights', icon: 'Lightbulb' },
-  { id: 'explain', label: 'Explain a passage', icon: 'GraduationCap' },
+  { id: 'summary', label: tr('Summary'), icon: 'ListChecks' },
+  { id: 'facts', label: tr('Key facts'), icon: 'ScanSearch' },
+  { id: 'qa', label: tr('Q&A'), icon: 'MessageCircleQuestion' },
+  { id: 'important', label: tr('Important parts'), icon: 'Star' },
+  { id: 'repeated', label: tr('Repeated points'), icon: 'Repeat' },
+  { id: 'insights', label: tr('Insights'), icon: 'Lightbulb' },
+  { id: 'explain', label: tr('Explain a passage'), icon: 'GraduationCap' },
 ];
 
 const JSON_ASK = {
@@ -50,19 +51,19 @@ function ResultCard({ m, onCopy, onSave, onCards, srcText }) {
   if (m.kind === 'facts') {
     body = (
       <div className="facts">
-        {[['names', 'People & names', (x) => [x.name, x.role]], ['dates', 'Dates', (x) => [x.date, x.what]], ['numbers', 'Numbers', (x) => [x.value, x.what]]].map(([k, label, f]) => (d[k] && d[k].length ? (
+        {[['names', tr('People & names'), (x) => [x.name, x.role]], ['dates', tr('Dates'), (x) => [x.date, x.what]], ['numbers', tr('Numbers'), (x) => [x.value, x.what]]].map(([k, label, f]) => (d[k] && d[k].length ? (
           <div key={k} className="fact-group"><h4>{label}</h4>{d[k].map((x, i) => { const [a, b] = f(x); return <div key={i} className="fact-row"><b dir="auto">{a}</b><span dir="auto">{b}</span></div>; })}</div>
         ) : null))}
-        {d.facts && d.facts.length ? <div className="fact-group"><h4>Key facts</h4><ul>{d.facts.map((x, i) => <li key={i} dir="auto">{x}</li>)}</ul></div> : null}
-        {!['names', 'dates', 'numbers', 'facts'].some((k) => d[k] && d[k].length) && <p className="mnote">No names, dates or numbers were found in this document.</p>}
+        {d.facts && d.facts.length ? <div className="fact-group"><h4>{tr('Key facts')}</h4><ul>{d.facts.map((x, i) => <li key={i} dir="auto">{x}</li>)}</ul></div> : null}
+        {!['names', 'dates', 'numbers', 'facts'].some((k) => d[k] && d[k].length) && <p className="mnote">{tr('No names, dates or numbers were found in this document.')}</p>}
       </div>
     );
   } else if (m.kind === 'qa') {
     body = <div className="qa-list">{(d.pairs || []).map((p, i) => <details key={i} className="qa-item"><summary dir="auto">{p.q}</summary><p dir="auto">{p.a}</p>{p.quote && <q dir="auto">{p.quote}</q>}</details>)}</div>;
   } else if (m.kind === 'important') {
-    body = <div className="imp-list">{(d.passages || []).map((p, i) => <blockquote key={i} dir="auto"><span>{p.quote}</span><small>{p.why}{p.found === false ? ' · not found word-for-word in the document' : ''}</small></blockquote>)}</div>;
+    body = <div className="imp-list">{(d.passages || []).map((p, i) => <blockquote key={i} dir="auto"><span>{p.quote}</span><small>{p.why}{p.found === false ? tr(' · not found word-for-word in the document') : ''}</small></blockquote>)}</div>;
   } else if (m.kind === 'repeated') {
-    body = (d.items || []).length ? <div className="facts">{d.items.map((x, i) => <div key={i} className="fact-row"><b dir="auto">{x.point}</b><span>{x.times ? `×${x.times}` : ''}</span></div>)}</div> : <p className="mnote">Nothing notable is repeated.</p>;
+    body = (d.items || []).length ? <div className="facts">{d.items.map((x, i) => <div key={i} className="fact-row"><b dir="auto">{x.point}</b><span>{x.times ? `×${x.times}` : ''}</span></div>)}</div> : <p className="mnote">{tr('Nothing notable is repeated.')}</p>;
   } else if (m.kind === 'insights') {
     body = <div className="ins-list">{(d.insights || []).map((x, i) => <div key={i} className="ins-item"><b dir="auto">{x.title}</b><p dir="auto">{x.detail}</p></div>)}</div>;
   } else body = <div className="bubble-text" dir="auto">{m.text}</div>;
@@ -72,9 +73,9 @@ function ResultCard({ m, onCopy, onSave, onCards, srcText }) {
       {body}
       {m.note && <p className="mnote">{m.note}</p>}
       <div className="bubble-actions">
-        <button type="button" className="link-btn" onClick={() => onCopy(m)}><Icon name="Copy" size={14} />Copy</button>
-        <button type="button" className="link-btn" onClick={() => onSave(m)}><Icon name="FilePlus2" size={14} />Save as document</button>
-        {m.kind === 'qa' && (d.pairs || []).length > 0 && <button type="button" className="link-btn" onClick={() => onCards(m)}><Icon name="Layers" size={14} />Make flashcards</button>}
+        <button type="button" className="link-btn" onClick={() => onCopy(m)}><Icon name="Copy" size={14} />{tr('Copy')}</button>
+        <button type="button" className="link-btn" onClick={() => onSave(m)}><Icon name="FilePlus2" size={14} />{tr('Save as document')}</button>
+        {m.kind === 'qa' && (d.pairs || []).length > 0 && <button type="button" className="link-btn" onClick={() => onCards(m)}><Icon name="Layers" size={14} />{tr('Make flashcards')}</button>}
       </div>
     </div>
   );
@@ -169,25 +170,25 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
         if (id === 'qa' && data && Array.isArray(data.pairs)) {
           const before = data.pairs.length;
           data.pairs = data.pairs.filter((p) => !p.quote || learn.grounded({ source: p.quote }, doc.text));
-          if (data.pairs.length < before) note = `${before - data.pairs.length} question(s) were removed because their supporting quote could not be found in the document.`;
+          if (data.pairs.length < before) note = tr('{0} question(s) were removed because their supporting quote could not be found in the document.', before - data.pairs.length);
         }
         msg = { kind: id, title: t.label, data: data || {}, note };
       }
-      if (doc.clipped) msg.note = (msg.note ? msg.note + ' ' : '') + `Only the first ${doc.text.length.toLocaleString()} of ${doc.total.toLocaleString()} characters were analysed.`;
+      if (doc.clipped) msg.note = tr('{0}Only the first {1} of {2} characters were analysed.', msg.note ? msg.note + ' ' : '', doc.text.length.toLocaleString(), doc.total.toLocaleString());
       persist([...base, { id: uid('m'), role: 'ai', at: Date.now(), ...msg }]);
     } catch (e) { setMsgs(base); fail(e); }
     finally { setBusy(false); setStream(''); }
   };
 
-  const onCopy = async (m) => { try { await navigator.clipboard.writeText(asText(m)); toast('Copied'); } catch (e) { toast('Copy is blocked here.', 'error'); } };
+  const onCopy = async (m) => { try { await navigator.clipboard.writeText(asText(m)); toast(tr('Copied')); } catch (e) { toast(tr('Copy is blocked here.'), 'error'); } };
   const onSave = async (m) => {
-    const d = await store.createDoc({ title: `${m.title || 'Notes'} · ${doc.title}`, delta: textToDelta(asText(m)) });
-    toast('Saved to Write'); openDoc(d.id);
+    const d = await store.createDoc({ title: `${m.title || tr('Notes')} · ${doc.title}`, delta: textToDelta(asText(m)) });
+    toast(tr('Saved to Write')); openDoc(d.id);
   };
   const onCards = async (m) => {
-    const deck = await learn.saveDeck({ name: 'Q&A · ' + doc.title, source: ref });
+    const deck = await learn.saveDeck({ name: tr('Q&A · {0}', doc.title), source: ref });
     await learn.addCards(deck.id, (m.data.pairs || []).map((p) => ({ front: p.q, back: p.a, source: p.quote })));
-    toast(`Made ${m.data.pairs.length} flashcards. Review them in Create → Learn.`);
+    toast(tr('Made {0} flashcards. Review them in Create → Learn.', m.data.pairs.length));
   };
 
   const filtered = useMemo(() => (sources || []).filter((s) => !q || s.title.toLowerCase().includes(q.toLowerCase())), [sources, q]);
@@ -198,18 +199,18 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
       <div className="sec-shell">
         <main className="lib-main">
           <div className="lib-inner">
-            <header className="sec-top"><h1>Think</h1><div className="sec-top-actions"><button type="button" className="tb lg" aria-label="Settings" onClick={openSettings}><Icon name="Settings" size={20} /></button></div></header>
-            <p className="sec-lead">Pick a document and ask it anything. Every answer comes from the document's own text.</p>
+            <header className="sec-top"><h1>{tr('Think')}</h1><div className="sec-top-actions"><button type="button" className="tb lg" aria-label={tr('Settings')} onClick={openSettings}><Icon name="Settings" size={20} /></button></div></header>
+            <p className="sec-lead">{tr('Pick a document and ask it anything. Every answer comes from the document\'s own text.')}</p>
             {unavailable && <div className="ai-status warn"><Icon name="TriangleAlert" size={16} /><span>{status.message}</span></div>}
             <label className="search"><Icon name="Search" size={18} /><input id="think-search" type="search" dir="auto" placeholder="Find a document or file" value={q} onChange={(e) => setQ(e.target.value)} /></label>
-            {sources === null ? <div className="empty"><span className="spin" /> Loading…</div>
-              : !filtered.length ? <div className="empty"><Icon name="FileSearch" size={28} /><p>No documents yet. Write one, or add files in Read.</p></div>
+            {sources === null ? <div className="empty"><span className="spin" />{' '}{tr('Loading…')}</div>
+              : !filtered.length ? <div className="empty"><Icon name="FileSearch" size={28} /><p>{tr('No documents yet. Write one, or add files in Read.')}</p></div>
                 : (
                   <div className="drows">
                     {filtered.map((s) => (
                       <button type="button" key={src.sourceKey(s)} className="drow src-pick" disabled={s.locked} onClick={() => setRef({ kind: s.kind, id: s.id })}>
                         <span className={'ftype t-' + (s.kind === 'doc' ? 'doc' : s.ftype)}><Icon name={s.locked ? 'Lock' : s.kind === 'doc' ? 'PenLine' : src.FILE_TYPES[s.ftype].icon} size={20} /><b>{s.kind === 'doc' ? 'Writex' : src.FILE_TYPES[s.ftype].label}</b></span>
-                        <span className="drow-text"><span className="drow-title" dir="auto">{s.title}</span><span className="drow-meta">{s.locked ? 'Password protected · unlock it in Write first' : fmtDate(s.at) + (s.words ? ` · ${s.words.toLocaleString()} words` : '')}</span></span>
+                        <span className="drow-text"><span className="drow-title" dir="auto">{s.title}</span><span className="drow-meta">{s.locked ? tr('Password protected · unlock it in Write first') : fmtDate(s.at) + (s.words ? tr(' · {0} words', s.words.toLocaleString()) : '')}</span></span>
                         <Icon name="ChevronRight" size={18} className="mrow-chev" />
                       </button>
                     ))}
@@ -224,26 +225,26 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
   return (
     <div className="sec-shell think">
       <header className="think-bar">
-        <button type="button" className="tb lg" aria-label="Choose another document" onClick={() => setRef(null)}><Icon name="ChevronLeft" size={24} /></button>
-        <div className="m-title"><span className="m-title-btn" dir="auto">{doc ? doc.title : 'Loading…'}</span><span className="m-sub">{doc ? `${doc.words.toLocaleString()} words${doc.clipped ? ' · long document, first part used' : ''}` : ''}</span></div>
-        {ref.kind === 'doc' && <button type="button" className="tb lg" aria-label="Open in Write" onClick={() => openDoc(ref.id)}><Icon name="PenLine" size={20} /></button>}
-        {msgs.length > 0 && <button type="button" className="tb lg" aria-label="Clear conversation" onClick={() => persist([])}><Icon name="Eraser" size={20} /></button>}
+        <button type="button" className="tb lg" aria-label={tr('Choose another document')} onClick={() => setRef(null)}><Icon name="ChevronLeft" size={24} /></button>
+        <div className="m-title"><span className="m-title-btn" dir="auto">{doc ? doc.title : tr('Loading…')}</span><span className="m-sub">{doc ? `${doc.words.toLocaleString()} words${doc.clipped ? tr(' · long document, first part used') : ''}` : ''}</span></div>
+        {ref.kind === 'doc' && <button type="button" className="tb lg" aria-label={tr('Open in Write')} onClick={() => openDoc(ref.id)}><Icon name="PenLine" size={20} /></button>}
+        {msgs.length > 0 && <button type="button" className="tb lg" aria-label={tr('Clear conversation')} onClick={() => persist([])}><Icon name="Eraser" size={20} /></button>}
       </header>
       <div className="think-scroll">
         <div className="think-inner">
           {unavailable && <div className="ai-status warn"><Icon name="TriangleAlert" size={16} /><span>{status.message}</span></div>}
-          {loading && <div className="empty sm"><span className="spin" /> Reading the document…</div>}
+          {loading && <div className="empty sm"><span className="spin" />{' '}{tr('Reading the document…')}</div>}
           {doc && !msgs.length && !busy && (
             <div className="think-hello">
               <Icon name="Brain" size={28} />
-              <p>Ask a question about <b dir="auto">{doc.title}</b>, or start with a tool below. Nothing is analysed until you ask.</p>
+              <p>{tr('Ask a question about')}{' '}<b dir="auto">{doc.title}</b>{tr(', or start with a tool below. Nothing is analysed until you ask.')}</p>
             </div>
           )}
           {msgs.map((m) => (m.role === 'user'
             ? <div key={m.id} className="bubble me" dir="auto">{m.text}</div>
             : <ResultCard key={m.id} m={m} onCopy={onCopy} onSave={onSave} onCards={onCards} />))}
-          {busy && <div className="bubble ai">{stream ? <div className="bubble-text" dir="auto">{stream}</div> : <div className="ai-thinking"><span className="spin" />Thinking… Claude may ask you to allow access the first time.</div>}
-            <div className="bubble-actions"><button type="button" className="link-btn" onClick={() => ctl.current && ctl.current.abort()}><Icon name="Square" size={14} />Stop</button></div></div>}
+          {busy && <div className="bubble ai">{stream ? <div className="bubble-text" dir="auto">{stream}</div> : <div className="ai-thinking"><span className="spin" />{tr('Thinking… Claude may ask you to allow access the first time.')}</div>}
+            <div className="bubble-actions"><button type="button" className="link-btn" onClick={() => ctl.current && ctl.current.abort()}><Icon name="Square" size={14} />{tr('Stop')}</button></div></div>}
           <div ref={listEnd} />
         </div>
       </div>
@@ -253,18 +254,18 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
             <button type="button" key={t.id} className="mchip" disabled={busy || !doc || unavailable} onMouseDown={nd}
               onClick={() => (t.id === 'explain' ? setExplain((v) => !v) : tool(t.id))}><Icon name={t.icon} size={14} />{t.label}</button>
           ))}
-          <Seg label="Summary length" value={sumLen} onChange={setSumLen} options={[{ value: 'short', label: 'Short' }, { value: 'medium', label: 'Medium' }, { value: 'detailed', label: 'Detailed' }]} />
+          <Seg label={tr('Summary length')} value={sumLen} onChange={setSumLen} options={[{ value: 'short', label: tr('Short') }, { value: 'medium', label: tr('Medium') }, { value: 'detailed', label: tr('Detailed') }]} />
         </div>
         {explain && (
           <form className="explain-box" onSubmit={(e) => { e.preventDefault(); const v = e.target.elements.passage.value.trim(); if (v) { setExplain(false); tool('explain', v); } }}>
-            <textarea name="passage" id="think-passage" dir="auto" rows={3} placeholder="Paste the passage you want explained" />
-            <button type="submit" className="btn primary">Explain</button>
+            <textarea name="passage" id="think-passage" dir="auto" rows={3} placeholder={tr('Paste the passage you want explained')} />
+            <button type="submit" className="btn primary">{tr('Explain')}</button>
           </form>
         )}
         <form className="composer" onSubmit={(e) => { e.preventDefault(); ask(); }}>
-          <textarea id="think-input" dir="auto" rows={1} value={input} placeholder={unavailable ? 'AI is not available in this view' : 'Ask about this document…'} disabled={unavailable || !doc}
+          <textarea id="think-input" dir="auto" rows={1} value={input} placeholder={unavailable ? tr('AI is not available in this view') : tr('Ask about this document…')} disabled={unavailable || !doc}
             onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} />
-          <button type="submit" className="tb lg accent" aria-label="Send" disabled={!input.trim() || busy || unavailable}><Icon name="ArrowUp" size={20} /></button>
+          <button type="submit" className="tb lg accent" aria-label={tr('Send')} disabled={!input.trim() || busy || unavailable}><Icon name="ArrowUp" size={20} /></button>
         </form>
       </div>
     </div>

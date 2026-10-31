@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from '../react.js';
 import { Modal } from './ui.jsx';
 import { loadScript } from '../util.js';
 import { libUrls } from '../vendor.js';
+import { tr } from '../i18n.js';
 
 // LaTeX equations rendered with MathJax (SVG output, no web fonts needed) and
 // stored in the document as an image that keeps its LaTeX source for editing.
@@ -31,7 +32,7 @@ async function renderSVG(tex, px = 18) {
   await loadMathJax();
   const node = await window.MathJax.tex2svgPromise(tex, { display: true });
   const svg = node.querySelector('svg');
-  if (!svg) throw new Error('Could not draw that equation.');
+  if (!svg) throw new Error(tr('Could not draw that equation.'));
   const err = svg.querySelector('[data-mml-node="merror"]');
   const ex = px / 2;
   const w = parseFloat(svg.getAttribute('width')) * ex;
@@ -40,7 +41,7 @@ async function renderSVG(tex, px = 18) {
   svg.setAttribute('height', h + 'px');
   svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
   svg.style.color = '#111827';
-  return { svg: new XMLSerializer().serializeToString(svg).replace(/currentColor/g, '#111827'), w, h, error: err ? (err.textContent || 'Check the LaTeX') : null };
+  return { svg: new XMLSerializer().serializeToString(svg).replace(/currentColor/g, '#111827'), w, h, error: err ? (err.textContent || tr('Check the LaTeX')) : null };
 }
 
 function svgToPng(svgText, w, h, k = 3) {
@@ -53,7 +54,7 @@ function svgToPng(svgText, w, h, k = 3) {
       ctx.drawImage(img, 0, 0, c.width, c.height);
       resolve(c.toDataURL('image/png'));
     };
-    img.onerror = () => reject(new Error('The equation could not be converted to an image.'));
+    img.onerror = () => reject(new Error(tr('The equation could not be converted to an image.')));
     img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgText)));
   });
 }
@@ -73,7 +74,7 @@ export function EquationDialog({ initial, onInsert, onClose }) {
         const r = await renderSVG(tex, size);
         if (!live) return;
         setPreview(r); setErr(r.error || ''); setLoading(false);
-      } catch (e) { if (live) { setErr(e.message || 'The equation engine could not load. Check your connection.'); setLoading(false); } }
+      } catch (e) { if (live) { setErr(e.message || tr('The equation engine could not load. Check your connection.')); setLoading(false); } }
     }, 220);
     return () => { live = false; clearTimeout(t); };
   }, [tex, size]);
@@ -94,30 +95,30 @@ export function EquationDialog({ initial, onInsert, onClose }) {
     } catch (e) { setErr(e.message); }
   };
   return (
-    <Modal title={initial ? 'Edit equation' : 'Insert equation'} onClose={onClose} width={520} footer={
+    <Modal title={initial ? tr('Edit equation') : tr('Insert equation')} onClose={onClose} width={520} footer={
       <>
-        <button type="button" className="btn ghost" onClick={onClose}>Cancel</button>
-        <button type="button" className="btn primary" disabled={!preview || !!(preview && preview.error)} onClick={insert}>{initial ? 'Update' : 'Insert'}</button>
+        <button type="button" className="btn ghost" onClick={onClose}>{tr('Cancel')}</button>
+        <button type="button" className="btn primary" disabled={!preview || !!(preview && preview.error)} onClick={insert}>{initial ? tr('Update') : tr('Insert')}</button>
       </>
     }>
       <div className="form-stack">
         <div className="eq-preview" aria-live="polite">
-          {loading ? <span className="muted-p"><span className="spin" /> Loading the equation engine…</span>
-            : preview && !preview.error ? <img alt="Equation preview" src={'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(preview.svg)))} />
-              : <span className="error-text">{err || 'Type an equation below.'}</span>}
+          {loading ? <span className="muted-p"><span className="spin" />{' '}{tr('Loading the equation engine…')}</span>
+            : preview && !preview.error ? <img alt={tr('Equation preview')} src={'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(preview.svg)))} />
+              : <span className="error-text">{err || tr('Type an equation below.')}</span>}
         </div>
         <label className="field">
-          <span>LaTeX</span>
+          <span>{tr('LaTeX')}</span>
           <textarea id="eq-tex" ref={ta} dir="ltr" rows={3} value={tex} spellCheck={false} onChange={(e) => setTex(e.target.value)} />
         </label>
         <div className="eq-snips">
           {SNIPPETS.map(([l, s]) => <button type="button" key={l} className="mchip" onClick={() => add(s)}>{l}</button>)}
         </div>
-        <div className="mline"><span className="mline-label">Size</span>
-          <div className="mchips">{[14, 18, 24, 32].map((v) => <button type="button" key={v} className={'mchip' + (size === v ? ' on' : '')} onClick={() => setSize(v)}>{v}px</button>)}</div>
+        <div className="mline"><span className="mline-label">{tr('Size')}</span>
+          <div className="mchips">{[14, 18, 24, 32].map((v) => <button type="button" key={v} className={'mchip' + (size === v ? ' on' : '')} onClick={() => setSize(v)}>{tr('{0}px', v)}</button>)}</div>
         </div>
         <div className="eq-examples">
-          <span className="hint">Examples:</span>
+          <span className="hint">{tr('Examples:')}</span>
           {EXAMPLES.map((e) => <button type="button" key={e} className="link-btn" dir="ltr" onClick={() => setTex(e)}>{e.length > 26 ? e.slice(0, 24) + '…' : e}</button>)}
         </div>
       </div>

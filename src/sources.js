@@ -5,12 +5,13 @@ import { uid, loadScript } from './util.js';
 import { libUrls, vendorUrl } from './vendor.js';
 import { loadLib } from './exporters.js';
 import { sessionKeys } from './crypto.js';
+import { tr } from './i18n.js';
 
 export const FILE_TYPES = {
-  pdf: { label: 'PDF', icon: 'FileText', accept: 'application/pdf,.pdf' },
-  docx: { label: 'Word', icon: 'FileType', accept: '.docx' },
-  txt: { label: 'Text', icon: 'AlignLeft', accept: 'text/plain,.txt,.md' },
-  image: { label: 'Image', icon: 'Image', accept: 'image/png,image/jpeg,image/webp,image/gif' },
+  pdf: { label: tr('PDF'), icon: 'FileText', accept: 'application/pdf,.pdf' },
+  docx: { label: tr('Word'), icon: 'FileType', accept: '.docx' },
+  txt: { label: tr('Text'), icon: 'AlignLeft', accept: 'text/plain,.txt,.md' },
+  image: { label: tr('Image'), icon: 'Image', accept: 'image/png,image/jpeg,image/webp,image/gif' },
 };
 export const ACCEPT_ALL = '.pdf,.docx,.txt,.md,image/png,image/jpeg,image/webp,image/gif,application/pdf,text/plain';
 const MAX_BYTES = 60 * 1024 * 1024;
@@ -30,8 +31,8 @@ export const getFile = (id) => db.get('files', id);
 export async function getFileData(id) { const r = await db.get('fileData', id); return r ? r.data : null; }
 export async function addFile(file) {
   const type = typeOf(file);
-  if (!type) throw new Error('This file type is not supported. Use PDF, Word (.docx), text or an image.');
-  if (file.size > MAX_BYTES) throw new Error('This file is larger than 60 MB.');
+  if (!type) throw new Error(tr('This file type is not supported. Use PDF, Word (.docx), text or an image.'));
+  if (file.size > MAX_BYTES) throw new Error(tr('This file is larger than 60 MB.'));
   const data = await file.arrayBuffer();
   const rec = { id: uid('file'), name: file.name, type, size: file.size, addedAt: Date.now(), openedAt: Date.now(), pos: 0, bookmarks: [], highlights: [] };
   await db.put('fileData', { id: rec.id, data });
@@ -65,7 +66,7 @@ export async function openPdf(data) {
   try {
     return await lib.getDocument({ data: bytes, isEvalSupported: false, useSystemFonts: true }).promise;
   } catch (e) {
-    if (e && e.name === 'PasswordException') throw new Error('This PDF is password protected.');
+    if (e && e.name === 'PasswordException') throw new Error(tr('This PDF is password protected.'));
     // Worker blocked: run pdf.js on the main thread instead
     await loadScript(libUrls('pdf.worker.js', [`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDF_VER}/pdf.worker.min.js`]), () => !!window.pdfjsWorker);
     return lib.getDocument({ data: new Uint8Array(data.slice(0)), isEvalSupported: false, useSystemFonts: true }).promise;
@@ -98,29 +99,29 @@ export const deltaPlain = (d) => ((d && d.ops) || []).map((op) => (typeof op.ins
 export async function sourceText(ref, onProgress) {
   if (ref.kind === 'doc') {
     const d = await db.get('docs', ref.id);
-    if (!d) throw new Error('This document no longer exists.');
+    if (!d) throw new Error(tr('This document no longer exists.'));
     let delta = d.delta;
     if (d.locked) {
       const sk = sessionKeys.get(d.id);
-      if (!sk || !sk.plain) throw new Error('This document is password protected. Open it in Write first to unlock it.');
+      if (!sk || !sk.plain) throw new Error(tr('This document is password protected. Open it in Write first to unlock it.'));
       delta = sk.plain.delta;
     }
     return { title: d.title, text: deltaPlain(delta).trim(), kind: 'doc' };
   }
   const f = await db.get('files', ref.id);
-  if (!f) throw new Error('This file no longer exists.');
+  if (!f) throw new Error(tr('This file no longer exists.'));
   if (f.text) return { title: f.name, text: f.text, kind: f.type, pages: f.pages };
   const data = await getFileData(f.id);
-  if (!data) throw new Error('The file data is missing.');
+  if (!data) throw new Error(tr('The file data is missing.'));
   let text = ''; let pages;
   if (f.type === 'txt') text = new TextDecoder().decode(data);
   else if (f.type === 'docx') { await loadLib.mammoth(); text = (await window.mammoth.extractRawText({ arrayBuffer: data.slice(0) })).value; }
   else if (f.type === 'pdf') {
     const pdf = await openPdf(data);
     pages = await pdfPageTexts(pdf, onProgress);
-    text = pages.map((t, i) => `[Page ${i + 1}]\n${t}`).join('\n\n');
-    if (!pages.join('').trim()) throw new Error('This PDF has no selectable text (it may be scanned images), so it cannot be read as text.');
-  } else throw new Error('Images have no text to read. Quick Capture can turn images into text in a later update.');
+    text = pages.map((t, i) => tr('[Page {0}]\n{1}', i + 1, t)).join('\n\n');
+    if (!pages.join('').trim()) throw new Error(tr('This PDF has no selectable text (it may be scanned images), so it cannot be read as text.'));
+  } else throw new Error(tr('Images have no text to read. Quick Capture can turn images into text in a later update.'));
   text = text.trim();
   // cache extracted text for next time (not for plain txt, which is cheap)
   if (f.type !== 'txt') await db.put('files', { ...f, text, pages });
