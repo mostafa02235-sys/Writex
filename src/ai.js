@@ -9,6 +9,7 @@
 //   Inside the Claude artifact sandbox, calls to other servers are blocked, so
 //   these providers only work once the app is deployed elsewhere.
 import { storage } from './util.js';
+import { isNative } from './platform.js';
 import { tr } from './i18n.js';
 
 export const LANGS = [
@@ -44,7 +45,7 @@ export function buildPrompt(task, text, opts = {}) {
 
 /* ---------- provider settings ---------- */
 export const PROVIDERS = [
-  { id: 'claude', label: 'Claude', note: tr('Built in. Uses your Claude account; no key needed.') },
+  { id: 'claude', label: 'Claude', note: isNative ? tr('Only available when Writex is opened inside the Claude app.') : tr('Built in. Uses your Claude account; no key needed.') },
   { id: 'openai', label: 'OpenAI', note: tr('Needs your own server endpoint that holds the API key.') },
   { id: 'gemini', label: 'Gemini', note: tr('Needs your own server endpoint that holds the API key.') },
 ];
@@ -64,11 +65,11 @@ export async function claudeSample() {
 export async function providerStatus(cfg) {
   if (cfg.provider === 'claude') {
     const s = await claudeSample();
-    return s ? { ready: true } : { ready: false, message: tr('Claude is not available in this view. Open the app inside Claude to use the built-in assistant.') };
+    return s ? { ready: true } : { ready: false, message: isNative ? tr('AI is not set up. In the Android app, AI features use your own server: open AI settings, choose OpenAI or Gemini and add your server endpoint.') : tr('Claude is not available in this view. Open the app inside Claude to use the built-in assistant.') };
   }
   const ep = (cfg.endpoints || {})[cfg.provider];
   if (!ep) return { ready: false, message: tr('Add your server endpoint for {0} in AI settings. Keys stay on your server, never in this app.', cfg.provider === 'openai' ? 'OpenAI' : 'Gemini') };
-  return { ready: true, warning: tr('Requests go to your server. Inside the Claude preview the sandbox blocks other servers, so this works after you deploy the app.') };
+  return { ready: true, warning: isNative ? tr('Requests go to your own server.') : tr('Requests go to your server. Inside the Claude preview the sandbox blocks other servers, so this works after you deploy the app.') };
 }
 
 const ERR = {
@@ -90,7 +91,7 @@ export async function runTask({ task, text, opts, signal, onText }) {
   const prompt = buildPrompt(task, text, opts);
   if (cfg.provider === 'claude') {
     const sample = await claudeSample();
-    if (!sample) throw { code: 'unavailable', message: tr('Claude is not available in this view.') };
+    if (!sample) throw { code: 'unavailable', message: isNative ? tr('AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.') : tr('Claude is not available in this view.') };
     if (task.kind === 'titles') {
       const arr = await sample.json(prompt, { signal, modelTier: 'quick' });
       return { titles: Array.isArray(arr) ? arr.map(String).slice(0, 8) : [] };
@@ -129,7 +130,7 @@ export async function complete({ prompt, turns, json, onText, signal, tier }) {
   const cfg = getAIConfig();
   if (cfg.provider === 'claude') {
     const sample = await claudeSample();
-    if (!sample) throw { code: 'unavailable', message: tr('Claude is not available in this view. Open the app inside Claude to use AI features.') };
+    if (!sample) throw { code: 'unavailable', message: isNative ? tr('AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.') : tr('Claude is not available in this view. Open the app inside Claude to use AI features.') };
     const input = turns || prompt;
     if (json) return sample.json(input, { signal, modelTier: tier || 'default' });
     const { text, truncated } = await sample(input, { signal, onText: onText ? ({ text: t }) => onText(t) : undefined, modelTier: tier || 'default', cache: turns ? false : undefined });

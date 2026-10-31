@@ -1,6 +1,10 @@
 // Arabic interface strings. Keys are the English text used in the code (see src/i18n.js).
 // Run "npm run i18n:check" after adding or changing interface text.
 export const AR = {
+  "Only available when Writex is opened inside the Claude app.": "متاح فقط عند فتح Writex داخل تطبيق Claude.",
+  "AI is not set up. In the Android app, AI features use your own server: open AI settings, choose OpenAI or Gemini and add your server endpoint.": "الذكاء الاصطناعي غير مُعدّ. في تطبيق أندرويد تعمل ميزات الذكاء الاصطناعي عبر خادمك الخاص: افتح إعدادات الذكاء الاصطناعي، واختر OpenAI أو Gemini، وأضف عنوان خادمك.",
+  "Requests go to your own server.": "تُرسل الطلبات إلى خادمك الخاص.",
+  "AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.": "الذكاء الاصطناعي غير مُعدّ. اختر OpenAI أو Gemini في إعدادات الذكاء الاصطناعي وأضف عنوان خادمك.",
   "Formal": "رسمي",
   "Friendly": "ودود",
   "Academic": "أكاديمي",

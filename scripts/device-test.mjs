@@ -99,8 +99,10 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
     await sleep(800);
     // A finger tap lands on the page sheet, which focuses the editor; do the same directly.
     await page.evaluate(() => { const ed = document.querySelector('.qwrap .ql-editor'); ed.focus(); const r = document.createRange(); r.selectNodeContents(ed); r.collapse(false); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
-    await page.keyboard.type(STAMP + '. ', { delay: 15 });
-    await page.keyboard.type('مرحبا بالعالم', { delay: 15 });
+    // insertText goes through the same input path as the on-screen keyboard's text commit
+    await page.keyboard.insertText(STAMP + '. ');
+    await sleep(300);
+    await page.keyboard.insertText('مرحبا بالعالم');
     await sleep(1500);
     await shot('02-editor');
     const txt = await page.textContent('.qwrap .ql-editor');
