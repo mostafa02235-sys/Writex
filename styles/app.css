@@ -1279,3 +1279,9 @@ html[dir="rtl"] kbd, html[dir="rtl"] .tnum { unicode-bidi: isolate; }
 .ed.m:has(.mfab-wrap) .wx-fab { bottom: calc(var(--kb, 0px) + 136px); }
 .text-input { height: 42px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--surface-2); color: var(--ink); padding: 0 12px; font: inherit; outline: none; width: 100%; box-sizing: border-box; }
 .text-input:focus { border-color: var(--accent); }
+.wx-private { display: flex; align-items: center; gap: 8px; margin-top: 14px !important; color: var(--ok); font-size: 13px; }
+.wx-upload { flex-direction: row !important; align-items: center; gap: 8px !important; }
+.model-card .set-label b { font-weight: 600; }
+.model-tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); margin-inline-start: 6px; }
+.model-tag.warn { background: transparent; color: var(--warn); border: 1px solid var(--line-strong); }
+.model-actions { display: flex; flex-wrap: wrap; gap: 8px; }

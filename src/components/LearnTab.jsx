@@ -17,7 +17,7 @@ const rules = (title, text) => `Use ONLY the document below. Every item must be 
 
 async function generateFrom(kind, source, opts, signal) {
   const r = await src.sourceText(source);
-  const cl = clip(r.text, 100000);
+  const cl = clip(r.text);
   if (cl.text.trim().length < 200) throw new Error(tr('This document is too short to make study material from.'));
   let data;
   if (kind === 'flashcards') {

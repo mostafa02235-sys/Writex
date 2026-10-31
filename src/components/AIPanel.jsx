@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from '../react.js';
 import { Icon } from '../icons.jsx';
 import { Sheet, Seg } from './ui.jsx';
-import { TASKS, LANGS, TONES, PROVIDERS, getAIConfig, setAIConfig, providerStatus, runTask, aiErrorText, TONE_LABEL } from '../ai.js';
+import { TASKS, LANGS, TONES, getAIConfig, providerStatus, runTask, aiErrorText, TONE_LABEL } from '../ai.js';
 import { diffWords } from '../diff.js';
 import { tr } from '../i18n.js';
 
@@ -53,7 +53,6 @@ export function AIPanel({ open, onClose, quill, lastRange, toast, setTitle, init
   useEffect(() => { let live = true; providerStatus(cfg).then((s) => { if (live) setStatus(s); }); return () => { live = false; }; }, [cfg, open]);
   useEffect(() => () => { if (ctl.current) ctl.current.abort(); }, []);
 
-  const saveCfg = (c) => { setCfg(c); setAIConfig(c); };
   const pick = (t) => { setTask(t); if (t.id === 'summarize' || t.id === 'titles') setScope(hasSel ? 'selection' : 'document'); };
 
   const run = async (t = task) => {
@@ -116,21 +115,10 @@ export function AIPanel({ open, onClose, quill, lastRange, toast, setTitle, init
     body = (
       <>
         <section className="msec">
-          <h3>{tr('Provider')}</h3>
-          <Seg label={tr('AI provider')} value={cfg.provider} onChange={(v) => saveCfg({ ...cfg, provider: v })} options={PROVIDERS.map((p) => ({ value: p.id, label: p.label }))} />
-          <p className="mnote">{PROVIDERS.find((p) => p.id === cfg.provider).note}</p>
+          <h3>{tr('Writex AI on this phone')}</h3>
+          <p className="mnote">{status.model ? tr('Model: {0}. Runs on your phone; your text is not sent anywhere.', status.model.name + ' · ' + status.model.model) : tr('Runs on your phone; your text is not sent anywhere.')}</p>
+          <button type="button" className="btn" onMouseDown={nd} onClick={() => { onClose(); window.dispatchEvent(new CustomEvent('writex:navigate', { detail: { settings: true } })); }}><Icon name="Settings" size={16} />{tr('Manage models')}</button>
         </section>
-        {cfg.provider !== 'claude' && (
-          <section className="msec">
-            <h3>{tr('Server endpoint')}</h3>
-            <label className="field">
-              <span>{cfg.provider === 'openai' ? 'OpenAI' : 'Gemini'}{' '}{tr('proxy URL')}</span>
-              <input id={'ai-ep-' + cfg.provider} dir="ltr" type="url" placeholder="https://your-server.example/ai" value={(cfg.endpoints || {})[cfg.provider] || ''}
-                onChange={(e) => saveCfg({ ...cfg, endpoints: { ...(cfg.endpoints || {}), [cfg.provider]: e.target.value.trim() } })} />
-            </label>
-            <p className="mnote">{tr('Your server keeps the API key and receives')}{' '}<code>{'{ provider, prompt }'}</code>{tr(', replying with')}{' '}<code>{'{ text }'}</code>{tr('. Never paste an API key into this app. Inside the Claude preview, requests to other servers are blocked, so use Claude here and switch providers after you deploy.')}</p>
-          </section>
-        )}
         <div className={'ai-status ' + (status.ready ? 'ok' : 'warn')}><Icon name={status.ready ? 'CircleCheck' : 'TriangleAlert'} size={16} /><span>{status.ready ? (status.warning || tr('Ready')) : status.message}</span></div>
       </>
     );

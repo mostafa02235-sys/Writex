@@ -8,3 +8,4 @@ export const Filesystem = null;
 export const Directory = {};
 export const Share = null;
 export const Keyboard = null;
+export const WritexAI = null;

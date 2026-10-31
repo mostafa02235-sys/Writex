@@ -1,10 +1,11 @@
-// Writex AI: conversations with attachments, task actions, live task progress,
-// and the task history. Every request runs as a job on the Writex AI server.
+// Writex AI: conversations with attached documents, task actions, live task
+// progress and task history. Everything runs on the phone (localAI.js, aiEngine.js).
 import React, { useState, useEffect, useRef, useMemo } from '../react.js';
 import { Icon } from '../icons.jsx';
 import { Sheet, ConfirmDialog } from './ui.jsx';
 import { SourcePicker } from './SourcePicker.jsx';
-import * as wx from '../writexAI.js';
+import * as engine from '../aiEngine.js';
+import { storage } from '../util.js';
 import * as src from '../sources.js';
 import * as store from '../store.js';
 import * as db from '../db.js';
@@ -17,19 +18,20 @@ import { providerStatus, getAIConfig } from '../ai.js';
 // Suggested actions: server task types and the input they need
 export const ACTIONS = [
   { type: 'summarize', icon: 'ListChecks', label: tr('Summarise'), needs: 1, input: { length: 'medium' } },
-  { type: 'analyze', icon: 'MessageSquareText', label: tr('Ask the documents'), needs: 1, ask: tr('What do you want to know?') },
+  { type: 'analyze', icon: 'MessageSquareText', label: tr('Ask the documents'), needs: 1, ask: tr('What do you want to know?'), key: 'question' },
+  { type: 'find', icon: 'Search', label: tr('Find information'), needs: 1, ask: tr('What should Writex AI look for?'), key: 'question' },
   { type: 'compare', icon: 'GitCompare', label: tr('Compare documents'), needs: 2 },
-  { type: 'inconsistencies', icon: 'TriangleAlert', label: tr('Find inconsistencies'), needs: 1 },
   { type: 'extract', icon: 'Table', label: tr('Extract key info and tables'), needs: 1 },
-  { type: 'study_guide', icon: 'GraduationCap', label: tr('Study guide'), needs: 1 },
-  { type: 'quiz', icon: 'ListTodo', label: tr('Difficult quiz'), needs: 1, input: { difficulty: 'hard', count: 12 } },
-  { type: 'flashcards', icon: 'Layers', label: tr('Flashcards'), needs: 1, input: { count: 20 } },
+  { type: 'explain', icon: 'Lightbulb', label: tr('Explain'), needs: 1, ask: tr('What should be explained?'), key: 'topic' },
+  { type: 'study_guide', icon: 'GraduationCap', label: tr('Study summary'), needs: 1 },
+  { type: 'quiz', icon: 'ListTodo', label: tr('Difficult exam'), needs: 1, input: { difficulty: 'hard', count: 10 } },
+  { type: 'flashcards', icon: 'Layers', label: tr('Flashcards'), needs: 1, input: { count: 15 } },
   { type: 'revision_plan', icon: 'CalendarDays', label: tr('Revision plan'), needs: 1, input: { days: 7 } },
-  { type: 'chapters', icon: 'BookOpen', label: tr('Organise into chapters'), needs: 1 },
+  { type: 'outline', icon: 'Presentation', label: tr('Presentation outline'), needs: 1, input: { slides: 8 } },
   { type: 'sources_review', icon: 'Library', label: tr('Review sources'), needs: 1 },
-  { type: 'research_outline', icon: 'Microscope', label: tr('Research outline'), needs: 0, ask: tr('Research topic') },
-  { type: 'explain', icon: 'Lightbulb', label: tr('Explain a subject'), needs: 0, ask: tr('What should be explained?'), key: 'topic' },
+  { type: 'research_outline', icon: 'Microscope', label: tr('Research outline'), needs: 0, ask: tr('Research topic'), key: 'topic' },
   { type: 'write', icon: 'PenLine', label: tr('Write a document'), needs: 0, ask: tr('What should the document be about?'), key: 'brief' },
+  { type: 'organize', icon: 'ListTree', label: tr('Notes → organised document'), needs: 0, ask: tr('Paste your notes'), key: 'text' },
 ];
 const ACTION = Object.fromEntries(ACTIONS.map((a) => [a.type, a]));
 
@@ -43,6 +45,7 @@ export function stateText(job) {
   if (!job) return '';
   const p = job.progress;
   if (job.status === 'analyzing' && p) return tr('Analysing part {0} of {1}', Math.min(p.done + 1, p.total), p.total);
+  if (job.stage === 'loading') return tr('Loading the model…');
   return STATE_LABEL[job.status] || job.status;
 }
 
@@ -50,16 +53,16 @@ export function stateText(job) {
 function resultText(job, text) {
   const d = job && job.data;
   if (d && Array.isArray(d.questions)) {
-    return `# ${d.title || tr('Quiz')}\n\n` + d.questions.map((q, i) => `${i + 1}. ${q.q}\n${(q.options || []).map((o, k) => `   - ${String.fromCharCode(65 + k)}) ${o}`).join('\n')}\n   **${tr('Answer')}:** ${q.answer}${q.explanation ? ' — ' + q.explanation : ''}`).join('\n\n');
+    return `# ${d.title || tr('Quiz')}\n\n` + d.questions.map((q, i) => `${i + 1}. ${q.q}\n${(q.type === 'mcq' ? (q.options || []) : []).map((o, k) => `   - ${String.fromCharCode(65 + k)}) ${o}`).join('\n')}\n   **${tr('Answer')}:** ${q.answer}${q.explanation ? ' — ' + q.explanation : ''}`).join('\n\n');
   }
   if (d && Array.isArray(d.cards)) return d.cards.map((c) => `- **${c.front}** — ${c.back}`).join('\n');
   return text || (job && job.result) || '';
 }
 
-async function attachmentPayload(att) {
-  if (att.kind === 'image') return { name: att.name, kind: 'image', data: att.data, mime: att.mime };
+// Document text is extracted on the phone (pdf.js, mammoth); nothing is uploaded.
+async function attachmentText(att) {
   const r = await src.sourceText(att.ref);
-  return { name: att.name || r.title, kind: 'text', text: r.text };
+  return { name: att.name || r.title, text: r.text };
 }
 
 export function WritexAIHub({ toast, openDoc, openSettings, status }) {
@@ -127,59 +130,47 @@ export function WritexAIHub({ toast, openDoc, openSettings, status }) {
     setAttachSheet(false);
     for (const f of files) {
       try {
-        if (/^image\//.test(f.type)) {
-          const data = await downscaleImage(await readFileAs(f, 'dataurl'), 1600);
-          addAttachment({ key: 'img:' + uid('i'), kind: 'image', name: f.name, data, mime: f.type });
-        } else {
-          const rec = await src.addFile(f); // also appears in Read
-          addAttachment({ key: 'file:' + rec.id, kind: 'file', ref: { kind: 'file', id: rec.id }, name: rec.name, ftype: rec.type });
-        }
+        if (/^image\//.test(f.type)) { toast(tr('The on-device model reads text. Attach PDFs, Word or text files.'), 'error'); continue; }
+        const rec = await src.addFile(f); // also appears in Read
+        addAttachment({ key: 'file:' + rec.id, kind: 'file', ref: { kind: 'file', id: rec.id }, name: rec.name, ftype: rec.type });
       } catch (err) { toast(err.message, 'error'); }
     }
   };
   const removeAttachment = (key) => save({ ...convRef.current, attachments: convRef.current.attachments.filter((a) => a.key !== key) });
 
-  async function uploadAll(c) {
-    const list = c.attachments;
-    const ids = [];
-    let changed = false;
-    for (let i = 0; i < list.length; i++) {
-      const a = list[i];
-      if (a.serverId && a.server === wx.serverUrl()) { ids.push(a.serverId); continue; }
-      setUpload({ i: i + 1, n: list.length, name: a.name, pct: 0 });
-      const payload = await attachmentPayload(a);
-      const r = await wx.uploadFile(payload, (loaded, total) => setUpload({ i: i + 1, n: list.length, name: a.name, pct: Math.round((loaded / total) * 100) }));
-      a.serverId = r.id; a.server = wx.serverUrl(); changed = true;
-      ids.push(r.id);
+  async function readAll(c) {
+    const out = [];
+    for (let i = 0; i < c.attachments.length; i++) {
+      setUpload({ i: i + 1, n: c.attachments.length, name: c.attachments[i].name });
+      out.push(await attachmentText(c.attachments[i]));
     }
     setUpload(null);
-    if (changed) save({ ...convRef.current, attachments: [...list] });
-    return ids;
+    return out;
   }
 
   /* ---------- running a request ---------- */
   async function run({ type, text, input: extra }) {
-    if (!ready) { toast((status && status.message) || tr('Writex AI is not connected.'), 'error'); return; }
+    if (!ready) { toast((status && status.message) || tr('Install a Writex AI model first (Settings › Writex AI). After that it works offline.'), 'error'); return; }
     let c = convRef.current;
     const userMsg = { id: uid('m'), role: 'user', text, action: type !== 'chat' ? type : null, attachments: c.attachments.map((a) => a.name) };
     const botMsg = { id: uid('m'), role: 'assistant', text: '', status: 'waiting', type };
     c = save({ ...c, title: c.title || (text || ACTION[type]?.label || '').slice(0, 60), messages: [...c.messages, userMsg, botMsg] });
     const convId = c.id;
-    let fileIds = [];
-    try { fileIds = await uploadAll(c); } catch (e) {
+    let sources = [];
+    try { sources = await readAll(c); } catch (e) {
       setUpload(null);
       patchMsg(convId, botMsg.id, { status: 'failed', error: e.message, final: true });
       return;
     }
-    const lang = wx.answerLang();
+    const lang = storage.get('writex.aiLang', 'auto');
     const input = type === 'chat'
-      ? { messages: c.messages.filter((m) => m.id !== botMsg.id && (m.role === 'user' || m.status === 'completed')).map((m) => ({ role: m.role, content: m.text || ACTION[m.action]?.label || '' })).filter((m) => m.content), fileIds }
-      : { ...(ACTION[type] && ACTION[type].input), ...extra, fileIds, lang };
+      ? { messages: c.messages.filter((m) => m.id !== botMsg.id && (m.role === 'user' || m.status === 'completed')).map((m) => ({ role: m.role, content: m.text || ACTION[m.action]?.label || '' })).filter((m) => m.content), sources, lang }
+      : { ...(ACTION[type] && ACTION[type].input), ...extra, sources, lang };
     const ctl = new AbortController();
     const title = (ACTION[type] ? ACTION[type].label : '') + (text ? (ACTION[type] ? ': ' : '') + text.slice(0, 80) : '');
     try {
-      const done = await wx.runJob(type, input, {
-        title, context: { conversation: convId }, signal: ctl.signal,
+      const done = await engine.runTask(type, input, {
+        title, signal: ctl.signal,
         onState: (job) => { running.current.set(job.id, ctl); patchMsg(convId, botMsg.id, { jobId: job.id, status: job.status, stage: job.stage, progress: job.progress }); },
         onText: (t) => patchMsg(convId, botMsg.id, { text: t }),
       });
@@ -209,7 +200,7 @@ export function WritexAIHub({ toast, openDoc, openSettings, status }) {
     setAskAction(null);
     run({ type: a.type, text: t, input: { [a.key || (a.type === 'analyze' ? 'question' : 'topic')]: t } });
   };
-  const cancel = (m) => { const ctl = running.current.get(m.jobId); if (ctl) ctl.abort(); else if (m.jobId) wx.cancelJob(m.jobId).catch(() => {}); };
+  const cancel = (m) => { const ctl = running.current.get(m.jobId); if (ctl) ctl.abort(); else if (m.jobId) engine.cancelTask(m.jobId); };
   const retry = (m) => {
     const idx = conv.messages.findIndex((x) => x.id === m.id);
     const q = conv.messages[idx - 1];
@@ -263,6 +254,7 @@ export function WritexAIHub({ toast, openDoc, openSettings, status }) {
           <div className="wx-intro">
             <h2>{tr('What can Writex AI do for you?')}</h2>
             <p>{tr('Write, rewrite and continue documents; summarise, compare and question long PDFs and Word files; build study guides, quizzes and research outlines. Attach documents for answers based on them.')}</p>
+            <p className="wx-private"><Icon name="ShieldCheck" size={16} />{tr('Runs privately on this phone. Works offline. Your documents and conversations never leave the device.')}{status && status.model ? ' · ' + status.model.model : ''}</p>
           </div>
         )}
         {conv.messages.map((m) => (m.role === 'user' ? (
@@ -273,7 +265,7 @@ export function WritexAIHub({ toast, openDoc, openSettings, status }) {
           </div>
         ) : (
           <div key={m.id} className={'wx-msg bot ' + m.status}>
-            {!wx.isFinished(m.status) && (
+            {!engine.isFinished(m.status) && (
               <div className="wx-task" role="status">
                 <span className="spin" /><span>{stateText(m)}</span>
                 <button type="button" className="btn sm ghost" onClick={() => cancel(m)}><Icon name="Square" size={14} />{tr('Cancel')}</button>
@@ -303,29 +295,28 @@ export function WritexAIHub({ toast, openDoc, openSettings, status }) {
 
       {upload && (
         <div className="wx-upload" role="status">
-          <span>{tr('Uploading {0} of {1}: {2}', upload.i, upload.n, upload.name)}</span>
-          <div className="rv-bar"><i style={{ width: upload.pct + '%' }} /></div>
+          <span className="spin" /><span>{tr('Reading {0} of {1}: {2}', upload.i, upload.n, upload.name)}</span>
         </div>
       )}
       {conv.attachments.length > 0 && (
         <div className="wx-atts">
           {conv.attachments.map((a) => (
-            <span key={a.key} className="chip wx-chip"><Icon name={a.kind === 'image' ? 'Image' : a.kind === 'doc' ? 'PenLine' : 'FileText'} size={13} /><span dir="auto">{a.name}</span>
+            <span key={a.key} className="chip wx-chip"><Icon name={a.kind === 'doc' ? 'PenLine' : 'FileText'} size={13} /><span dir="auto">{a.name}</span>
               <button type="button" aria-label={tr('Remove {0}', a.name)} onClick={() => removeAttachment(a.key)}><Icon name="X" size={12} /></button></span>
           ))}
         </div>
       )}
       <div className="m-composer wx-composer">
-        <button type="button" className="tb lg" aria-label={tr('Attach documents, PDFs or images')} onClick={() => setAttachSheet(true)}><Icon name="Paperclip" size={20} /></button>
+        <button type="button" className="tb lg" aria-label={tr('Attach documents or PDFs')} onClick={() => setAttachSheet(true)}><Icon name="Paperclip" size={20} /></button>
         <textarea id="wx-input" dir="auto" rows={1} value={input} placeholder={tr('Message Writex AI…')} onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } }} />
         <button type="button" className="tb lg accent" aria-label={tr('Send')} disabled={!input.trim()} onClick={send}><Icon name="ArrowUp" size={20} /></button>
       </div>
-      <input ref={fileRef} type="file" hidden multiple accept={src.ACCEPT_ALL} onChange={onDeviceFile} />
+      <input ref={fileRef} type="file" hidden multiple accept=".pdf,.docx,.txt,.md,application/pdf,text/plain" onChange={onDeviceFile} />
 
       <Sheet open={attachSheet} onClose={() => setAttachSheet(false)} title={tr('Attach')} className="sheet-tall">
         <button type="button" className="mrow" onClick={() => fileRef.current && fileRef.current.click()}>
-          <span className="mrow-ico"><Icon name="Upload" size={19} /></span><span className="mrow-label">{tr('From this device')}<small>{tr('PDF, Word, text or images')}</small></span>
+          <span className="mrow-ico"><Icon name="Upload" size={19} /></span><span className="mrow-label">{tr('From this device')}<small>{tr('PDF, Word or text files')}</small></span>
         </button>
         <p className="hint" style={{ margin: '10px 4px 6px' }}>{tr('Or pick from your documents and files:')}</p>
         <SourcePicker onPick={pickSource} />
@@ -385,38 +376,25 @@ export function TasksPanel({ toast, openDoc }) {
   const [jobs, setJobs] = useState(null);
   const [open, setOpen] = useState(null);
   const [err, setErr] = useState('');
-  const load = async () => {
-    const local = await wx.localJobs();
-    let merged = local;
-    if (wx.configured()) {
-      try {
-        const remote = await wx.listJobs(100);
-        const map = new Map(local.map((j) => [j.id, j]));
-        for (const r of remote) map.set(r.id, { ...(map.get(r.id) || {}), ...r, result: r.result != null ? r.result : (map.get(r.id) || {}).result });
-        merged = [...map.values()].sort((a, b) => b.createdAt - a.createdAt);
-        setErr('');
-      } catch (e) { setErr(e.message); }
-    }
-    setJobs(merged);
-  };
+  const load = async () => { setJobs(await engine.listJobs()); };
   useEffect(() => { load(); const t = setInterval(load, 5000); return () => clearInterval(t); }, []);
-  const act = async (fn, j) => { try { await fn(j.id); load(); } catch (e) { toast(e.message, 'error'); } };
+  const remove = async (j) => { await engine.deleteJob(j.id); load(); };
   const toDoc = async (j) => { const d = await store.createDoc({ title: (j.title || TYPE_LABEL[j.type] || 'Writex AI').slice(0, 80), delta: normalizeDelta(mdToDelta(resultText(j))) }); openDoc(d.id); };
 
   if (!jobs) return <div className="empty"><span className="spin" /></div>;
   return (
     <div className="wx-tasks">
-      {err && <div className="ai-status warn"><Icon name="WifiOff" size={16} /><span>{err}</span></div>}
+      
       {!jobs.length && <div className="empty"><Icon name="ListTodo" size={28} /><p>{tr('No Writex AI tasks yet. Tasks you start anywhere in the app appear here, with their results.')}</p></div>}
       <div className="drows">
         {jobs.map((j) => (
           <div key={j.id} className="drow">
             <button type="button" className="drow-main" onClick={() => setOpen(j)}>
-              <span className={'wx-state s-' + j.status}>{wx.isFinished(j.status) ? <Icon name={j.status === 'completed' ? 'CircleCheck' : j.status === 'failed' ? 'CircleAlert' : 'CircleSlash'} size={18} /> : <span className="spin" />}</span>
+              <span className={'wx-state s-' + j.status}>{engine.isFinished(j.status) ? <Icon name={j.status === 'completed' ? 'CircleCheck' : j.status === 'failed' ? 'CircleAlert' : 'CircleSlash'} size={18} /> : <span className="spin" />}</span>
               <span className="drow-text"><span className="drow-title" dir="auto">{j.title || TYPE_LABEL[j.type] || j.type}</span><span className="drow-meta">{stateText(j)} · {fmtDate(j.createdAt)}</span></span>
             </button>
-            {!wx.isFinished(j.status) && <button type="button" className="tb" aria-label={tr('Cancel')} onClick={() => act(wx.cancelJob, j)}><Icon name="Square" size={16} /></button>}
-            {(j.status === 'failed' || j.status === 'cancelled') && <button type="button" className="tb" aria-label={tr('Retry')} onClick={() => act(wx.retryJob, j)}><Icon name="RotateCcw" size={16} /></button>}
+            {!engine.isFinished(j.status) && <button type="button" className="tb" aria-label={tr('Cancel')} onClick={() => engine.cancelTask(j.id)}><Icon name="Square" size={16} /></button>}
+            {engine.isFinished(j.status) && <button type="button" className="tb" aria-label={tr('Delete')} onClick={() => remove(j)}><Icon name="Trash2" size={16} /></button>}
           </div>
         ))}
       </div>

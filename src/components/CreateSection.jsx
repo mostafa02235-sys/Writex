@@ -273,7 +273,7 @@ export function CreateSection({ toast, openDoc, openSettings }) {
     ctl.current = new AbortController();
     try {
       const r = await src.sourceText(source);
-      const cl = clip(r.text, 100000);
+      const cl = clip(r.text);
       if (!cl.text.trim()) throw new Error(tr('This document has no text yet.'));
       const prompt = SRC_RULES(r.title, cl.text) + 'Task: ' + PROMPTS[type](opts);
       let data; let note = cl.clipped ? tr('Made from the first {0} of {1} characters.', cl.text.length.toLocaleString(), cl.total.toLocaleString()) : '';

@@ -9,8 +9,8 @@
 //   Inside the Claude artifact sandbox, calls to other servers are blocked, so
 //   these providers only work once the app is deployed elsewhere.
 import { storage } from './util.js';
-import { isNative } from './platform.js';
-import * as wx from './writexAI.js';
+import * as local from './localAI.js';
+import * as engine from './aiEngine.js';
 import { tr } from './i18n.js';
 
 export const LANGS = [
@@ -46,147 +46,58 @@ export function buildPrompt(task, text, opts = {}) {
   return `You are a writing assistant inside a document editor.\nTask: ${ask}\n${format}\n\nText:\n"""\n${text}\n"""`;
 }
 
-/* ---------- provider settings ---------- */
-export const PROVIDERS = [
-  { id: 'writex', label: 'Writex AI', note: tr('The Writex AI service. Nothing to set up on this device, and no keys are stored in the app.') },
-  { id: 'claude', label: 'Claude', note: isNative ? tr('Only available when Writex is opened inside the Claude app.') : tr('Built in. Uses your Claude account; no key needed.') },
-  { id: 'openai', label: 'OpenAI', note: tr('Needs your own server endpoint that holds the API key.') },
-  { id: 'gemini', label: 'Gemini', note: tr('Needs your own server endpoint that holds the API key.') },
-];
-const defaultProvider = () => (wx.configured() || !(typeof window !== 'undefined' && window.claude) ? 'writex' : 'claude');
-export function getAIConfig() {
-  const c = storage.get('writex.ai', null) || { provider: defaultProvider(), endpoints: { openai: '', gemini: '' } };
-  // Earlier versions defaulted to Claude, which only works inside the Claude app
-  if (c.provider === 'claude' && !(typeof window !== 'undefined' && window.claude)) c.provider = 'writex';
-  return c;
-}
-export function setAIConfig(c) { storage.set('writex.ai', c); }
+/* ---------- Writex AI (on-device) ---------- */
+// Every AI feature in the app runs on the phone through the local engine (localAI.js).
+// There are no external AI providers and no API keys.
+export function getAIConfig() { return { provider: 'local' }; }
 
-let sampleFn;
-export async function claudeSample() {
-  if (sampleFn !== undefined) return sampleFn;
-  try { sampleFn = window.claude && window.claude.use ? await window.claude.use('sample') : null; } catch (e) { sampleFn = null; }
-  return sampleFn;
-}
-
-// Status for the UI: { ready, message }
-export async function providerStatus(cfg) {
-  if (cfg.provider === 'writex') {
-    if (!wx.configured()) return { ready: false, code: 'not_deployed', message: tr('Writex AI is not connected to a server yet. The app is ready for it: the Writex AI server needs to be deployed once (Settings › Writex AI explains how).') };
-    const h = await wx.health();
-    if (!h.ok) return { ready: false, code: 'offline', message: tr('Could not reach Writex AI. Check your internet connection.') };
-    if (!h.ready) return { ready: false, code: 'no_model', message: tr('The Writex AI server is running but has no AI model connected yet.') };
-    return { ready: true };
-  }
-  if (cfg.provider === 'claude') {
-    const s = await claudeSample();
-    return s ? { ready: true } : { ready: false, message: isNative ? tr('AI is not set up. In the Android app, AI features use your own server: open AI settings, choose OpenAI or Gemini and add your server endpoint.') : tr('Claude is not available in this view. Open the app inside Claude to use the built-in assistant.') };
-  }
-  const ep = (cfg.endpoints || {})[cfg.provider];
-  if (!ep) return { ready: false, message: tr('Add your server endpoint for {0} in AI settings. Keys stay on your server, never in this app.', cfg.provider === 'openai' ? 'OpenAI' : 'Gemini') };
-  return { ready: true, warning: isNative ? tr('Requests go to your own server.') : tr('Requests go to your server. Inside the Claude preview the sandbox blocks other servers, so this works after you deploy the app.') };
-}
-
-const ERR = {
-  not_granted: tr('You declined access to Claude for this page. Reload the page to be asked again.'),
-  rate_limited: tr('Too many requests right now. Wait a moment and try again.'),
-  prompt_too_large: tr('That text is too long for one request. Select a smaller part.'),
-  refused: tr('Claude declined this request.'),
-  empty_completion: tr('No answer came back. Try again.'),
-  upstream_error: tr('The AI service had a problem. Try again in a moment.'),
-  sampling_disabled: tr('AI is turned off for this account or organization.'),
-  session_expired: tr('Your Claude session expired. Reload the page.'),
-  invalid_json: tr('The answer was not in the expected format. Try again.'),
-};
-export const aiErrorText = (e) => (e instanceof wx.AIError ? e.message : (e && ERR[e.code]) || (e && e.message) || tr('Something went wrong.'));
-
-// Run a task. onText receives the whole answer so far.
-export async function runTask({ task, text, opts, signal, onText }) {
-  const cfg = getAIConfig();
-  const prompt = buildPrompt(task, text, opts);
-  if (cfg.provider === 'writex') {
-    const done = await wx.runJob('prompt', { prompt, quality: text.length > 6000 ? 'best' : undefined }, { title: task.label, signal, onText: task.kind === 'titles' ? undefined : (t) => onText && onText(clean(t)) });
-    if (task.kind === 'titles') {
-      try { return { titles: JSON.parse(String(done.result).match(/\[[\s\S]*\]/)[0]).map(String).slice(0, 8) }; } catch (e) { return { titles: String(done.result || '').split('\n').map((s) => s.replace(/^[-*\d.\s"]+|"$/g, '').trim()).filter(Boolean).slice(0, 8) }; }
-    }
-    return { text: clean(done.result) };
-  }
-  if (cfg.provider === 'claude') {
-    const sample = await claudeSample();
-    if (!sample) throw { code: 'unavailable', message: isNative ? tr('AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.') : tr('Claude is not available in this view.') };
-    if (task.kind === 'titles') {
-      const arr = await sample.json(prompt, { signal, modelTier: 'quick' });
-      return { titles: Array.isArray(arr) ? arr.map(String).slice(0, 8) : [] };
-    }
-    const { text: out, truncated } = await sample(prompt, { signal, onText: ({ text: t }) => onText && onText(clean(t)), modelTier: text.length > 6000 ? 'default' : 'quick' });
-    return { text: clean(out), truncated };
-  }
-  // External provider through the user's own server
-  const ep = (cfg.endpoints || {})[cfg.provider];
-  if (!ep) throw { code: 'not_configured', message: tr('No server endpoint is set for this provider.') };
-  let res;
+// { ready, code, message, model }
+export async function providerStatus() {
+  if (!local.supported) return { ready: false, code: 'unsupported', message: tr('Writex AI runs on the Android app, on your phone. It is not available in this view.') };
   try {
-    res = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider: cfg.provider, prompt }), signal });
-  } catch (e) {
-    if (e && e.name === 'AbortError') throw { code: 'cancelled', message: tr('Stopped.') };
-    throw { code: 'network', message: tr('Could not reach your server. Inside the Claude preview, connections to other servers are blocked.') };
-  }
-  if (!res.ok) throw { code: 'http', message: tr('Your server answered with an error ({0}).', res.status) };
-  const data = await res.json();
+    const dev = await local.device();
+    if (!dev.engine) return { ready: false, code: 'engine', message: tr('The Writex AI engine could not start on this device.') };
+    const m = await local.currentModel(dev);
+    if (!m) return { ready: false, code: 'no_model', message: tr('Install a Writex AI model first (Settings › Writex AI). After that it works offline.') };
+    return { ready: true, model: m };
+  } catch (e) { return { ready: false, code: 'error', message: e.message }; }
+}
+
+export const aiErrorText = (e) => (e && e.message) || tr('Something went wrong.');
+
+// Writing assistant tools. onText receives the whole answer so far.
+export async function runTask({ task, text, opts, signal, onText }) {
+  const prompt = buildPrompt(task, text, opts);
+  const job = await engine.runTask('prompt', { prompt, maxTokens: Math.min(1800, Math.max(400, Math.round(text.length / 2))) }, {
+    title: task.label, signal, onText: task.kind === 'titles' ? undefined : (t) => onText && onText(clean(t)),
+  });
   if (task.kind === 'titles') {
-    try { return { titles: JSON.parse(String(data.text).match(/\[[\s\S]*\]/)[0]) }; } catch (e) { return { titles: String(data.text || '').split('\n').filter(Boolean) }; }
+    try { return { titles: JSON.parse(String(job.result).match(/\[[\s\S]*\]/)[0]).map(String).slice(0, 8) }; } catch (e) {
+      return { titles: String(job.result || '').split('\n').map((x) => x.replace(/^[-*\d.\s"]+|"$/g, '').trim()).filter(Boolean).slice(0, 8) };
+    }
   }
-  const out = clean(String(data.text || ''));
-  onText && onText(out);
-  return { text: out };
+  return { text: clean(job.result) };
 }
 
 function clean(t) {
   return String(t || '').replace(/^\s*```[a-z]*\n?|```\s*$/g, '').replace(/^\s*"""\s*|\s*"""\s*$/g, '').trim();
 }
 
-
 /* ---------- generic helpers used by Think, Create and Learn ---------- */
 // Returns { text } or a parsed JSON value when json: true.
-export async function complete({ prompt, turns, json, onText, signal, tier, title }) {
-  const cfg = getAIConfig();
-  if (cfg.provider === 'writex') {
-    const done = turns
-      ? await wx.runJob('chat', { messages: turns }, { title, signal, onText })
-      : await wx.runJob('prompt', { prompt, json: !!json, quality: tier === 'quick' ? undefined : (String(prompt).length > 30000 ? 'best' : undefined) }, { title, signal, onText });
-    if (json) return done.data;
-    return { text: done.result || '' };
+export async function complete({ prompt, turns, json, onText, signal, title }) {
+  if (turns) {
+    const job = await engine.runTask('chat', { messages: turns.filter((t) => t.role !== 'system') }, { title, signal, onText });
+    return { text: job.result || '' };
   }
-  if (cfg.provider === 'claude') {
-    const sample = await claudeSample();
-    if (!sample) throw { code: 'unavailable', message: isNative ? tr('AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.') : tr('Claude is not available in this view. Open the app inside Claude to use AI features.') };
-    const input = turns || prompt;
-    if (json) return sample.json(input, { signal, modelTier: tier || 'default' });
-    const { text, truncated } = await sample(input, { signal, onText: onText ? ({ text: t }) => onText(t) : undefined, modelTier: tier || 'default', cache: turns ? false : undefined });
-    return { text, truncated };
-  }
-  const ep = (cfg.endpoints || {})[cfg.provider];
-  if (!ep) throw { code: 'not_configured', message: tr('No server endpoint is set for this provider. Add one in the writing assistant settings.') };
-  let res;
-  const body = { provider: cfg.provider, prompt: turns ? turns.map((t) => `${t.role.toUpperCase()}: ${t.content}`).join('\n\n') : prompt };
-  try { res = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal }); } catch (e) {
-    if (e && e.name === 'AbortError') throw { code: 'cancelled', message: tr('Stopped.') };
-    throw { code: 'network', message: tr('Could not reach your server. Inside the Claude preview, connections to other servers are blocked.') };
-  }
-  if (!res.ok) throw { code: 'http', message: tr('Your server answered with an error ({0}).', res.status) };
-  const data = await res.json();
-  const text = String(data.text || '');
-  if (json) {
-    const m = text.match(/[\[{][\s\S]*[\]}]/);
-    if (!m) throw { code: 'invalid_json', message: tr('The answer was not in the expected format.') };
-    return JSON.parse(m[0]);
-  }
-  if (onText) onText(text);
-  return { text };
+  const job = await engine.runTask('prompt', { prompt, json: !!json, maxTokens: json ? 1600 : 1400 }, { title, signal, onText });
+  if (json) return job.data;
+  return { text: job.result || '' };
 }
 
 // Keep prompts inside provider limits; tells the caller whether text was cut.
-export const MAX_SOURCE = 120000;
+// The on-device model reads long text in parts (aiEngine.js); one prompt holds about this much.
+export const MAX_SOURCE = 10000;
 export function clip(text, max = MAX_SOURCE) {
   const t = String(text || '');
   return t.length > max ? { text: t.slice(0, max), clipped: true, total: t.length } : { text: t, clipped: false, total: t.length };

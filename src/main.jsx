@@ -9,7 +9,10 @@ import { Editor } from './components/Editor.jsx';
 import { Toasts } from './components/ui.jsx';
 import { seedIfNeeded } from './store.js';
 import * as store from './store.js';
-import * as wx from './writexAI.js';
+import * as engine from './aiEngine.js';
+import * as localAI from './localAI.js';
+import * as src from './sources.js';
+import { loadLib } from './exporters.js';
 import { setupQuill } from './quillSetup.js';
 import { storage, uid } from './util.js';
 import { Icon } from './icons.jsx';
@@ -152,17 +155,17 @@ function App() {
     const go = (e) => {
       const d = e.detail || {};
       if (d.tab) storage.set('writex.thinkTab', d.tab);
+      if (d.settings) { storage.set('writex.libSection', 'settings'); setLibKey(uid('lib')); setSection('write'); }
       setView({ name: 'library', key: uid('v') });
       if (d.section) setSection(d.section);
     };
     window.addEventListener('writex:navigate', go);
     return () => window.removeEventListener('writex:navigate', go);
   }, [setSection]);
-  // Writex AI tasks that were still running when the app closed finish on the
-  // server; follow them again and say when they are done.
+  // On-device tasks stop when the app closes; mark them so they can be run again.
   useEffect(() => {
     if (!ready) return;
-    wx.resumeUnfinished((job) => { if (job.status === 'completed') toast(tr('Writex AI finished: {0}', job.title || tr('task'))); });
+    engine.markInterrupted();
   }, [ready]);
 
   // Hooks for the automated device test (scripts/device-test.mjs)
@@ -234,6 +237,6 @@ applyLang();
 // The Android/iOS app opens in AMOLED black by default; Settings can switch to light or system.
 if (isNative && storage.get('writex.theme', null) == null) storage.set('writex.theme', 'dark');
 if (storage.get('writex.theme', null)) document.documentElement.setAttribute('data-theme', storage.get('writex.theme', null));
-window.__writex = Object.assign(window.__writex || {}, { setLang, setAIServer: (u) => wx.setServerUrl(u) });
+window.__writex = Object.assign(window.__writex || {}, { setLang, aiEngine: engine, localAI, sources: src, loadLib });
 const rootEl = document.getElementById('app');
 window.ReactDOM.createRoot(rootEl).render(<Boundary><App /></Boundary>);

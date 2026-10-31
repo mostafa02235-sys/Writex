@@ -29,3 +29,6 @@ server/.env
 *.db
 *.db-wal
 *.db-shm
+# llama.cpp source is fetched at build time (scripts/fetch-llama.sh)
+android/app/src/main/cpp/llama.cpp/
+android/app/.cxx/

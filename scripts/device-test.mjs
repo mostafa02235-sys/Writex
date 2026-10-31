@@ -189,63 +189,132 @@ async function goHome() {
     return 'shown → hidden while typing → shown after deleting';
   });
 
-  await check('Writex AI: connect to the server', async () => {
+  await check('Writex AI: engine is built into the app', async () => {
     await goHome();
-    adb('reverse', 'tcp:8787', 'tcp:8787');
-    await page.evaluate(() => window.__writex.setAIServer('http://localhost:8787'));
-    await page.locator('.snav-item').nth(3).click(); await sleep(800);
-    await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(1500);
-    const ok = await page.waitForSelector('.wx-dot.ok', { timeout: 20000 }).then(() => true).catch(() => false);
-    if (!ok) throw new Error(await page.evaluate(() => (document.querySelector('.ai-status') || {}).textContent || 'not connected'));
-    return 'connected through localhost:8787';
+    const d = await page.evaluate(() => window.__writex.localAI.device());
+    if (!d.engine) throw new Error('native engine not loaded: ' + d.engineError);
+    return `${d.abi}, ${Math.round(d.totalMem / 1048576)} MB memory, ${d.cores} cores`;
   });
 
-  await check('Writex AI: conversation streams and completes', async () => {
-    if (!(await page.$('#wx-input'))) { await goHome(); await page.locator('.snav-item').nth(3).click(); await sleep(800); await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(800); }
-    await page.fill('#wx-input', 'Hello from Android, write two lines about rain');
+  await check('Writex AI: install the lightweight model from Settings', async () => {
+    await goHome();
+    await page.locator('.snav-item').nth(0).click(); await sleep(500);
+    await page.locator('.subtab').last().click(); await sleep(1500);
+    await page.waitForSelector('[data-model="light"]', { timeout: 20000 });
+    await page.click('[data-model="light"]');
+    await sleep(4000);
+    await shot('12-model-downloading');
+    const t0 = Date.now();
+    for (;;) {
+      const d = await page.evaluate(() => window.__writex.localAI.device());
+      const f = (d.files || []).find((x) => x.file === 'qwen2.5-0.5b-instruct-q4_k_m.gguf');
+      if (f && f.size === 491400032) break;
+      if (Date.now() - t0 > 15 * 60000) throw new Error('download did not finish');
+      await sleep(5000);
+    }
+    await sleep(1500);
+    await shot('13-model-installed');
+    return `installed in ${Math.round((Date.now() - t0) / 1000)} s`;
+  });
+
+  await check('Writex AI: works offline (network switched off)', async () => {
+    adb('shell', 'svc', 'wifi', 'disable'); adb('shell', 'svc', 'data', 'disable');
+    await sleep(3000);
+    await goHome();
+    await page.locator('.snav-item').nth(3).click(); await sleep(800);
+    await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(1200);
+    await page.fill('#wx-input', 'Reply in one short sentence: what is the capital of France?');
     await page.waitForSelector('.wx-composer .tb.accent:not([disabled])', { timeout: 10000 });
     await page.click('.wx-composer .tb.accent');
-    await page.waitForSelector('.wx-msg.bot.completed', { timeout: 60000 });
-    const t = await page.locator('.wx-msg.bot.completed .wx-md').last().innerText();
-    return t.slice(0, 80);
+    await page.waitForFunction(() => { const m = [...document.querySelectorAll('.wx-msg.bot')].pop(); return m && /completed|failed/.test(m.className); }, null, { timeout: 8 * 60000 });
+    const m = page.locator('.wx-msg.bot').last();
+    const cls = await m.getAttribute('class');
+    const text = await m.innerText();
+    await shot('14-offline-answer');
+    if (!/completed/.test(cls)) throw new Error(text);
+    return text.split('\n')[0].slice(0, 120);
+  });
+
+  await check('Writex AI: Arabic', async () => {
+    const job = await page.evaluate(() => window.__writex.aiEngine.runTask('chat', { messages: [{ role: 'user', content: 'اكتب جملة واحدة قصيرة عن البحر.' }], maxTokens: 60 }).then((j) => ({ result: j.result, status: j.status }), (e) => ({ error: e.message })));
+    if (job.error) throw new Error(job.error);
+    if (!/[؀-ۿ]/.test(job.result)) throw new Error('no Arabic in: ' + job.result);
+    return job.result.slice(0, 100);
+  });
+
+  await check('Writex AI: writing assistant task', async () => {
+    const r = await page.evaluate(() => window.__writex.aiEngine.runTask('prompt', { prompt: 'Correct the grammar. Reply with only the corrected sentence: "She go to school every days."', maxTokens: 40 }).then((j) => j.result, (e) => 'ERROR ' + e.message));
+    if (r.startsWith('ERROR')) throw new Error(r);
+    return r.slice(0, 100);
+  });
+
+  await check('Writex AI: PDF analysis (text extracted on the phone)', async () => {
+    const r = await page.evaluate(async () => {
+      const w = window.__writex;
+      await w.loadLib.jspdf();
+      const doc = new window.jspdf.jsPDF();
+      doc.text('Writex Test Report', 20, 20);
+      doc.text('The project budget for 2026 is 4500 dollars.', 20, 35);
+      doc.text('The team has three members: Sara, Omar and Lina.', 20, 45);
+      const file = new File([doc.output('blob')], 'report.pdf', { type: 'application/pdf' });
+      const rec = await w.sources.addFile(file);
+      const t = await w.sources.sourceText({ kind: 'file', id: rec.id });
+      const job = await w.aiEngine.runTask('analyze', { sources: [{ name: 'report.pdf', text: t.text }], question: 'What is the project budget?', maxTokens: 50 });
+      return { extracted: t.text.length, answer: job.result };
+    }).catch((e) => ({ error: e.message }));
+    if (r.error) throw new Error(r.error);
+    if (!/4[ ,.]?500/.test(r.answer)) throw new Error('answer did not contain the budget: ' + r.answer);
+    return `extracted ${r.extracted} chars; answer: ${r.answer.slice(0, 80)}`;
+  });
+
+  await check('Writex AI: long document read in parts with real progress', async () => {
+    const r = await page.evaluate(async () => {
+      const e = window.__writex.aiEngine;
+      e.setScale(700, 800, 40);
+      const para = (n) => `Section ${n}. The river Nile flows north through eleven countries and is about 6650 kilometres long. `.repeat(4) + '\n\n';
+      const text = [1, 2, 3, 4].map(para).join('');
+      const states = [];
+      try {
+        const job = await e.runTask('summarize', { sources: [{ name: 'Nile notes', text }], length: 'short', maxTokens: 60 }, { onState: (j) => states.push(j.status + (j.progress ? ` ${j.progress.done}/${j.progress.total}` : '')) });
+        return { status: job.status, states, result: job.result, chars: text.length };
+      } finally { e.setScale(9000, 10000, 400); }
+    }).catch((err) => ({ error: err.message }));
+    if (r.error) throw new Error(r.error);
+    const parts = r.states.filter((s) => s.startsWith('analyzing'));
+    if (!parts.length) throw new Error('no staged reading: ' + r.states.join(', '));
+    return `${r.chars} chars; ${[...new Set(parts)].join(' → ')}; ${r.result.slice(0, 60)}`;
+  });
+
+  await check('Writex AI: structured output (flashcards as JSON)', async () => {
+    const r = await page.evaluate(() => window.__writex.aiEngine.runTask('flashcards', { sources: [{ name: 'Notes', text: 'Photosynthesis happens in chloroplasts. Water boils at 100 degrees Celsius at sea level.' }], count: 2, maxTokens: 160 }).then((j) => j.data, (e) => ({ error: e.message })));
+    if (!r || r.error) throw new Error(r ? r.error : 'no data');
+    if (!Array.isArray(r.cards)) throw new Error('unexpected JSON: ' + JSON.stringify(r).slice(0, 200));
+    return `${r.cards.length} cards`;
   });
 
   await check('Writex AI: cancel a running task', async () => {
-    await page.fill('#wx-input', '[slow] write a very long essay about the sea and the mountains and the rivers');
-    await page.waitForSelector('.wx-composer .tb.accent:not([disabled])', { timeout: 10000 });
-    await page.click('.wx-composer .tb.accent');
-    await page.waitForSelector('.wx-task .btn', { timeout: 30000 });
-    await sleep(1500);
-    // The message re-renders as text streams in, so press the button from inside the page
-    await page.evaluate(() => { const b = document.querySelector('.wx-task .btn'); if (b) b.click(); });
-    await page.waitForSelector('.wx-msg.bot.cancelled', { timeout: 30000 });
-    return 'cancelled';
+    const r = await page.evaluate(async () => {
+      const e = window.__writex.aiEngine;
+      const ctl = new AbortController();
+      const p = e.runTask('chat', { messages: [{ role: 'user', content: 'Write a very long story about the sea, at least 600 words.' }], maxTokens: 800 }, { signal: ctl.signal });
+      setTimeout(() => ctl.abort(), 6000);
+      const t0 = Date.now();
+      try { await p; return { status: 'completed' }; } catch (err) { return { status: err.job && err.job.status, code: err.code, ms: Date.now() - t0 }; }
+    });
+    if (r.status !== 'cancelled') throw new Error(JSON.stringify(r));
+    return `stopped after ${Math.round(r.ms / 100) / 10} s`;
   });
 
-  await check('Writex AI: summarise an attached document and insert the result', async () => {
-    if (!(await page.$('#wx-input'))) { await goHome(); await page.locator('.snav-item').nth(3).click(); await sleep(800); await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(800); }
-    await page.click('.wx-composer .tb.lg');
-    await page.waitForSelector('.bsheet .spick .mrow', { timeout: 15000 });
-    await page.locator('.bsheet .spick .mrow').first().click();
-    await sleep(600);
-    await page.click('[data-action="summarize"]');
-    await page.waitForFunction(() => { const m = [...document.querySelectorAll('.wx-msg.bot')].pop(); return m && /completed|failed/.test(m.className); }, null, { timeout: 90000 });
-    const cls = await page.locator('.wx-msg.bot').last().getAttribute('class');
-    if (!/completed/.test(cls)) throw new Error(await page.locator('.wx-msg.bot').last().innerText());
-    await shot('10-writex-ai');
-    await page.locator('.wx-msg.bot.completed .wx-actions .btn').nth(1).click();
-    await page.waitForSelector('.bsheet .mlist .mrow', { timeout: 10000 });
-    const title = await page.locator('.bsheet .mlist .mrow').first().innerText();
-    await page.locator('.bsheet .mlist .mrow').first().click();
-    await page.waitForSelector('.modal .btn.primary', { timeout: 5000 });
-    await page.click('.modal .btn.primary');
-    await sleep(1200);
-    const inserted = await page.evaluate(() => new Promise((r) => { const q = indexedDB.open('qalam-docs'); q.onsuccess = () => { const a = q.result.transaction('docs').objectStore('docs').getAll(); a.onsuccess = () => r(a.result.some((d) => JSON.stringify(d.delta || '').includes('TEST MODEL'))); }; }));
-    if (!inserted) throw new Error('result not found in the document');
-    return 'inserted into ' + title.split('\n')[0];
+  await check('Writex AI: memory is released when unloaded', async () => {
+    await page.evaluate(() => window.__writex.localAI.unload());
+    await sleep(1000);
+    const d = await page.evaluate(() => window.__writex.localAI.device());
+    if (d.loadedFile) throw new Error('model still loaded');
+    return 'unloaded';
   });
 
   await check('Writex AI button in the editor', async () => {
+    adb('shell', 'svc', 'wifi', 'enable'); adb('shell', 'svc', 'data', 'enable');
     await goHome();
     await page.locator('.snav-item').nth(0).click(); await sleep(500);
     await page.locator('.subtab').first().click(); await sleep(400);
@@ -253,7 +322,7 @@ async function goHome() {
     await page.waitForSelector('[data-test="wx-fab"]', { timeout: 20000 });
     await page.click('[data-test="wx-fab"]');
     await page.waitForSelector('.bsheet .ai-tool', { timeout: 10000 });
-    await shot('11-editor-ai');
+    await shot('15-editor-ai');
     await back(); await sleep(400); await back(); await sleep(400);
     if (await page.$('.qwrap .ql-editor')) await back();
     return 'opens the assistant';
