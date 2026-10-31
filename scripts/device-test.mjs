@@ -47,6 +47,11 @@ async function launch() {
   return attach();
 }
 const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(900); };
+// Leaves any editor, sheet or dialog so each check starts from the main screens
+async function goHome() {
+  for (let i = 0; i < 5 && !(await page.$('.shell')); i++) { await page.evaluate(() => document.activeElement && document.activeElement.blur()).catch(() => {}); await back(); }
+  for (let i = 0; i < 3 && (await page.$('.sheet-scrim, .scrim')); i++) await back();
+}
 
 (async () => {
   [device] = await android.devices();
@@ -153,6 +158,7 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   });
 
   await check('Placeholder hides while typing with the Android keyboard', async () => {
+    await goHome();
     await page.locator('.snav-item').nth(0).click(); await sleep(500);
     await page.locator('.subtab').first().click(); await sleep(400);
     await page.click('[data-test="new-doc"]');
@@ -184,6 +190,7 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   });
 
   await check('Writex AI: connect to the server', async () => {
+    await goHome();
     adb('reverse', 'tcp:8787', 'tcp:8787');
     await page.evaluate(() => window.__writex.setAIServer('http://localhost:8787'));
     await page.locator('.snav-item').nth(3).click(); await sleep(800);
@@ -194,6 +201,7 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   });
 
   await check('Writex AI: conversation streams and completes', async () => {
+    if (!(await page.$('#wx-input'))) { await goHome(); await page.locator('.snav-item').nth(3).click(); await sleep(800); await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(800); }
     await page.fill('#wx-input', 'Hello from Android, write two lines about rain');
     await page.click('.wx-composer .tb.accent');
     await page.waitForSelector('.wx-msg.bot.completed', { timeout: 60000 });
@@ -212,6 +220,7 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   });
 
   await check('Writex AI: summarise an attached document and insert the result', async () => {
+    if (!(await page.$('#wx-input'))) { await goHome(); await page.locator('.snav-item').nth(3).click(); await sleep(800); await page.locator('.think-tabs .subtab').nth(0).click(); await sleep(800); }
     await page.click('.wx-composer .tb.lg');
     await page.waitForSelector('.bsheet .spick .mrow', { timeout: 15000 });
     await page.locator('.bsheet .spick .mrow').first().click();
@@ -234,6 +243,7 @@ const back = async () => { adb('shell', 'input', 'keyevent', '4'); await sleep(9
   });
 
   await check('Writex AI button in the editor', async () => {
+    await goHome();
     await page.locator('.snav-item').nth(0).click(); await sleep(500);
     await page.locator('.subtab').first().click(); await sleep(400);
     await page.click('[data-test="new-doc"]');

@@ -31,7 +31,6 @@ export function attachPlaceholder(quill, { getDir } = {}) {
   el.contentEditable = 'false';
   host.appendChild(el);
 
-  let composing = false;
   let shown = null;
   let raf = 0;
 
@@ -52,7 +51,7 @@ export function attachPlaceholder(quill, { getDir } = {}) {
 
   const update = () => {
     raf = 0;
-    const show = !composing && isEditorEmpty(root);
+    const show = isEditorEmpty(root);
     if (show) place();
     if (show !== shown) {
       shown = show;
@@ -68,13 +67,14 @@ export function attachPlaceholder(quill, { getDir } = {}) {
     if (e.inputType && e.inputType.startsWith('insert') && (e.data || e.inputType !== 'insertText')) { el.hidden = true; shown = false; }
     soon();
   };
-  const onCompStart = () => { composing = true; now(); };
-  const onCompEnd = () => { composing = false; soon(); };
+  // A keyboard starting a word hides the hint at once; the next DOM change decides again.
+  const onCompStart = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; } el.hidden = true; shown = false; };
+  const onCompEnd = () => soon();
 
   root.addEventListener('beforeinput', onBeforeInput);
   root.addEventListener('input', soon);
   root.addEventListener('compositionstart', onCompStart);
-  root.addEventListener('compositionupdate', onCompStart);
+  root.addEventListener('compositionupdate', soon);
   root.addEventListener('compositionend', onCompEnd);
   root.addEventListener('blur', onCompEnd);
   const mo = new MutationObserver(soon);
@@ -91,7 +91,7 @@ export function attachPlaceholder(quill, { getDir } = {}) {
       root.removeEventListener('beforeinput', onBeforeInput);
       root.removeEventListener('input', soon);
       root.removeEventListener('compositionstart', onCompStart);
-      root.removeEventListener('compositionupdate', onCompStart);
+      root.removeEventListener('compositionupdate', soon);
       root.removeEventListener('compositionend', onCompEnd);
       root.removeEventListener('blur', onCompEnd);
       if (raf) cancelAnimationFrame(raf);
