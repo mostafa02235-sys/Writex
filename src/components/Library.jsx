@@ -294,7 +294,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
         ) : (
           <>
             <section className="new-block">
-              <button type="button" className="btn primary xl" onClick={() => newFromTemplate('blank')}>
+              <button type="button" data-test="new-doc" className="btn primary xl" onClick={() => newFromTemplate('blank')}>
                 <Icon name="Plus" size={22} /><span>New document</span>
               </button>
               <div className="new-row">

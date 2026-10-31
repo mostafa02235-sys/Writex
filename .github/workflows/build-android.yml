@@ -1,0 +1,215 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  WRITEX_VERSION_CODE: ${{ github.run_number }}
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    outputs:
+      version: ${{ steps.version.outputs.name }}
+      release_signed: ${{ steps.release.outputs.signed }}
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Work out the version
+        id: version
+        run: |
+          base=$(node -p "require('./package.json').version.split('.').slice(0,2).join('.')")
+          echo "name=$base.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+          echo "WRITEX_VERSION_NAME=$base.${{ github.run_number }}" >> "$GITHUB_ENV"
+          mkdir -p ci-logs
+
+      - name: Install dependencies
+        run: set -o pipefail; npm ci --no-audit --no-fund 2>&1 | tee ci-logs/npm.txt
+
+      - name: Check translations
+        run: set -o pipefail; npm run i18n:check 2>&1 | tee ci-logs/i18n.txt
+
+      - name: Build the web app
+        run: set -o pipefail; npm run build 2>&1 | tee ci-logs/web.txt
+
+      - name: Sync Capacitor Android
+        run: |
+          set -o pipefail
+          npx cap sync android 2>&1 | tee ci-logs/cap.txt
+          node scripts/apply-android.mjs
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build debug APK
+        working-directory: android
+        run: |
+          set -o pipefail
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee ../ci-logs/gradle-debug.txt
+
+      - name: Build signed release APK and App Bundle (only when signing secrets are set)
+        id: release
+        working-directory: android
+        env:
+          KEYSTORE_BASE64: ${{ secrets.WRITEX_KEYSTORE_BASE64 }}
+          WRITEX_KEYSTORE_PASSWORD: ${{ secrets.WRITEX_KEYSTORE_PASSWORD }}
+          WRITEX_KEY_ALIAS: ${{ secrets.WRITEX_KEY_ALIAS }}
+          WRITEX_KEY_PASSWORD: ${{ secrets.WRITEX_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Release signing::No signing secrets set, so only the debug APK was built. See docs/SIGNING.md."
+            exit 0
+          fi
+          set -o pipefail
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/writex-release.jks"
+          export WRITEX_KEYSTORE_FILE="$RUNNER_TEMP/writex-release.jks"
+          ./gradlew assembleRelease bundleRelease --no-daemon --stacktrace 2>&1 | tee ../ci-logs/gradle-release.txt
+          rm -f "$RUNNER_TEMP/writex-release.jks"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Verify the APK
+        run: |
+          set -e
+          APK=android/app/build/outputs/apk/debug/app-debug.apk
+          test -f "$APK" || { echo "::error::No APK was produced"; exit 1; }
+          size=$(stat -c %s "$APK")
+          [ "$size" -gt 2000000 ] || { echo "::error::APK is suspiciously small ($size bytes)"; exit 1; }
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          "$BT/apksigner" verify --print-certs "$APK" | tee ci-logs/apksigner.txt
+          "$BT/aapt2" dump badging "$APK" | tee ci-logs/badging.txt | grep -E "^package:|application-label:|launchable-activity"
+          grep -q "package: name='com.writex.app'" ci-logs/badging.txt
+          grep -q "application-label:'Writex'" ci-logs/badging.txt
+          unzip -l "$APK" | grep -q "assets/public/index.html" || { echo "::error::Web app missing from APK"; exit 1; }
+          unzip -l "$APK" | grep -q "assets/public/vendor/quill.js" || { echo "::error::Editor engine missing from APK"; exit 1; }
+          mkdir -p dist
+          cp "$APK" dist/Writex-debug.apk
+          if [ -f android/app/build/outputs/apk/release/app-release.apk ]; then
+            "$BT/apksigner" verify android/app/build/outputs/apk/release/app-release.apk
+            cp android/app/build/outputs/apk/release/app-release.apk dist/Writex.apk
+            cp android/app/build/outputs/bundle/release/app-release.aab dist/Writex.aab
+          fi
+          ls -la dist
+          echo "### Writex ${{ steps.version.outputs.name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Debug APK: $(du -h dist/Writex-debug.apk | cut -f1)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Writex-${{ steps.version.outputs.name }}
+          path: dist/*
+          if-no-files-found: error
+
+      - name: Save build logs when something fails
+        if: failure()
+        run: |
+          cd ci-logs
+          git init -q -b ci-results
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "Build ${{ github.run_number }} failed at $(date -u)" > README.md
+          for f in *.txt; do tail -c 60000 "$f" > "$f.tail" && mv "$f.tail" "$f"; done
+          git add -A && git commit -qm "Build logs for run ${{ github.run_number }}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-results
+
+  device-test:
+    name: Install and test on an Android emulator
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download the APK
+        uses: actions/download-artifact@v4
+        with:
+          name: Writex-${{ needs.build.outputs.version }}
+          path: dist
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install the test driver
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: npm install --no-save --no-audit --no-fund playwright@1.48.2
+
+      - name: Enable hardware acceleration for the emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run the app on Android 14
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: node scripts/device-test.mjs dist/Writex-debug.apk device-results
+
+      - name: Publish test results (screenshots and logs)
+        if: always()
+        run: |
+          mkdir -p device-results && cd device-results
+          git init -q -b ci-results
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "Device test for build ${{ github.run_number }} ($(date -u))" > README.md
+          git add -A && git commit -qm "Device test results for run ${{ github.run_number }}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-results
+
+  publish:
+    name: Publish the APK as a release
+    needs: [build, device-test]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Writex-${{ needs.build.outputs.version }}
+          path: dist
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          cd dist
+          # Writex.apk is always the file to install: the signed release when signing is
+          # set up, otherwise the debug build.
+          [ -f Writex.apk ] || cp Writex-debug.apk Writex.apk
+          notes="Install **Writex.apk** on your Android phone (allow installs from your browser or Files app when asked). Built from ${GITHUB_SHA::7} and tested on an Android 14 emulator."
+          gh release create "v$VERSION" ./* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "Writex $VERSION" --notes "$notes" --latest

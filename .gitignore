@@ -19,3 +19,6 @@ keystore.properties
 # iOS (not yet added)
 ios/App/Pods/
 ios/App/App/public/
+
+# The shared debug key is intentionally committed (see android/app/build.gradle)
+!android/app/debug.keystore

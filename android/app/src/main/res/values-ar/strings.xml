@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <!-- The product name stays "Writex" in every language -->
+    <string name="app_name">Writex</string>
+    <string name="title_activity_main">Writex</string>
+</resources>

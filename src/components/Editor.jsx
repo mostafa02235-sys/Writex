@@ -923,6 +923,13 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
   const redo = () => { const q = Q(); if (q) { q.history.redo(); after(); } };
 
   /* ---------- exports ---------- */
+  // Test hook used by scripts/device-test.mjs on the Android emulator
+  const runExportRef = useRef(null);
+  useEffect(() => {
+    const hooks = (window.__writex = window.__writex || {});
+    hooks.exportCurrent = (kind) => runExportRef.current && runExportRef.current(kind);
+    return () => { delete hooks.exportCurrent; };
+  }, []);
   const runExport = async (kind) => {
     const q = Q(); if (!q) return;
     await persist();
@@ -968,6 +975,8 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       toast('Export failed: ' + e.message, 'error');
     }
   };
+
+  runExportRef.current = runExport;
 
   const importInto = async (file) => {
     if (!file) return;

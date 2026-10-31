@@ -8,6 +8,7 @@ import { CreateSection } from './components/CreateSection.jsx';
 import { Editor } from './components/Editor.jsx';
 import { Toasts } from './components/ui.jsx';
 import { seedIfNeeded } from './store.js';
+import * as store from './store.js';
 import { setupQuill } from './quillSetup.js';
 import { storage, uid } from './util.js';
 import { Icon } from './icons.jsx';
@@ -143,6 +144,19 @@ function App() {
   }, []);
   useEffect(() => { setSystemBars(theme); }, [theme]);
   useEffect(() => { if (ready || fatal) hideSplash(); }, [ready, fatal]);
+
+  // Hooks for the automated device test (scripts/device-test.mjs)
+  useEffect(() => {
+    const hooks = (window.__writex = window.__writex || {});
+    hooks.exportLatest = async (kind) => {
+      const docs = await store.listDocs();
+      if (!docs.length) throw new Error('No documents');
+      openDoc(docs[0].id);
+      for (let i = 0; i < 100 && !hooks.exportCurrent; i++) await new Promise((r) => setTimeout(r, 100));
+      await new Promise((r) => setTimeout(r, 1500));
+      return hooks.exportCurrent(kind);
+    };
+  }, [openDoc]);
 
   const askAbout = useCallback((ref) => { setThink({ ref, t: Date.now() }); setSection('think'); setView({ name: 'library', key: uid('v') }); }, [setSection]);
 

@@ -61,17 +61,23 @@ for n in ('ic_launcher', 'ic_launcher_round'):
     open(f'{RES}/mipmap-anydpi-v26/{n}.xml', 'w').write(adaptive_xml)
 os.makedirs(f'{RES}/values', exist_ok=True)
 open(f'{RES}/values/ic_launcher_background.xml', 'w').write(
-    '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#000000</color>\n</resources>\n')
+    '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#000000</color>\n    <color name="splash_background">#000000</color>\n</resources>\n')
 
-# Splash: Android 12+ system splash icon (inner 2/3 of the canvas is visible)
+# Splash icon. Android 12+ shows a 288dp canvas and keeps only a 192dp circle,
+# so the tile takes half the canvas. Older Android versions draw it centred on black
+# through drawable/splash.xml.
 for d, k in DENS.items():
-    save(framed(0.58), f'{RES}/drawable-{d}/splash_icon.png', int(288 * k / 1.5))
-# Legacy full-screen splash (Android 11 and older)
-splash = Image.new('RGB', (1280, 1280), (0, 0, 0))
-logo = framed(0.86).resize((420, 420), Image.LANCZOS)
-splash.paste(logo, (430, 430))
+    save(framed(0.50), f'{RES}/drawable-{d}/splash_icon.png', int(288 * k))
 os.makedirs(f'{RES}/drawable', exist_ok=True)
-splash.save(f'{RES}/drawable/splash.png', optimize=True)
+open(f'{RES}/drawable/splash.xml', 'w').write('''<?xml version="1.0" encoding="utf-8"?>
+<!-- Launch screen: the Writex icon centred on AMOLED black (never stretched) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/splash_background" />
+    <item android:width="160dp" android:height="160dp" android:gravity="center">
+        <bitmap android:src="@drawable/splash_icon" android:gravity="fill" />
+    </item>
+</layer-list>
+''')
 
 # Web / store icons
 os.makedirs(WEB, exist_ok=True)
