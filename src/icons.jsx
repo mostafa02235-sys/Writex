@@ -1,4 +1,8 @@
 import React from './react.js';
+import { isArabic } from './i18n.js';
+
+// Arrows that mean back/forward point the other way in the Arabic interface
+const FLIP = new Set(['ArrowLeft', 'ArrowRight', 'ChevronLeft', 'ChevronRight', 'ChevronsLeft', 'ChevronsRight']);
 
 // Lucide icons (loaded as a UMD global) rendered as React SVG.
 const cache = {};
@@ -39,7 +43,7 @@ export function Icon({ name, size = 18, stroke = 1.75, className, style }) {
     })
     : [React.createElement('circle', { key: 0, cx: 12, cy: 12, r: 4 })];
   return (
-    <svg className={'ico ' + (className || '')} style={style} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg className={'ico ' + (isArabic && FLIP.has(name) ? 'icon-flip ' : '') + (className || '')} style={style} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
       strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{kids}</svg>
   );
 }

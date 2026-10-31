@@ -8,6 +8,7 @@ import * as src from '../sources.js';
 import { complete, clip, aiErrorText } from '../ai.js';
 import { fmtDate, uid } from '../util.js';
 import { tr, trn } from '../i18n.js';
+import { locale } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 const NEW_PER_DAY = 20;
@@ -221,7 +222,7 @@ export function LearnTab({ toast, request, aiOk, aiMessage }) {
   const masteredN = cards.filter(learn.mastered).length;
   const attempts = quizzes.flatMap((q) => q.attempts || []).sort((a, b) => b.at - a.at).slice(0, 10);
   const avg = attempts.length ? Math.round((attempts.reduce((s, a) => s + a.score / a.total, 0) / attempts.length) * 100) : null;
-  const days14 = Array.from({ length: 14 }, (_, i) => { const t = now - (13 - i) * 86400000; const k = store.dayKey(t); const d = act[k] || {}; return { k, n: (d.reviews || 0) + (d.answered || 0), lbl: new Date(t).toLocaleDateString(undefined, { weekday: 'narrow' }) }; });
+  const days14 = Array.from({ length: 14 }, (_, i) => { const t = now - (13 - i) * 86400000; const k = store.dayKey(t); const d = act[k] || {}; return { k, n: (d.reviews || 0) + (d.answered || 0), lbl: new Date(t).toLocaleDateString(locale, { weekday: 'narrow' }) }; });
   const max14 = Math.max(1, ...days14.map((d) => d.n));
   const nextDue = cards.filter((c) => !learn.isNew(c)).sort((a, b) => a.due - b.due)[0];
 
@@ -275,7 +276,7 @@ export function LearnTab({ toast, request, aiOk, aiMessage }) {
       <section className="revise-card">
         <div>
           <b className="tnum">{queue.length ? trn(queue.length, '{0} card to review', '{0} cards to review') : cards.length ? tr('All caught up') : tr('Start learning')}</b>
-          <span>{queue.length ? tr('Daily revision keeps what you learn.') : nextDue ? tr('Next review {0}', new Date(nextDue.due).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'short' })) : tr('Make flashcards from any document.')}</span>
+          <span>{queue.length ? tr('Daily revision keeps what you learn.') : nextDue ? tr('Next review {0}', new Date(nextDue.due).toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'short' })) : tr('Make flashcards from any document.')}</span>
         </div>
         {queue.length > 0 && <button type="button" className="btn primary" onClick={() => setMode({ review: queue })}><Icon name="Play" size={16} />{tr('Review now')}</button>}
       </section>

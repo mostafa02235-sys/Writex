@@ -16,10 +16,13 @@ import { importDOCX } from '../exporters.js';
 import { fontByStack } from '../constants.js';
 import { setLang, langPref } from '../i18n.js';
 import { tr, trn } from '../i18n.js';
+import { locale } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 // Stored on documents in English; shown with tr()
 export const CATEGORIES = ['Personal', 'Work', 'School', 'Creative', 'Other'];
+const CAT_LABEL = { Personal: tr('Personal'), Work: tr('Work'), School: tr('School'), Creative: tr('Creative'), Other: tr('Other') };
+const catLabel = (c) => CAT_LABEL[c] || c;
 
 function Paper({ html, settings, className }) {
   const s = settings || {};
@@ -220,7 +223,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
             <span className="chips">
               {d.example && <span className="chip">{tr('Example')}</span>}
               {d.locked && <span className="chip"><Icon name="Lock" size={11} />{tr('Private')}</span>}
-              {d.category && <span className="chip">{tr(d.category)}</span>}
+              {d.category && <span className="chip">{catLabel(d.category)}</span>}
               {d.subjectId && subjects.find((x) => x.id === d.subjectId) && <span className="chip" style={{ '--sc': subjects.find((x) => x.id === d.subjectId).color }}><i className="chip-dot" /><span dir="auto">{subjects.find((x) => x.id === d.subjectId).name}</span></span>}
               {d.folderId && folderName(d.folderId) && <span className="chip"><Icon name="Folder" size={12} /><span dir="auto">{folderName(d.folderId)}</span></span>}
             </span>
@@ -267,7 +270,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   for (let i = 0; i < 7; i++) weekWords += daysMap[store.dayKey(Date.now() - i * 86400000)] || 0;
   for (let i = daysMap[today] ? 0 : 1; i < 400; i++) { if (daysMap[store.dayKey(Date.now() - i * 86400000)]) streak++; else break; }
   const totalWords = (docs || []).reduce((n, d) => n + (d.words || 0), 0);
-  const week = Array.from({ length: 7 }, (_, i) => { const t = Date.now() - (6 - i) * 86400000; return { k: store.dayKey(t), d: new Date(t).toLocaleDateString(undefined, { weekday: 'narrow' }), n: daysMap[store.dayKey(t)] || 0 }; });
+  const week = Array.from({ length: 7 }, (_, i) => { const t = Date.now() - (6 - i) * 86400000; return { k: store.dayKey(t), d: new Date(t).toLocaleDateString(locale, { weekday: 'narrow' }), n: daysMap[store.dayKey(t)] || 0 }; });
   const weekMax = Math.max(1, ...week.map((w) => w.n));
   const homeResults = q ? search(docs || [], q) : null;
 
@@ -374,7 +377,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           <button type="button" className="fchip add" onClick={() => setDialog({ kind: 'new-folder' })}><Icon name="Plus" size={14} />{tr('Folder')}</button>
         </div>
         <div className="fchips sm" role="group" aria-label={tr('Filter')}>
-          {[['none', tr('Everything')], ['fav', tr('★ Favorites')], ['private', tr('Private')], ...CATEGORIES.map((c) => ['cat:' + c, tr(c)])].map(([k, l]) => (
+          {[['none', tr('Everything')], ['fav', tr('★ Favorites')], ['private', tr('Private')], ...CATEGORIES.map((c) => ['cat:' + c, catLabel(c)])].map(([k, l]) => (
             <button type="button" key={k} className={'fchip' + (filter === k ? ' on' : '')} aria-pressed={filter === k} onClick={() => setFilter(k)}>{l}</button>
           ))}
         </div>
@@ -540,7 +543,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           <div className="set-card">
             <div className="set-row">
               <span className="set-label">{trn((docs || []).length, '{0} document', '{0} documents')} · {trn(folders.length, '{0} folder', '{0} folders')}
-                <small>{persistent ? tr('Saved on this device in this browser. Export to PDF or Word to keep a copy elsewhere.') : tr("This view can't keep data, so documents last until you close it.")}</small>
+                <small>{persistent ? tr('Saved on this device. Export to PDF or Word to keep a copy elsewhere.') : tr("This view can't keep data, so documents last until you close it.")}</small>
               </span>
               <Icon name={persistent ? 'HardDrive' : 'TriangleAlert'} size={20} />
             </div>
@@ -594,7 +597,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           <div className="mlist">
             {[null, ...CATEGORIES].map((c) => (
               <button type="button" key={c || 'none'} className={'mrow' + ((ad.category || null) === c ? ' on' : '')} onClick={() => { patchDoc(ad, { category: c }); closeActions(); }}>
-                <span className="mrow-label">{c ? tr(c) : tr('No category')}</span>{(ad.category || null) === c && <Icon name="Check" size={18} />}
+                <span className="mrow-label">{c ? catLabel(c) : tr('No category')}</span>{(ad.category || null) === c && <Icon name="Check" size={18} />}
               </button>
             ))}
           </div>

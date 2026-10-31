@@ -116,7 +116,7 @@ function App() {
   useEffect(() => { initNative({ theme }); }, []);
   useEffect(() => {
     (async () => {
-      if (!window.Quill) { setFatal(tr('The editor engine could not be loaded. Check your internet connection and reload.')); return; }
+      if (!window.Quill) { setFatal(tr('The editor engine could not be loaded. Restart the app, or reload the page.')); return; }
       try { setupQuill(); } catch (e) { setFatal(tr('The editor could not start: {0}', e.message)); return; }
       try { setPersistent(await seedIfNeeded()); } catch (e) { setPersistent(false); }
       setReady(true);
@@ -202,7 +202,7 @@ class Boundary extends React.Component {
       return (
         <div className="ed-error">
           <p>{tr('Something went wrong:')}{' '}{String(this.state.err.message || this.state.err)}</p>
-          <p className="muted-p">{tr('Your documents are safe in this browser.')}</p>
+          <p className="muted-p">{tr('Your documents are safe on this device.')}</p>
           <button type="button" className="btn primary" onClick={() => this.setState({ err: null })}>{tr('Try again')}</button>
         </div>
       );

@@ -16,6 +16,7 @@ export const LANGS = [
   { id: 'Spanish', label: tr('Español') }, { id: 'Turkish', label: tr('Türkçe') }, { id: 'German', label: tr('Deutsch') },
 ];
 export const TONES = ['Formal', 'Friendly', 'Academic', 'Confident', 'Simple', 'Persuasive'];
+export const TONE_LABEL = { Formal: tr('Formal'), Friendly: tr('Friendly'), Academic: tr('Academic'), Confident: tr('Confident'), Simple: tr('Simple'), Persuasive: tr('Persuasive') };
 
 // kind: 'replace' — result can replace the source text; 'insert' — result is new content
 export const TASKS = [

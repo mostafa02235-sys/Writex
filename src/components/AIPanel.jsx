@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from '../react.js';
 import { Icon } from '../icons.jsx';
 import { Sheet, Seg } from './ui.jsx';
-import { TASKS, LANGS, TONES, PROVIDERS, getAIConfig, setAIConfig, providerStatus, runTask, aiErrorText } from '../ai.js';
+import { TASKS, LANGS, TONES, PROVIDERS, getAIConfig, setAIConfig, providerStatus, runTask, aiErrorText, TONE_LABEL } from '../ai.js';
 import { diffWords } from '../diff.js';
 import { tr } from '../i18n.js';
 
@@ -211,7 +211,7 @@ export function AIPanel({ open, onClose, quill, lastRange, toast, setTitle, init
         )}
         {task && task.option === 'tone' && (
           <section className="msec"><h3>{tr('Tone')}</h3>
-            <div className="mchips">{TONES.map((t) => <button type="button" key={t} className={'mchip' + (tone === t ? ' on' : '')} onMouseDown={nd} onClick={() => setTone(t)}>{tr(t)}</button>)}</div>
+            <div className="mchips">{TONES.map((t) => <button type="button" key={t} className={'mchip' + (tone === t ? ' on' : '')} onMouseDown={nd} onClick={() => setTone(t)}>{TONE_LABEL[t] || t}</button>)}</div>
           </section>
         )}
         <button type="button" className="btn primary block ai-run" disabled={!task || !status.ready || (scope === 'selection' && !hasSel)} onMouseDown={nd} onClick={() => run()}>

@@ -5,6 +5,7 @@ import { uid, loadScript } from './util.js';
 import { libUrls, vendorUrl } from './vendor.js';
 import { loadLib } from './exporters.js';
 import { sessionKeys } from './crypto.js';
+const fillIn = (s, ...a) => s.replace(/\{(\d+)\}/g, (m, i) => a[i]);
 import { tr } from './i18n.js';
 
 export const FILE_TYPES = {
@@ -119,7 +120,7 @@ export async function sourceText(ref, onProgress) {
   else if (f.type === 'pdf') {
     const pdf = await openPdf(data);
     pages = await pdfPageTexts(pdf, onProgress);
-    text = pages.map((t, i) => tr('[Page {0}]\n{1}', i + 1, t)).join('\n\n');
+    text = pages.map((t, i) => fillIn('[Page {0}]\n{1}', i + 1, t)).join('\n\n');
     if (!pages.join('').trim()) throw new Error(tr('This PDF has no selectable text (it may be scanned images), so it cannot be read as text.'));
   } else throw new Error(tr('Images have no text to read. Quick Capture can turn images into text in a later update.'));
   text = text.trim();

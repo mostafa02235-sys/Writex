@@ -1187,3 +1187,29 @@ kbd { font-family: ui-monospace, Menlo, monospace; font-size: 12px; padding: 3px
   .mbar { height: 48px; }
   .bsheet { max-height: calc(100% - var(--kb, 0px) - 16px); }
 }
+
+/* ---------- Arabic interface (right-to-left) ----------
+   Flex and grid layouts mirror automatically from <html dir="rtl">; these rules
+   mirror the few places that use physical left/right. Document pages keep their
+   own direction (set per document and per paragraph), never the interface's. */
+html[dir="rtl"] body { font-family: 'IBM Plex Sans Arabic', var(--font-ui, system-ui), sans-serif; }
+html[dir="rtl"] .zoom-box, html[dir="rtl"] .stack { direction: ltr; }
+html[dir="rtl"] .lib-side, html[dir="rtl"] .bnav, html[dir="rtl"] .snav { border-right: 0; border-left: 1px solid var(--line); }
+html[dir="rtl"] .export-pop { right: auto; left: 0; }
+html[dir="rtl"] .find-panel { right: auto; left: max(16px, env(safe-area-inset-left, 0px)); }
+html[dir="rtl"] .ed.m .find-panel { left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); }
+html[dir="rtl"] .mfab-wrap { right: auto; left: max(16px, env(safe-area-inset-left, 0px)); }
+html[dir="rtl"] .mbar .hide-btn { border-left: 0; border-right: 1px solid var(--line); }
+html[dir="rtl"] .switch::before { left: auto; right: 3px; }
+html[dir="rtl"] .switch:checked::before { transform: translateX(-20px); }
+html[dir="rtl"] .stepper small { margin-left: 0; margin-right: 1px; }
+html[dir="rtl"] .draw-title { padding-left: 0; padding-right: 4px; }
+html[dir="rtl"] .icon-flip { transform: scaleX(-1); }
+@media (min-width: 761px) {
+  html[dir="rtl"] .bsheet.sheet-ai, html[dir="rtl"] .bsheet.sheet-tall { right: auto; left: 16px; }
+}
+@media (max-width: 760px), (pointer: coarse) and (max-height: 520px) {
+  html[dir="rtl"] .snav, html[dir="rtl"] .bnav { border-left: 0; }
+}
+/* Numbers, file sizes and shortcuts read left-to-right inside Arabic text */
+html[dir="rtl"] kbd, html[dir="rtl"] .tnum { unicode-bidi: isolate; }

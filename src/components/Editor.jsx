@@ -1054,7 +1054,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       const k = e.key.toLowerCase();
       if (k === 'f' && !e.shiftKey) { e.preventDefault(); setFind({ mode: 'find', t: Date.now() }); }
       else if (k === 'h') { e.preventDefault(); setFind({ mode: 'replace', t: Date.now() }); }
-      else if (k === 's') { e.preventDefault(); saveSoon.cancel(); persist(); toast(tr('All changes are saved in this browser')); }
+      else if (k === 's') { e.preventDefault(); saveSoon.cancel(); persist(); toast(tr('All changes are saved on this device')); }
       else if (k === 'p') { e.preventDefault(); runExport('pdf'); }
     };
     window.addEventListener('keydown', key);

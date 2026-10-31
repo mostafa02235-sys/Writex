@@ -1,6 +1,7 @@
 import React, { useMemo } from '../../react.js';
 import { loadLib } from '../../exporters.js';
 import { AR_RE } from '../../util.js';
+const fillIn = (s, ...a) => s.replace(/\{(\d+)\}/g, (m, i) => a[i]);
 import { tr } from '../../i18n.js';
 
 export const PALETTE = ['#5B7CFA', '#22A06B', '#E5484D', '#F5A524', '#9B5DE5', '#12A4B5', '#E8638C', '#7A869A'];
@@ -170,7 +171,7 @@ export function ChartView({ data, svgRef }) {
         {vals.map((v, i) => {
           const a1 = a0 + (Math.max(0, v) / total) * Math.PI * 2;
           const large = a1 - a0 > Math.PI ? 1 : 0;
-          const p = tr('M{0},{1} L{2},{3} A{4},{5} 0 {6} 1 {7},{8} Z', cx, cy, cx + r * Math.cos(a0), cy + r * Math.sin(a0), r, r, large, cx + r * Math.cos(a1), cy + r * Math.sin(a1));
+          const p = fillIn('M{0},{1} L{2},{3} A{4},{5} 0 {6} 1 {7},{8} Z', cx, cy, cx + r * Math.cos(a0), cy + r * Math.sin(a0), r, r, large, cx + r * Math.cos(a1), cy + r * Math.sin(a1));
           a0 = a1;
           return <path key={i} d={p} fill={PALETTE[i % PALETTE.length]} stroke="#fff" strokeWidth="2" />;
         })}
