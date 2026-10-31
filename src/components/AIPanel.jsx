@@ -223,7 +223,7 @@ export function AIPanel({ open, onClose, quill, lastRange, toast, setTitle, init
   }
 
   return (
-    <Sheet open={open} onClose={() => { stop(); onClose(); }} title={page === 'settings' ? tr('AI settings') : tr('Writing assistant')} actions={actions} className="sheet-ai">
+    <Sheet open={open} onClose={() => { stop(); onClose(); }} title={page === 'settings' ? tr('AI settings') : tr('Writex AI')} actions={actions} className="sheet-ai">
       {body}
     </Sheet>
   );

@@ -10,6 +10,7 @@
 //   these providers only work once the app is deployed elsewhere.
 import { storage } from './util.js';
 import { isNative } from './platform.js';
+import * as wx from './writexAI.js';
 import { tr } from './i18n.js';
 
 export const LANGS = [
@@ -32,6 +33,8 @@ export const TASKS = [
   { id: 'titles', label: tr('Generate titles'), icon: 'Heading', kind: 'titles', ask: 'Suggest 6 short, strong titles for this text, in the same language as the text.' },
   { id: 'notes', label: tr('Notes → paragraphs'), icon: 'NotebookPen', kind: 'replace', ask: 'Turn these rough notes into clear, well-structured professional paragraphs. Same language. Do not invent facts that are not in the notes.' },
   { id: 'tone', label: tr('Change tone'), icon: 'Palette', kind: 'replace', option: 'tone', ask: 'Rewrite the text in a {tone} tone. Keep the meaning and the language.' },
+  { id: 'continue', label: tr('Continue writing'), icon: 'PenLine', kind: 'insert', ask: 'Continue the text naturally from where it ends, in the same language, voice and formatting. Write about two paragraphs. Output only the continuation, without repeating the text.' },
+  { id: 'organize', label: tr('Organise paragraphs'), icon: 'ListTree', kind: 'replace', ask: 'Reorganise the text into a clear, logical order with smooth transitions, merging repeated points. Keep every piece of information, the language and the meaning.' },
   { id: 'explain', label: tr('Explain'), icon: 'Lightbulb', kind: 'insert', ask: 'Explain this text in simple terms for a student: what it means, key terms, and an example. Answer in the same language as the text.' },
 ];
 
@@ -45,12 +48,17 @@ export function buildPrompt(task, text, opts = {}) {
 
 /* ---------- provider settings ---------- */
 export const PROVIDERS = [
+  { id: 'writex', label: 'Writex AI', note: tr('The Writex AI service. Nothing to set up on this device, and no keys are stored in the app.') },
   { id: 'claude', label: 'Claude', note: isNative ? tr('Only available when Writex is opened inside the Claude app.') : tr('Built in. Uses your Claude account; no key needed.') },
   { id: 'openai', label: 'OpenAI', note: tr('Needs your own server endpoint that holds the API key.') },
   { id: 'gemini', label: 'Gemini', note: tr('Needs your own server endpoint that holds the API key.') },
 ];
+const defaultProvider = () => (wx.configured() || !(typeof window !== 'undefined' && window.claude) ? 'writex' : 'claude');
 export function getAIConfig() {
-  return storage.get('writex.ai', { provider: 'claude', endpoints: { openai: '', gemini: '' } });
+  const c = storage.get('writex.ai', null) || { provider: defaultProvider(), endpoints: { openai: '', gemini: '' } };
+  // Earlier versions defaulted to Claude, which only works inside the Claude app
+  if (c.provider === 'claude' && !(typeof window !== 'undefined' && window.claude)) c.provider = 'writex';
+  return c;
 }
 export function setAIConfig(c) { storage.set('writex.ai', c); }
 
@@ -63,6 +71,13 @@ export async function claudeSample() {
 
 // Status for the UI: { ready, message }
 export async function providerStatus(cfg) {
+  if (cfg.provider === 'writex') {
+    if (!wx.configured()) return { ready: false, code: 'not_deployed', message: tr('Writex AI is not connected to a server yet. The app is ready for it: the Writex AI server needs to be deployed once (Settings › Writex AI explains how).') };
+    const h = await wx.health();
+    if (!h.ok) return { ready: false, code: 'offline', message: tr('Could not reach Writex AI. Check your internet connection.') };
+    if (!h.ready) return { ready: false, code: 'no_model', message: tr('The Writex AI server is running but has no AI model connected yet.') };
+    return { ready: true };
+  }
   if (cfg.provider === 'claude') {
     const s = await claudeSample();
     return s ? { ready: true } : { ready: false, message: isNative ? tr('AI is not set up. In the Android app, AI features use your own server: open AI settings, choose OpenAI or Gemini and add your server endpoint.') : tr('Claude is not available in this view. Open the app inside Claude to use the built-in assistant.') };
@@ -83,12 +98,19 @@ const ERR = {
   session_expired: tr('Your Claude session expired. Reload the page.'),
   invalid_json: tr('The answer was not in the expected format. Try again.'),
 };
-export const aiErrorText = (e) => (e && ERR[e.code]) || (e && e.message) || tr('Something went wrong.');
+export const aiErrorText = (e) => (e instanceof wx.AIError ? e.message : (e && ERR[e.code]) || (e && e.message) || tr('Something went wrong.'));
 
 // Run a task. onText receives the whole answer so far.
 export async function runTask({ task, text, opts, signal, onText }) {
   const cfg = getAIConfig();
   const prompt = buildPrompt(task, text, opts);
+  if (cfg.provider === 'writex') {
+    const done = await wx.runJob('prompt', { prompt, quality: text.length > 6000 ? 'best' : undefined }, { title: task.label, signal, onText: task.kind === 'titles' ? undefined : (t) => onText && onText(clean(t)) });
+    if (task.kind === 'titles') {
+      try { return { titles: JSON.parse(String(done.result).match(/\[[\s\S]*\]/)[0]).map(String).slice(0, 8) }; } catch (e) { return { titles: String(done.result || '').split('\n').map((s) => s.replace(/^[-*\d.\s"]+|"$/g, '').trim()).filter(Boolean).slice(0, 8) }; }
+    }
+    return { text: clean(done.result) };
+  }
   if (cfg.provider === 'claude') {
     const sample = await claudeSample();
     if (!sample) throw { code: 'unavailable', message: isNative ? tr('AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.') : tr('Claude is not available in this view.') };
@@ -126,8 +148,15 @@ function clean(t) {
 
 /* ---------- generic helpers used by Think, Create and Learn ---------- */
 // Returns { text } or a parsed JSON value when json: true.
-export async function complete({ prompt, turns, json, onText, signal, tier }) {
+export async function complete({ prompt, turns, json, onText, signal, tier, title }) {
   const cfg = getAIConfig();
+  if (cfg.provider === 'writex') {
+    const done = turns
+      ? await wx.runJob('chat', { messages: turns }, { title, signal, onText })
+      : await wx.runJob('prompt', { prompt, json: !!json, quality: tier === 'quick' ? undefined : (String(prompt).length > 30000 ? 'best' : undefined) }, { title, signal, onText });
+    if (json) return done.data;
+    return { text: done.result || '' };
+  }
   if (cfg.provider === 'claude') {
     const sample = await claudeSample();
     if (!sample) throw { code: 'unavailable', message: isNative ? tr('AI is not set up. Choose OpenAI or Gemini in AI settings and add your server endpoint.') : tr('Claude is not available in this view. Open the app inside Claude to use AI features.') };

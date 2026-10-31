@@ -8,7 +8,7 @@ import { TEMPLATES, STUDY_TEMPLATES, STUDY_TYPES } from '../templates.js';
 import { Study } from './Study.jsx';
 import { PasswordDialog } from './Tools.jsx';
 import { deriveKey, decryptJSON, sessionKeys } from '../crypto.js';
-import { getAIConfig, providerStatus, PROVIDERS } from '../ai.js';
+import { AISettings } from './AISettings.jsx';
 import { HIGHLIGHTS } from '../constants.js';
 import { deltaToHTML, previewFromHTML } from '../quillHtml.js';
 import { fmtDate, readFileAs, storage } from '../util.js';
@@ -89,7 +89,6 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
   const [filter, setFilter] = useState('none');
   const [unlock, setUnlock] = useState(null); // {doc, error}
   const [customHL, setCustomHL] = useState(() => storage.get('writex.customHighlights', []));
-  const [aiState, setAiState] = useState(null);
   const [online, setOnline] = useState(() => navigator.onLine !== false);
   const fileRef = useRef(null);
   const mainRef = useRef(null);
@@ -513,16 +512,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
             </div>
           </div>
         </section>
-        <section className="set-group">
-          <h2>{tr('Writing assistant')}</h2>
-          <div className="set-card">
-            <button type="button" className="set-row btn-row" onClick={async () => { setAiState('checking'); setAiState(await providerStatus(getAIConfig())); }}>
-              <span className="set-label">{tr('Provider:')}{' '}{(PROVIDERS.find((p) => p.id === getAIConfig().provider) || PROVIDERS[0]).label}
-                <small>{aiState === 'checking' ? tr('Checking…') : aiState ? (aiState.ready ? (aiState.warning || tr('Ready to use.')) : aiState.message) : tr('Tap to check whether AI is available. Change providers from the assistant inside a document.')}</small></span>
-              <Icon name="Sparkles" size={18} />
-            </button>
-          </div>
-        </section>
+        <AISettings toast={toast} />
         <section className="set-group">
           <h2>{tr('Sync & offline')}</h2>
           <div className="set-card">

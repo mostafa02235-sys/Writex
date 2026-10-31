@@ -17,7 +17,7 @@ export function SourcePicker({ value, onPick }) {
   return (
     <div className="spick">
       {list.length > 6 && (
-        <label className="search sm"><Icon name="Search" size={16} /><input id="spick-q" type="search" dir="auto" placeholder="Find a document" value={q} onChange={(e) => setQ(e.target.value)} /></label>
+        <label className="search sm"><Icon name="Search" size={16} /><input id="spick-q" type="search" dir="auto" placeholder={tr('Find a document')} value={q} onChange={(e) => setQ(e.target.value)} /></label>
       )}
       <div className="mlist">
         {shown.map((s) => {

@@ -32,9 +32,24 @@ Later versions install over the old one and keep your documents.
 | **Write** | Rich-text editor with A4/Letter pages, headers and footers, page numbers, tables, images, drawings, equations (LaTeX), footnotes, citations (APA/MLA), table of contents, cover pages, find and replace, version history, crash recovery, password protection (AES-256), templates and study notebooks |
 | **Read** | Opens PDF, Word (.docx), text and image files, with zoom, dark pages, search, read-aloud and a remembered page. Any file can be converted into an editable document |
 | **Create** | Studio for presentations (with PowerPoint export), mind maps, diagrams, charts, infographics, study summaries and book covers. **Learn** offers spaced-repetition flashcards and quizzes made only from your document |
-| **Think** | Chat with one document; summary, key facts, Q&A, important passages, repeated points, insights and passage explanations |
+| **Think** | **Writex AI**: conversations with attached documents, PDFs and images; suggested actions (summarise, compare, find inconsistencies, extract tables, study guides, difficult quizzes, revision plans, research outlines, write a document); live task progress; and task history. The **document companion** chats with one document. |
+| **Writex AI everywhere** | A floating Writex AI button in the editor (works on the selected text, the paragraph or the whole document, and never replaces text without confirmation). Writex AI also powers Studio, Learn and the companion. |
 
 Exports: **PDF, Word (.docx), HTML, plain text, PowerPoint (.pptx) and PNG**. In the app, exported files are saved to **Documents › Writex** on your phone, and you can send any document through the Android share menu.
+
+## Writex AI
+
+Writex has its own AI service: [`server/`](server/) in this repository.
+
+- **Tasks run as jobs.** The app sends tasks; the server runs each one as a job saved in a database.
+- **Long documents are read in stages.** You see real progress, such as "Analysing part 4 of 11", and the answer streams in as it is written.
+- **Jobs survive interruptions.** You can cancel or retry a job, and it keeps running if the app is closed.
+- **Model routing.** Each task goes to a suitable model (OpenAI, Gemini or self-hosted open-source models), so users don't need to know or choose one.
+- **Keys stay on the server.** Provider keys never reach the app.
+
+Writex does not train its own model: the server is Writex's own platform layer on top of the providers you connect.
+
+To turn it on, deploy the server once and set the `WRITEX_AI_URL` variable in GitHub. The steps are in [docs/AI_BACKEND.md](docs/AI_BACKEND.md), and the endpoints are in [docs/API.md](docs/API.md). Until a server is connected, the app says so clearly, and everything that doesn't need AI keeps working.
 
 ## Languages
 
@@ -100,8 +115,18 @@ Other commands:
    - Presses the Android back button, restarts the app and checks the document is still there.
    - Switches to Arabic, exports a PDF and a DOCX to `Documents/Writex`, and rotates to landscape.
    - Screenshots and logs are pushed to the `ci-results` branch.
-3. **Publish**
-   - Creates a GitHub Release with `Writex.apk` only after both jobs succeed.
+3. **Test the Writex AI server**: runs the server's API tests.
+4. **Publish**
+   - Creates a GitHub Release with `Writex.apk` only after all jobs succeed.
+
+The emulator job also starts a Writex AI server with the automated-test model and checks the real app against it:
+- connection;
+- a streamed answer;
+- cancelling a task;
+- summarising a document and inserting the result;
+- the editor's Writex AI button.
+
+It also checks the empty-document hint with real keyboard input: the hint disappears while typing and comes back when the document is emptied.
 
 If signing secrets are set (see [docs/SIGNING.md](docs/SIGNING.md)), the workflow also builds a signed release APK and an **Android App Bundle (.aab)** for Google Play.
 
@@ -118,13 +143,17 @@ styles/app.css       all styles, including the AMOLED theme and RTL rules
 web/                 app HTML shell, web manifest and icons
 assets/              supplied icon artwork and generated Android resources
 android/             Capacitor Android project (open in Android Studio)
+server/              Writex AI service (Node.js, SQLite): API, job queue, document pipeline, model adapters, migrations, tests
+  src/ai/            task catalogue, model registry/router, OpenAI · Gemini · self-hosted adapters
+  src/jobs/          persistent job queue and staged runner
+  src/db/migrations/ database schema
 scripts/             build, icon, translation-check and device-test scripts
 docs/                signing, iOS and maintenance notes
 ```
 
 ## Known limitations
 
-- **AI features** (writing assistant, Think, AI generation in Create) need a configured provider. The built-in Claude provider only works inside the Claude app. In the Android app, AI works once you enter your own server endpoint for OpenAI or Gemini in the assistant settings. The app never stores API keys. Everything else works without AI: the editor, reader, book covers, blank slides, charts, flashcards you write yourself, and exports.
+- **Writex AI** needs its server deployed once, with at least one model provider (Gemini has a free tier, and self-hosted models are free to run). Until `WRITEX_AI_URL` is set, the app shows "Not connected to a server yet". All non-AI features work without it.
 - **Voice typing and read-aloud** depend on the phone's WebView. Many Android WebViews don't provide speech recognition, and the app says so when it isn't available. The keyboard's microphone button always works.
 - **Scanned PDFs** (images only) can be read but not searched or analysed. There's no text recognition (OCR) yet.
 - **Reminders** show inside the app; phone notifications aren't set up yet.

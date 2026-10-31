@@ -136,6 +136,12 @@ async function buildApp() {
   fs.cpSync(rel('web/icons'), path.join(out, 'icons'), { recursive: true });
   fs.copyFileSync(rel('web/manifest.webmanifest'), path.join(out, 'manifest.webmanifest'));
   fs.copyFileSync(rel('web/index.html'), path.join(out, 'index.html'));
+  // Public build settings. WRITEX_AI_URL is the address of the Writex AI server
+  // (set as a GitHub Actions variable). It is not a secret; provider keys stay on the server.
+  const pkg = JSON.parse(fs.readFileSync(rel('package.json'), 'utf8'));
+  const config = { aiUrl: (process.env.WRITEX_AI_URL || '').trim(), version: process.env.WRITEX_VERSION_NAME || pkg.version };
+  write(path.join(out, 'config.js'), 'window.__WRITEX_CONFIG = ' + JSON.stringify(config) + ';\n');
+  console.log('  Writex AI server:', config.aiUrl || '(not set — the app will explain how to connect one)');
   console.log('www/app.js', kb(js.length));
 }
 

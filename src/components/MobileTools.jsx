@@ -143,7 +143,7 @@ export function MobileToolbar({ ed, open, hidden, setHidden }) {
         <Key icon="ListOrdered" label={tr('Numbered list')} active={f.list === 'ordered'} onClick={() => ed.fmt('list', f.list === 'ordered' ? false : 'ordered')} />
         <Key icon={alignIcon} label={tr('Alignment: ') + curAlign} onClick={cycleAlign} />
         <Key icon="Plus" label={tr('Insert')} onClick={() => open('insert')} />
-        <Key icon="Sparkles" label={tr('Writing assistant')} onClick={() => ed.openPanel('ai')} />
+        <Key icon="Sparkles" label={tr('Writex AI')} onClick={() => ed.openPanel('ai')} />
         <Key icon="Mic" label={ed.listening ? tr('Stop voice typing') : tr('Voice typing')} active={!!ed.listening} onClick={() => (ed.listening ? ed.stopDictation() : ed.startDictation())} />
         {ed.inTable && <Key icon="Table" label={tr('Table tools')} className="ctx" onClick={() => open('table')} />}
         {ed.imgSel && <Key icon="Image" label={tr('Picture tools')} className="ctx" onClick={() => open('picture')} />}

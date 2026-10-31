@@ -3,7 +3,7 @@
 // The database keeps its original name so documents written before the rename to
 // Writex keep loading. It is internal and never shown to people.
 const DB_NAME = 'qalam-docs';
-const VERSION = 3;
+const VERSION = 4;
 let dbp = null;
 let memory = null; // used when IndexedDB is unavailable
 export let persistent = true;
@@ -41,6 +41,9 @@ function open() {
       if (!db.objectStoreNames.contains('quizzes')) db.createObjectStore('quizzes', { keyPath: 'id' });
       if (!db.objectStoreNames.contains('creations')) db.createObjectStore('creations', { keyPath: 'id' });
       if (!db.objectStoreNames.contains('chats')) db.createObjectStore('chats', { keyPath: 'id' });
+      // v4: Writex AI task history and conversations
+      if (!db.objectStoreNames.contains('aijobs')) db.createObjectStore('aijobs', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('aichats')) db.createObjectStore('aichats', { keyPath: 'id' });
     };
     req.onsuccess = () => {
       clearTimeout(timer);
@@ -51,7 +54,7 @@ function open() {
     req.onerror = () => { clearTimeout(timer); persistent = false; resolve(null); };
     req.onblocked = () => { /* an older tab is open; the timer above falls back if it never closes */ };
   }).then((db) => {
-    if (!db) memory = memory || { docs: new Map(), folders: new Map(), meta: new Map(), versions: new Map(), recovery: new Map(), templates: new Map(), subjects: new Map(), files: new Map(), fileData: new Map(), decks: new Map(), cards: new Map(), quizzes: new Map(), creations: new Map(), chats: new Map() };
+    if (!db) memory = memory || { docs: new Map(), folders: new Map(), meta: new Map(), versions: new Map(), recovery: new Map(), templates: new Map(), subjects: new Map(), files: new Map(), fileData: new Map(), decks: new Map(), cards: new Map(), quizzes: new Map(), creations: new Map(), chats: new Map(), aijobs: new Map(), aichats: new Map() };
     return db;
   });
   return dbp;

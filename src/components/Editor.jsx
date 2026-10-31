@@ -7,6 +7,7 @@ import { pageGeometry, DEFAULT_SETTINGS, fontByStack } from '../constants.js';
 import { debounce, countText, clamp, saveFile, savedLabel, safeFilename, readFileAs, downscaleImage, storage } from '../util.js';
 import { isNative, nativeShare, BACKGROUND_EVENT } from '../platform.js';
 import { previewFromRoot } from '../quillHtml.js';
+import { attachPlaceholder } from '../editorPlaceholder.js';
 import { docText, findAll } from '../find.js';
 import { exportPDF, exportDOCX, exportHTML, importDOCX } from '../exporters.js';
 import * as store from '../store.js';
@@ -97,6 +98,8 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
 
   const quillEl = useRef(null);
   const quillRef = useRef(null);
+  const phRef = useRef(null); // empty-document hint (editorPlaceholder.js)
+  const [selLen, setSelLen] = useState(0);
   const stackRef = useRef(null);
   const workRef = useRef(null);
   const lastRange = useRef(null);
@@ -443,7 +446,6 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
             },
           },
         },
-        placeholder: tr('Start writing…  ابدأ الكتابة…'),
       });
       quillRef.current = q;
       q.root.setAttribute('spellcheck', s.spellcheck ? 'true' : 'false');
@@ -459,6 +461,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
         toast(tr('Part of this document could not be displayed.'), 'error');
       }
       q.history.clear();
+      phRef.current = attachPlaceholder(q, { getDir: () => settingsRef.current && settingsRef.current.dir });
       if (d.readOnly) q.enable(false);
       if (importHtml) { dirty.current = true; persist(); toast(tr('Imported “{0}”', d.title)); }
 
@@ -466,6 +469,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
         if (name === 'selection-change') {
           if (a) {
             lastRange.current = a;
+            setSelLen(a.length);
             // image selected?
             if (a.length === 1) {
               const op = q.getContents(a.index, 1).ops[0];
@@ -526,6 +530,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
     return () => {
       disposed = true;
       if (ro) ro.disconnect();
+      if (phRef.current) { phRef.current.destroy(); phRef.current = null; }
       if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener('loadingdone', repaginate);
       saveSoon.cancel();
       if (quillRef.current && docRef.current) {
@@ -541,6 +546,8 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       quillRef.current = null;
     };
   }, [docId]);
+
+  useEffect(() => { if (phRef.current) phRef.current.refresh(); }, [settings.dir]);
 
   // repaginate on geometry / view changes
   useEffect(() => { repaginate(); }, [geo, viewMode, ez, mScale, settings.font, settings.fontSize, settings.lineHeight, repaginate]);
@@ -1355,6 +1362,10 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
           onSubmit={(v) => { const q = Q(); if (q && imgRef.current) q.formatText(imgRef.current.index, 1, 'alt', v, 'user'); }} />
       )}
 
+      {!readOnly && panel !== 'ai' && !reading && (
+        <button type="button" className={'wx-fab' + (selLen > 0 ? ' has-sel' : '')} data-test="wx-fab" aria-label={selLen > 0 ? tr('Ask Writex AI about the selected text') : tr('Writex AI')}
+          onMouseDown={(e) => e.preventDefault()} onClick={() => setPanel('ai')}><Icon name="Sparkles" size={22} /></button>
+      )}
       <AIPanel open={panel === 'ai'} onClose={() => setPanel(null)} quill={Q} lastRange={lastRange} toast={toast}
         setTitle={(t) => { setTitle(t); titleRef.current = t; markDirty(); }} />
       <SourcesSheet open={panel === 'sources'} refs={settings.refs || { style: 'apa', items: [] }} onChange={setRefs} onCite={citeSource} onBibliography={insertBibliography} onClose={() => setPanel(null)} />

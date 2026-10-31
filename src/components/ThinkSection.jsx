@@ -8,6 +8,8 @@ import * as learn from '../learn.js';
 import { complete, clip, providerStatus, getAIConfig, aiErrorText } from '../ai.js';
 import { fmtDate, uid } from '../util.js';
 import { textToDelta } from '../exporters.js';
+import { WritexAIHub, TasksPanel, useAIStatus } from './WritexAIHub.jsx';
+import { storage } from '../util.js';
 import { tr } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
@@ -91,7 +93,7 @@ const asText = (m) => {
   return m.text || '';
 };
 
-export function ThinkSection({ toast, openDoc, openSettings, initial }) {
+function Companion({ toast, openDoc, openSettings, initial }) {
   const [sources, setSources] = useState(null);
   const [ref, setRef] = useState(initial ? initial.ref : null);
   const [doc, setDoc] = useState(null); // {title, text, clipped, total}
@@ -202,7 +204,7 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
             <header className="sec-top"><h1>{tr('Think')}</h1><div className="sec-top-actions"><button type="button" className="tb lg" aria-label={tr('Settings')} onClick={openSettings}><Icon name="Settings" size={20} /></button></div></header>
             <p className="sec-lead">{tr('Pick a document and ask it anything. Every answer comes from the document\'s own text.')}</p>
             {unavailable && <div className="ai-status warn"><Icon name="TriangleAlert" size={16} /><span>{status.message}</span></div>}
-            <label className="search"><Icon name="Search" size={18} /><input id="think-search" type="search" dir="auto" placeholder="Find a document or file" value={q} onChange={(e) => setQ(e.target.value)} /></label>
+            <label className="search"><Icon name="Search" size={18} /><input id="think-search" type="search" dir="auto" placeholder={tr('Find a document or file')} value={q} onChange={(e) => setQ(e.target.value)} /></label>
             {sources === null ? <div className="empty"><span className="spin" />{' '}{tr('Loading…')}</div>
               : !filtered.length ? <div className="empty"><Icon name="FileSearch" size={28} /><p>{tr('No documents yet. Write one, or add files in Read.')}</p></div>
                 : (
@@ -267,6 +269,28 @@ export function ThinkSection({ toast, openDoc, openSettings, initial }) {
             onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} />
           <button type="submit" className="tb lg accent" aria-label={tr('Send')} disabled={!input.trim() || busy || unavailable}><Icon name="ArrowUp" size={20} /></button>
         </form>
+      </div>
+    </div>
+  );
+}
+
+// Think: Writex AI (conversations and tasks), the per-document companion, and task history.
+export function ThinkSection({ toast, openDoc, openSettings, initial }) {
+  const [tab, setTabState] = useState(() => (initial && initial.ref ? 'docs' : storage.get('writex.thinkTab', 'ai')));
+  const setTab = (t) => { setTabState(t); storage.set('writex.thinkTab', t); };
+  useEffect(() => { if (initial && initial.ref) setTab('docs'); }, [initial && initial.t]);
+  const status = useAIStatus();
+  return (
+    <div className="think-shell">
+      <div className="subtabs think-tabs" role="tablist" aria-label={tr('Think')}>
+        <button type="button" role="tab" aria-selected={tab === 'ai'} className={'subtab' + (tab === 'ai' ? ' on' : '')} onClick={() => setTab('ai')}><Icon name="Sparkles" size={16} />{tr('Writex AI')}</button>
+        <button type="button" role="tab" aria-selected={tab === 'docs'} className={'subtab' + (tab === 'docs' ? ' on' : '')} onClick={() => setTab('docs')}><Icon name="MessageSquareText" size={16} />{tr('Document companion')}</button>
+        <button type="button" role="tab" aria-selected={tab === 'tasks'} className={'subtab' + (tab === 'tasks' ? ' on' : '')} onClick={() => setTab('tasks')}><Icon name="ListTodo" size={16} />{tr('Tasks')}</button>
+      </div>
+      <div className="think-body">
+        {tab === 'ai' && <WritexAIHub toast={toast} openDoc={openDoc} openSettings={openSettings} status={status} />}
+        {tab === 'docs' && <Companion toast={toast} openDoc={openDoc} openSettings={openSettings} initial={initial} />}
+        {tab === 'tasks' && <div className="lib-main"><div className="lib-inner"><TasksPanel toast={toast} openDoc={openDoc} /></div></div>}
       </div>
     </div>
   );

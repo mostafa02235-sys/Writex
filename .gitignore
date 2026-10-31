@@ -22,3 +22,10 @@ ios/App/App/public/
 
 # The shared debug key is intentionally committed (see android/app/build.gradle)
 !android/app/debug.keystore
+
+# Writex AI server: local database and secrets
+server/data/
+server/.env
+*.db
+*.db-wal
+*.db-shm

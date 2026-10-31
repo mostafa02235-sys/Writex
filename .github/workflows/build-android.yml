@@ -19,6 +19,23 @@ env:
   WRITEX_VERSION_CODE: ${{ github.run_number }}
 
 jobs:
+  server:
+    name: Test the Writex AI server
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run server tests (API, jobs, streaming, large documents, cancel/retry, rate limits, OpenAI adapter)
+        run: npm test
+      - name: Check migrations apply to a fresh database
+        run: WRITEX_DB_PATH=/tmp/migrate-check.db npm run migrate
+
   build:
     name: Build APK
     runs-on: ubuntu-latest
@@ -51,6 +68,9 @@ jobs:
         run: set -o pipefail; npm run i18n:check 2>&1 | tee ci-logs/i18n.txt
 
       - name: Build the web app
+        env:
+          # Public address of the deployed Writex AI server (Settings › Variables › Actions).
+          WRITEX_AI_URL: ${{ vars.WRITEX_AI_URL }}
         run: set -o pipefail; npm run build 2>&1 | tee ci-logs/web.txt
 
       - name: Sync Capacitor Android
@@ -142,7 +162,7 @@ jobs:
 
   device-test:
     name: Install and test on an Android emulator
-    needs: build
+    needs: [build, server]
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -162,6 +182,14 @@ jobs:
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: npm install --no-save --no-audit --no-fund playwright@1.48.2
+
+      - name: Start a Writex AI server for the test (test model, no real AI provider)
+        run: |
+          cd server
+          WRITEX_ENABLE_TEST_PROVIDER=1 WRITEX_DB_PATH=$RUNNER_TEMP/wx.db WRITEX_TOKEN_SECRET=ci PORT=8787 \
+            nohup node --disable-warning=ExperimentalWarning src/index.js > $RUNNER_TEMP/server.log 2>&1 &
+          sleep 2
+          curl -sf http://127.0.0.1:8787/v1/health
 
       - name: Enable hardware acceleration for the emulator
         run: |
@@ -183,7 +211,9 @@ jobs:
       - name: Publish test results (screenshots and logs)
         if: always()
         run: |
-          mkdir -p device-results && cd device-results
+          mkdir -p device-results
+          cp $RUNNER_TEMP/server.log device-results/server-log.txt 2>/dev/null || true
+          cd device-results
           git init -q -b ci-results
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
