@@ -296,13 +296,14 @@ async function goHome() {
     const r = await page.evaluate(async () => {
       const e = window.__writex.aiEngine;
       const ctl = new AbortController();
-      const p = e.runTask('chat', { messages: [{ role: 'user', content: 'Write a very long story about the sea, at least 600 words.' }], maxTokens: 800 }, { signal: ctl.signal });
-      setTimeout(() => ctl.abort(), 6000);
+      let streamed = 0;
+      // Cancel as soon as the answer has started streaming
+      const p = e.runTask('chat', { messages: [{ role: 'user', content: 'Write a very long story about the sea, at least 600 words.' }], maxTokens: 800 }, { signal: ctl.signal, onText: (t) => { streamed = t.length; if (t.length > 40 && !ctl.signal.aborted) ctl.abort(); } });
       const t0 = Date.now();
       try { await p; return { status: 'completed' }; } catch (err) { return { status: err.job && err.job.status, code: err.code, ms: Date.now() - t0 }; }
     });
     if (r.status !== 'cancelled') throw new Error(JSON.stringify(r));
-    return `stopped after ${Math.round(r.ms / 100) / 10} s`;
+    return `stopped while streaming (${r.ms} ms)`;
   });
 
   await check('Writex AI: memory is released when unloaded', async () => {
