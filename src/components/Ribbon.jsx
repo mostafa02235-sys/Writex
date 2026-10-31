@@ -3,7 +3,7 @@ import { Icon } from '../icons.jsx';
 import { TB, Group, Drop, MenuItem, Seg } from './ui.jsx';
 import { FONTS, SIZES, LINE_SPACINGS, PARA_SPACINGS, TEXT_COLORS, HIGHLIGHTS, PAGE_SIZES, MARGIN_PRESETS, fontByStack } from '../constants.js';
 import { TEMPLATES } from '../templates.js';
-import { tr } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 const TABS = [
   { id: 'file', label: tr('File') },
@@ -432,7 +432,7 @@ export function Ribbon({ tab, setTab, ed }) {
           <div className="mini-stats">
             <div><b className="tnum">{ed.stats.words.toLocaleString()}</b><span>{tr('words')}</span></div>
             <div><b className="tnum">{ed.stats.chars.toLocaleString()}</b><span>{tr('characters')}</span></div>
-            <div><b className="tnum">{ed.pages}</b><span>{ed.pages === 1 ? 'page' : 'pages'}</span></div>
+            <div><b className="tnum">{ed.pages}</b><span>{trn(ed.pages, 'page', 'pages')}</span></div>
           </div>
         </Group>
         <Group label={tr('Find')}>

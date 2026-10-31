@@ -3,7 +3,7 @@ import { Icon } from '../icons.jsx';
 import { Sheet, Seg } from './ui.jsx';
 import { FONTS, LINE_SPACINGS, PARA_SPACINGS, TEXT_COLORS, HIGHLIGHTS, PAGE_SIZES, MARGIN_PRESETS, fontByStack } from '../constants.js';
 import { TEMPLATES } from '../templates.js';
-import { tr } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 
@@ -421,7 +421,7 @@ export function MobileSheets({ ed, sheet, setSheet, toolbarHidden, setToolbarHid
           <Section title={tr('Review')}>
             <div className="mlist">
               <Row icon="Search" label="Find & replace" onClick={run(() => ed.openFind('find'))} />
-              <Row icon="Sigma" label={tr('Word count')} value={`${ed.stats.words.toLocaleString()} words`} onClick={run(() => ed.openDialog('count'))} />
+              <Row icon="Sigma" label={tr('Word count')} value={trn(ed.stats.words, '{0} word', '{0} words')} onClick={run(() => ed.openDialog('count'))} />
               <Toggle icon="SpellCheck" label={tr('Spell check')} checked={s.spellcheck} onChange={(v) => ed.setSettings({ spellcheck: v })} />
               <Row icon="WandSparkles" label={tr('Auto direction for all paragraphs')} chevron={false} onClick={() => { ed.autoDirection(); close(); }} />
             </div>

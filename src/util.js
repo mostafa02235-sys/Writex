@@ -1,6 +1,6 @@
 // Shared helpers: ids, script loading, text analysis, downloads.
 import { isNative, nativeSave, nativeShare } from './platform.js';
-import { tr } from './i18n.js';
+import { tr, locale } from './i18n.js';
 
 // Where the last native save landed (shown in the confirmation toast)
 export let lastSavedWhere = null;
@@ -66,10 +66,10 @@ export function fmtDate(ts) {
   const diff = (now - d) / 1000;
   if (diff < 60) return tr('Just now');
   if (diff < 3600) return tr('{0} min ago', Math.floor(diff / 60));
-  if (d.toDateString() === now.toDateString()) return tr('Today, {0}', d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+  if (d.toDateString() === now.toDateString()) return tr('Today, {0}', d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }));
   const y = new Date(now); y.setDate(now.getDate() - 1);
   if (d.toDateString() === y.toDateString()) return tr('Yesterday');
-  return d.toLocaleDateString([], { day: 'numeric', month: 'short', year: d.getFullYear() === now.getFullYear() ? undefined : 'numeric' });
+  return d.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: d.getFullYear() === now.getFullYear() ? undefined : 'numeric' });
 }
 
 export function safeFilename(name, ext) {

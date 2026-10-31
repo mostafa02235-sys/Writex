@@ -26,7 +26,7 @@ import { Reader } from './Reader.jsx';
 import { DrawingEditor } from './Drawing.jsx';
 import { EquationDialog } from './EquationDialog.jsx';
 import { FootnoteDialog, SourcesSheet, CoverDialog, ParagraphSheet, VersionsSheet, PasswordDialog } from './Tools.jsx';
-import { tr } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 const ROOT_SEL = '.qwrap .ql-editor';
 const PN_FORMATS = {
@@ -1213,7 +1213,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
             )}
             <span className={'m-sub ' + saveState}>
               {saveState === 'saving' ? tr('Saving…') : saveState === 'error' ? tr('Not saved') : tr('Saved')}
-              {' · '}{viewMode === 'print' ? tr('Page {0} of {1}', Math.min(curPage, nPages), nPages) : `${stats.words.toLocaleString()} words`}
+              {' · '}{viewMode === 'print' ? tr('Page {0} of {1}', Math.min(curPage, nPages), nPages) : trn(stats.words, '{0} word', '{0} words')}
             </span>
           </div>
           <button type="button" className="tb lg" aria-label={viewMode === 'mobile' ? tr('Switch to page view') : tr('Switch to mobile view')} title={viewMode === 'mobile' ? tr('Page view') : tr('Mobile view')}
@@ -1347,7 +1347,7 @@ export function Editor({ docId, importHtml, onExit, toast, theme, toggleTheme, t
       {dialog && dialog.kind === 'link' && <LinkDialog initial={formats.link || ''} hasSelection={!!(lastRange.current && lastRange.current.length)} onSave={insertLink} onRemove={formats.link ? removeLink : null} onClose={() => { setDialog(null); const q = Q(); if (q) q.focus(); }} />}
       {dialog && dialog.kind === 'margins' && <MarginsDialog settings={settings} onSave={(p) => setSettings(p)} onClose={() => setDialog(null)} />}
       {dialog && dialog.kind === 'delete' && (
-        <ConfirmDialog title={tr('Delete document?')} message={`“${title}” will be permanently removed from this browser. This can't be undone.`} onClose={() => setDialog(null)}
+        <ConfirmDialog title={tr('Delete document?')} message={tr("“{0}” will be permanently removed from this device. This can't be undone.", title)} onClose={() => setDialog(null)}
           onConfirm={async () => { saveSoon.cancel(); const id = docRef.current.id; docRef.current = null; await store.deleteDoc(id); toast(tr('Deleted “{0}”', title)); onExit(); }} />
       )}
       {dialog && dialog.kind === 'alt' && (

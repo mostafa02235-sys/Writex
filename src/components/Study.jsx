@@ -4,7 +4,7 @@ import { Modal, Sheet, ConfirmDialog } from './ui.jsx';
 import { STUDY_TEMPLATES, STUDY_TYPES } from '../templates.js';
 import { fmtDate } from '../util.js';
 import * as store from '../store.js';
-import { tr } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 export const SUBJECT_COLORS = ['#5B7CFA', '#22A06B', '#E5484D', '#F5A524', '#9B5DE5', '#12A4B5'];
@@ -98,7 +98,7 @@ export function Study({ docs, subjects, refresh, openDoc, toast, renderRow }) {
         {examIn != null && examIn >= 0 && (
           <div className="exam-card" style={{ '--sc': subject.color }}>
             <Icon name="GraduationCap" size={22} />
-            <div><b className="tnum">{examIn === 0 ? tr('Exam today') : tr('{0} {1} to the exam', examIn, examIn === 1 ? 'day' : 'days')}</b><span>{new Date(subject.examDate + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}</span></div>
+            <div><b className="tnum">{examIn === 0 ? tr('Exam today') : trn(examIn, '{0} day to the exam', '{0} days to the exam')}</b><span>{new Date(subject.examDate + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}</span></div>
           </div>
         )}
         <div className="fchips">
@@ -164,7 +164,7 @@ export function Study({ docs, subjects, refresh, openDoc, toast, renderRow }) {
               <div className="exam-row">
                 {exams.map((s) => { const n = dayDiff(s.examDate); return (
                   <button type="button" key={s.id} className="exam-chip" style={{ '--sc': s.color }} onClick={() => setCurrent(s.id)}>
-                    <b className="tnum">{n === 0 ? tr('Today') : n}</b><span>{n === 0 ? '' : n === 1 ? 'day' : 'days'}</span><em dir="auto">{s.name}</em>
+                    <b className="tnum">{n === 0 ? tr('Today') : n}</b><span>{n === 0 ? '' : trn(n, 'day', 'days')}</span><em dir="auto">{s.name}</em>
                   </button>
                 ); })}
               </div>
@@ -182,7 +182,7 @@ export function Study({ docs, subjects, refresh, openDoc, toast, renderRow }) {
                   <button type="button" key={s.id} className="subj-card" style={{ '--sc': s.color }} onClick={() => setCurrent(s.id)}>
                     <span className="subj-bar" />
                     <span className="subj-name" dir="auto">{s.name}</span>
-                    <span className="subj-meta">{subjCount(s.id)} {subjCount(s.id) === 1 ? 'document' : 'documents'}</span>
+                    <span className="subj-meta">{trn(subjCount(s.id), '{0} document', '{0} documents')}</span>
                     <span className="subj-next">{next ? dueText(next.dueDate) + ': ' + next.title : s.examDate && dayDiff(s.examDate) >= 0 ? tr('Exam on {0}', new Date(s.examDate + 'T00:00:00').toLocaleDateString(undefined, { day: 'numeric', month: 'short' })) : tr('Nothing due')}</span>
                   </button>
                 );

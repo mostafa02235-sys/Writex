@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from '../react.js';
 import { Icon } from '../icons.jsx';
 import { replaceAll, replaceOne } from '../find.js';
 import { storage } from '../util.js';
-import { tr } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onClose, toast }) {
   const [showReplace, setShowReplace] = useState(mode === 'replace');
@@ -48,7 +48,7 @@ export function FindPanel({ mode, hits, runFind, gotoHit, quill, lastRange, onCl
     const q = quill(); if (!q || !n) return;
     const count = replaceAll(q, hits.list, repl);
     runFind(query, opts);
-    toast(tr('Replaced {0} {1}', count, count === 1 ? 'match' : 'matches'));
+    toast(trn(count, 'Replaced {0} match', 'Replaced {0} matches'));
   };
 
   const opt = (k, label, hint) => (

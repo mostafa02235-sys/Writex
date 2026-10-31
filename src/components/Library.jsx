@@ -14,7 +14,8 @@ import { deltaToHTML, previewFromHTML } from '../quillHtml.js';
 import { fmtDate, readFileAs, storage } from '../util.js';
 import { importDOCX } from '../exporters.js';
 import { fontByStack } from '../constants.js';
-import { tr } from '../i18n.js';
+import { setLang, langPref } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 // Stored on documents in English; shown with tr()
@@ -308,7 +309,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
               <div className="st-nums">
                 <div><b className="tnum">{wordsToday.toLocaleString()}</b><span>{tr('words today')}</span></div>
                 <div><b className="tnum">{weekWords.toLocaleString()}</b><span>{tr('this week')}</span></div>
-                <div><b className="tnum">{streak}</b><span>{streak === 1 ? tr('day streak') : tr('day streak')}</span></div>
+                <div><b className="tnum">{streak}</b><span>{tr('day streak')}</span></div>
                 <div><b className="tnum">{totalWords.toLocaleString()}</b><span>{tr('words in all')}</span></div>
               </div>
               <div className="st-week" aria-hidden="true">
@@ -383,7 +384,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
               <button type="button" className="link-btn" onClick={() => setDialog({ kind: 'rename-folder', folder: folders.find((f) => f.id === folder) })}><Icon name="Pencil" size={14} />{tr('Rename')}</button>
               <button type="button" className="link-btn danger-text" onClick={() => setDialog({ kind: 'delete-folder', folder: folders.find((f) => f.id === folder) })}><Icon name="Trash2" size={14} />{tr('Delete folder')}</button>
             </div>
-          ) : <span className="sec-note">{filtered.length} {filtered.length === 1 ? 'document' : 'documents'}</span>}
+          ) : <span className="sec-note">{trn(filtered.length, '{0} document', '{0} documents')}</span>}
           <label className="sort">
             <Icon name="ArrowUpDown" size={14} />
             <select id="lib-sort" value={sort} onChange={(e) => setSort(e.target.value)} aria-label={tr('Sort documents')}>
@@ -458,6 +459,15 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
       <>
         <header className="sec-top"><h1>{tr('Settings')}</h1></header>
         <section className="set-group">
+          <h2>{tr('Language')}</h2>
+          <div className="set-card">
+            <div className="set-row col">
+              <span className="set-label">{tr('App language')}<small>{tr('Menus, buttons and messages. Your documents keep their own language and direction.')}</small></span>
+              <Seg label={tr('App language')} value={langPref()} onChange={(v) => setLang(v)} options={[{ value: 'system', label: tr('Device') }, { value: 'en', label: 'English' }, { value: 'ar', label: 'العربية' }]} />
+            </div>
+          </div>
+        </section>
+        <section className="set-group">
           <h2>{tr('Appearance')}</h2>
           <div className="set-card">
             <div className="set-row col">
@@ -529,8 +539,8 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           <h2>{tr('Storage')}</h2>
           <div className="set-card">
             <div className="set-row">
-              <span className="set-label">{(docs || []).length} {(docs || []).length === 1 ? 'document' : 'documents'} · {folders.length} {folders.length === 1 ? 'folder' : 'folders'}
-                <small>{persistent ? tr('Saved on this device in this browser. Export to PDF or Word to keep a copy elsewhere.') : "This view can't keep data, so documents last until you close it."}</small>
+              <span className="set-label">{trn((docs || []).length, '{0} document', '{0} documents')} · {trn(folders.length, '{0} folder', '{0} folders')}
+                <small>{persistent ? tr('Saved on this device in this browser. Export to PDF or Word to keep a copy elsewhere.') : tr("This view can't keep data, so documents last until you close it.")}</small>
               </span>
               <Icon name={persistent ? 'HardDrive' : 'TriangleAlert'} size={20} />
             </div>
@@ -636,7 +646,7 @@ export function Library({ openDoc, toast, theme, toggleTheme, themeMode, setThem
           onSubmit={async (v) => { await store.updateDoc(dialog.doc.id, { title: v, updatedAt: dialog.doc.updatedAt }); refresh(); toast(tr('Renamed to “{0}”', v)); }} />
       )}
       {dialog && dialog.kind === 'delete' && (
-        <ConfirmDialog title={tr('Delete document?')} message={`“${dialog.doc.title}” will be permanently removed from this device. This can't be undone.`}
+        <ConfirmDialog title={tr('Delete document?')} message={tr("“{0}” will be permanently removed from this device. This can't be undone.", dialog.doc.title)}
           onClose={() => setDialog(null)} onConfirm={async () => { await store.deleteDoc(dialog.doc.id); refresh(); toast(tr('Deleted “{0}”', dialog.doc.title)); }} />
       )}
       {dialog && dialog.kind === 'new-folder' && (

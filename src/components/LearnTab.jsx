@@ -7,7 +7,7 @@ import * as store from '../store.js';
 import * as src from '../sources.js';
 import { complete, clip, aiErrorText } from '../ai.js';
 import { fmtDate, uid } from '../util.js';
-import { tr } from '../i18n.js';
+import { tr, trn } from '../i18n.js';
 
 const nd = (e) => e.preventDefault();
 const NEW_PER_DAY = 20;
@@ -274,7 +274,7 @@ export function LearnTab({ toast, request, aiOk, aiMessage }) {
     <>
       <section className="revise-card">
         <div>
-          <b className="tnum">{queue.length ? tr('{0} {1} to review', queue.length, queue.length === 1 ? 'card' : 'cards') : cards.length ? tr('All caught up') : tr('Start learning')}</b>
+          <b className="tnum">{queue.length ? trn(queue.length, '{0} card to review', '{0} cards to review') : cards.length ? tr('All caught up') : tr('Start learning')}</b>
           <span>{queue.length ? tr('Daily revision keeps what you learn.') : nextDue ? tr('Next review {0}', new Date(nextDue.due).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'short' })) : tr('Make flashcards from any document.')}</span>
         </div>
         {queue.length > 0 && <button type="button" className="btn primary" onClick={() => setMode({ review: queue })}><Icon name="Play" size={16} />{tr('Review now')}</button>}
@@ -316,7 +316,7 @@ export function LearnTab({ toast, request, aiOk, aiMessage }) {
               return (
                 <button type="button" key={d.id} className="deck-card" onClick={() => setMode({ deck: d.id })} style={sub ? { '--sc': sub.color } : undefined}>
                   <b dir="auto">{d.name}</b>
-                  <span>{dc.length} {dc.length === 1 ? 'card' : 'cards'}{due ? tr(' · {0} due', due) : ''}</span>
+                  <span>{trn(dc.length, '{0} card', '{0} cards')}{due ? tr(' · {0} due', due) : ''}</span>
                   <div className="deck-bar"><i style={{ width: (dc.length ? (m / dc.length) * 100 : 0) + '%' }} /></div>
                   {sub && <span className="chip"><i className="chip-dot" />{sub.name}</span>}
                 </button>

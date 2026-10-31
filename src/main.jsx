@@ -12,7 +12,7 @@ import * as store from './store.js';
 import { setupQuill } from './quillSetup.js';
 import { storage, uid } from './util.js';
 import { Icon } from './icons.jsx';
-import { tr } from './i18n.js';
+import { tr, applyLang, setLang } from './i18n.js';
 
 function systemTheme() {
   try { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch (e) { return 'light'; }
@@ -211,5 +211,7 @@ class Boundary extends React.Component {
   }
 }
 
+applyLang();
+window.__writex = Object.assign(window.__writex || {}, { setLang });
 const rootEl = document.getElementById('app');
 window.ReactDOM.createRoot(rootEl).render(<Boundary><App /></Boundary>);

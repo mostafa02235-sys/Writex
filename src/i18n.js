@@ -9,7 +9,7 @@
 // Document content is never translated or re-ordered: only the interface follows
 // the chosen language. Changing the language reloads the interface (documents are
 // saved first), so every screen, menu and message switches at once.
-import { AR } from './locales/ar.js';
+import { AR, AR_PLURALS } from './locales/ar.js';
 
 export const LANGS = [
   { id: 'en', label: 'English', dir: 'ltr' },
@@ -40,6 +40,19 @@ export function tr(s, ...args) {
   let out = isArabic && Object.prototype.hasOwnProperty.call(AR, s) ? AR[s] : s;
   if (args.length) out = out.replace(/\{(\d+)\}/g, (m, i) => (args[i] == null ? '' : String(args[i])));
   return out;
+}
+
+// Counted phrases. English picks one/other; Arabic uses its six plural forms
+// (zero, one, two, few, many, other) from AR_PLURALS, keyed by the English "other" text.
+//   trn(n, '{0} document', '{0} documents')
+let arRules;
+export function trn(n, one, other) {
+  if (isArabic && AR_PLURALS[other]) {
+    try { arRules = arRules || new Intl.PluralRules('ar'); } catch (e) { arRules = { select: (x) => (x === 1 ? 'one' : x === 2 ? 'two' : 'other') }; }
+    const forms = AR_PLURALS[other];
+    return (forms[arRules.select(n)] || forms.other).replace(/\{0\}/g, String(n));
+  }
+  return (n === 1 ? one : other).replace(/\{0\}/g, String(n));
 }
 
 export function applyLang() {

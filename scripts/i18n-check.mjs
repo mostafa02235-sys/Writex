@@ -31,10 +31,20 @@ for (const f of files) {
   }
 }
 
-const { AR } = await import(pathToFileURL(path.join(SRC, 'locales/ar.js')).href);
-if (process.argv.includes('--list')) { console.log(JSON.stringify([...used.keys()], null, 1)); process.exit(0); }
+// counted phrases: trn(n, 'one', 'other') need AR_PLURALS['other']
+const plurals = new Map();
+for (const f of files) {
+  const src = fs.readFileSync(f, 'utf8');
+  const re = /(?<![\w.$])trn\((?:[^;]*?)'((?:[^'\\\n]|\\.)*)'\s*,\s*'((?:[^'\\\n]|\\.)*)'\s*\)/g;
+  let m;
+  while ((m = re.exec(src))) plurals.set(unescape(m[2]), path.relative(ROOT, f) + ':' + src.slice(0, m.index).split('\n').length);
+}
+
+const { AR, AR_PLURALS = {} } = await import(pathToFileURL(path.join(SRC, 'locales/ar.js')).href);
+if (process.argv.includes('--list')) { console.log(JSON.stringify({ strings: [...used.keys()], plurals: [...plurals.keys()] }, null, 1)); process.exit(0); }
 
 const missing = [...used.keys()].filter((k) => !Object.prototype.hasOwnProperty.call(AR, k));
+const missingPlural = [...plurals.keys()].filter((k) => !AR_PLURALS[k] || !AR_PLURALS[k].other);
 const unused = Object.keys(AR).filter((k) => !used.has(k));
 const badPlaceholders = [...used.keys()].filter((k) => AR[k] != null && (k.match(/\{\d+\}/g) || []).sort().join() !== (AR[k].match(/\{\d+\}/g) || []).sort().join());
 
@@ -45,4 +55,8 @@ if (missing.length) {
   console.log(`\nMissing Arabic translations (${missing.length}):`);
   for (const k of missing) console.log(`  ${JSON.stringify(k)}   (${used.get(k)[0]})`);
 }
-process.exit(missing.length || badPlaceholders.length ? 1 : 0);
+if (missingPlural.length) {
+  console.log(`\nMissing Arabic plural forms (${missingPlural.length}):`);
+  for (const k of missingPlural) console.log(`  ${JSON.stringify(k)}   (${plurals.get(k)})`);
+}
+process.exit(missing.length || badPlaceholders.length || missingPlural.length ? 1 : 0);
