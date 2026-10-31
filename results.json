@@ -1,0 +1,184 @@
+[
+  {
+    "name": "Install the APK",
+    "ok": true,
+    "critical": true,
+    "ms": 2845,
+    "detail": "versionName=1.0.12"
+  },
+  {
+    "name": "App starts and shows the home screen",
+    "ok": true,
+    "critical": true,
+    "ms": 12690,
+    "detail": "title Writex"
+  },
+  {
+    "name": "Writex branding (no old name)",
+    "ok": true,
+    "critical": true,
+    "ms": 20,
+    "detail": "brand: Writex, Writex"
+  },
+  {
+    "name": "AMOLED black background",
+    "ok": true,
+    "critical": true,
+    "ms": 10,
+    "detail": "rgb(0, 0, 0)"
+  },
+  {
+    "name": "Native bridge is active",
+    "ok": true,
+    "critical": true,
+    "ms": 8,
+    "detail": "native native-android"
+  },
+  {
+    "name": "Create a document and type in it",
+    "ok": true,
+    "critical": true,
+    "ms": 5592,
+    "detail": "typed 47 chars"
+  },
+  {
+    "name": "Automatic saving",
+    "ok": true,
+    "critical": true,
+    "ms": 1514,
+    "detail": "stored in IndexedDB"
+  },
+  {
+    "name": "Android back button leaves the editor",
+    "ok": true,
+    "critical": true,
+    "ms": 1763,
+    "detail": "back on home"
+  },
+  {
+    "name": "Documents survive an app restart",
+    "ok": true,
+    "critical": true,
+    "ms": 10444,
+    "detail": "listed on home"
+  },
+  {
+    "name": "Placeholder hides while typing with the Android keyboard",
+    "ok": true,
+    "critical": true,
+    "ms": 8654,
+    "detail": "shown → hidden while typing → shown after deleting"
+  },
+  {
+    "name": "Writex AI: engine is built into the app",
+    "ok": true,
+    "critical": true,
+    "ms": 100,
+    "detail": "x86_64, 3922 MB memory, 2 cores"
+  },
+  {
+    "name": "Writex AI: install the lightweight model from Settings",
+    "ok": true,
+    "critical": true,
+    "ms": 44949,
+    "detail": "installed in 37 s"
+  },
+  {
+    "name": "Writex AI: works offline (network switched off)",
+    "ok": true,
+    "critical": true,
+    "ms": 162742,
+    "detail": "Paris is the capital of France."
+  },
+  {
+    "name": "Writex AI: Arabic",
+    "ok": true,
+    "critical": true,
+    "ms": 10394,
+    "detail": "البحر هو شواطئ الأرض التي تُمتد بين الجبال والصخر، وتعتبر خلقة قوية من محيطها إلى جبل واحد."
+  },
+  {
+    "name": "Writex AI: writing assistant task",
+    "ok": true,
+    "critical": true,
+    "ms": 6863,
+    "detail": "She goes to school every day."
+  },
+  {
+    "name": "Writex AI: PDF analysis (text extracted on the phone)",
+    "ok": true,
+    "critical": true,
+    "ms": 12705,
+    "detail": "extracted 123 chars; answer: The project budget for 2026 is $4500."
+  },
+  {
+    "name": "Writex AI: long document read in parts with real progress",
+    "ok": true,
+    "critical": true,
+    "ms": 83234,
+    "detail": "1576 chars; analyzing 0/3 → analyzing 1/3 → analyzing 2/3 → analyzing 3/3; **Key Facts:**  \n- The river Nile flows through eleven count"
+  },
+  {
+    "name": "Writex AI: structured output (flashcards as JSON)",
+    "ok": true,
+    "critical": true,
+    "ms": 17065,
+    "detail": "2 cards"
+  },
+  {
+    "name": "Writex AI: cancel a running task",
+    "ok": true,
+    "critical": true,
+    "ms": 8535,
+    "detail": "stopped while streaming (8531 ms)"
+  },
+  {
+    "name": "Writex AI: memory is released when unloaded",
+    "ok": true,
+    "critical": true,
+    "ms": 1081,
+    "detail": "unloaded"
+  },
+  {
+    "name": "Writex AI button in the editor",
+    "ok": true,
+    "critical": true,
+    "ms": 8467,
+    "detail": "opens the assistant"
+  },
+  {
+    "name": "Switch the interface to Arabic",
+    "ok": true,
+    "critical": false,
+    "ms": 7999,
+    "detail": "dir=rtl"
+  },
+  {
+    "name": "Export a PDF to Documents/Writex",
+    "ok": true,
+    "critical": false,
+    "ms": 12594,
+    "detail": "Untitled document.pdf"
+  },
+  {
+    "name": "Export a Word (DOCX) file",
+    "ok": true,
+    "critical": false,
+    "ms": 6888,
+    "detail": "-rw-rw---- 1 u0_a181 media_rw  9748 2026-10-31 21:26 Untitled document.docx"
+  },
+  {
+    "name": "Landscape layout has no sideways scrolling",
+    "ok": true,
+    "critical": false,
+    "ms": 4566,
+    "detail": "866 / 866"
+  },
+  {
+    "name": "No JavaScript errors",
+    "ok": true,
+    "critical": false,
+    "ms": 1,
+    "detail": "1647 console lines"
+  }
+]

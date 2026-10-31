@@ -1,0 +1,30 @@
+Device: sdk_gphone64_x86_64 emulator-5554
+PASS  Install the APK — versionName=1.0.12
+PASS  App starts and shows the home screen — title Writex
+PASS  Writex branding (no old name) — brand: Writex, Writex
+PASS  AMOLED black background — rgb(0, 0, 0)
+PASS  Native bridge is active — native native-android
+PASS  Create a document and type in it — typed 47 chars
+PASS  Automatic saving — stored in IndexedDB
+PASS  Android back button leaves the editor — back on home
+PASS  Documents survive an app restart — listed on home
+PASS  Placeholder hides while typing with the Android keyboard — shown → hidden while typing → shown after deleting
+PASS  Writex AI: engine is built into the app — x86_64, 3922 MB memory, 2 cores
+PASS  Writex AI: install the lightweight model from Settings — installed in 37 s
+PASS  Writex AI: works offline (network switched off) — Paris is the capital of France.
+PASS  Writex AI: Arabic — البحر هو شواطئ الأرض التي تُمتد بين الجبال والصخر، وتعتبر خلقة قوية من محيطها إلى جبل واحد.
+PASS  Writex AI: writing assistant task — She goes to school every day.
+PASS  Writex AI: PDF analysis (text extracted on the phone) — extracted 123 chars; answer: The project budget for 2026 is $4500.
+PASS  Writex AI: long document read in parts with real progress — 1576 chars; analyzing 0/3 → analyzing 1/3 → analyzing 2/3 → analyzing 3/3; **Key Facts:**  
+- The river Nile flows through eleven count
+PASS  Writex AI: structured output (flashcards as JSON) — 2 cards
+PASS  Writex AI: cancel a running task — stopped while streaming (8531 ms)
+PASS  Writex AI: memory is released when unloaded — unloaded
+PASS  Writex AI button in the editor — opens the assistant
+PASS  Switch the interface to Arabic — dir=rtl
+PASS  Export a PDF to Documents/Writex — Untitled document.pdf
+PASS  Export a Word (DOCX) file — -rw-rw---- 1 u0_a181 media_rw  9748 2026-10-31 21:26 Untitled document.docx
+PASS  Landscape layout has no sideways scrolling — 866 / 866
+PASS  No JavaScript errors — 1647 console lines
+
+26/26 checks passed

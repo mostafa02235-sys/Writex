@@ -1,0 +1,299 @@
+--------- beginning of main
+W/chromium( 2460): [WARNING:dns_config_service_android.cc(115)] Failed to read DnsConfig.
+D/Capacitor( 2460): Starting BridgeActivity
+D/Capacitor( 2460): Registering plugin instance: CapacitorCookies
+D/Capacitor( 2460): Registering plugin instance: WebView
+D/Capacitor( 2460): Registering plugin instance: CapacitorHttp
+D/Capacitor( 2460): Registering plugin instance: WritexAI
+D/Capacitor( 2460): Registering plugin instance: App
+D/Capacitor( 2460): Registering plugin instance: Filesystem
+D/Capacitor( 2460): Registering plugin instance: Keyboard
+D/Capacitor( 2460): Registering plugin instance: Share
+D/Capacitor( 2460): Registering plugin instance: SplashScreen
+D/Capacitor( 2460): Registering plugin instance: StatusBar
+W/Capacitor( 2460): Unable to read file at path public/plugins
+D/Capacitor( 2460): Loading app at https://localhost
+D/Capacitor( 2460): App started
+D/Capacitor( 2460): App resumed
+D/Capacitor( 2460): Handling local request: https://localhost/
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/fonts.css
+D/Capacitor( 2460): Handling local request: https://localhost/config.js
+D/Capacitor( 2460): Handling local request: https://localhost/app.css
+D/Capacitor( 2460): Handling local request: https://localhost/vendor/react.js
+D/Capacitor( 2460): Handling local request: https://localhost/vendor/react-dom.js
+D/Capacitor( 2460): Handling local request: https://localhost/vendor/quill.js
+D/Capacitor( 2460): Handling local request: https://localhost/app.js
+D/Capacitor( 2460): Handling local request: https://localhost/vendor/lucide.js
+E/chromium( 2903): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+E/chromium( 2903): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+V/Capacitor( 2460): callback: 104690683, pluginId: App, methodName: addListener, methodData: {"eventName":"backButton"}
+V/Capacitor( 2460): callback: 104690684, pluginId: App, methodName: addListener, methodData: {"eventName":"appStateChange"}
+V/Capacitor( 2460): callback: 104690685, pluginId: App, methodName: addListener, methodData: {"eventName":"pause"}
+V/Capacitor( 2460): callback: 104690686, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+V/Capacitor( 2460): callback: 104690687, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+I/Capacitor/Console( 2460): File:  - Line 333 - Msg: undefined
+V/Capacitor( 2460): callback: 104690688, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#000000"}
+I/Capacitor/Console( 2460): File:  - Line 333 - Msg: undefined
+V/Capacitor( 2460): callback: 104690689, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#000000"}
+D/Capacitor( 2460): Handling local request: https://localhost/icons/icon-32.png
+I/Capacitor/Console( 2460): File:  - Line 333 - Msg: undefined
+I/Capacitor/Console( 2460): File:  - Line 333 - Msg: undefined
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/geist-sans-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/geist-sans-latin-600-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/geist-sans-latin-500-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/fraunces-latin-600-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/fraunces-latin-500-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/amiri-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/amiri-arabic-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2
+E/chromium( 2903): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+E/chromium( 2903): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+V/Capacitor( 2460): callback: 104690690, pluginId: SplashScreen, methodName: hide, methodData: {"fadeOutDuration":180}
+W/Capacitor( 2460): fadeOutDuration parameter doesn't work on initial splash screen, use launchFadeOutDuration configuration option
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/open-sans-latin-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/open-sans-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/lato-latin-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/lato-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/lato-latin-400-italic.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/amiri-arabic-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/source-serif-4-latin-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/source-serif-4-latin-400-italic.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/source-serif-4-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/noto-naskh-arabic-arabic-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/noto-naskh-arabic-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/noto-naskh-arabic-arabic-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/noto-naskh-arabic-latin-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/amiri-latin-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/carlito-latin-400-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/carlito-latin-700-normal.woff2
+D/Capacitor( 2460): Handling local request: https://localhost/fonts/carlito-latin-400-italic.woff2
+I/Capacitor/Console( 2460): File:  - Line 333 - Msg: undefined
+D/Capacitor( 2460): Handling local request: https://localhost/icons/icon-32.png
+V/Capacitor( 2460): callback: 104690691, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 2460): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 2460): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 2460): Handling local request: https://localhost/icons/icon-32.png
+W/chromium( 4684): [WARNING:dns_config_service_android.cc(115)] Failed to read DnsConfig.
+E/chromium( 4684): [ERROR:simple_file_enumerator.cc(58)] Could not get file info for /data/user/0/com.writex.app/cache/WebView/Default/HTTP Cache/Code Cache/js/e0e0cc6d810f857b_0
+E/chromium( 4684): [ERROR:simple_file_enumerator.cc(58)] Could not get file info for /data/user/0/com.writex.app/cache/WebView/Default/HTTP Cache/Code Cache/js/d8706279799000f7_0
+E/chromium( 4684): [ERROR:simple_file_enumerator.cc(58)] Could not get file info for /data/user/0/com.writex.app/cache/WebView/Default/HTTP Cache/Code Cache/js/1b815b5a94826885_0
+E/chromium( 4684): [ERROR:simple_file_enumerator.cc(43)] readdir /data/user/0/com.writex.app/cache/WebView/Default/HTTP Cache/Code Cache/js: No such file or directory (2)
+E/chromium( 4684): [ERROR:simple_index_file.cc(614)] Could not reconstruct index from disk
+D/Capacitor( 4684): Starting BridgeActivity
+D/Capacitor( 4684): Registering plugin instance: CapacitorCookies
+D/Capacitor( 4684): Registering plugin instance: WebView
+D/Capacitor( 4684): Registering plugin instance: CapacitorHttp
+D/Capacitor( 4684): Registering plugin instance: WritexAI
+D/Capacitor( 4684): Registering plugin instance: App
+D/Capacitor( 4684): Registering plugin instance: Filesystem
+D/Capacitor( 4684): Registering plugin instance: Keyboard
+D/Capacitor( 4684): Registering plugin instance: Share
+D/Capacitor( 4684): Registering plugin instance: SplashScreen
+D/Capacitor( 4684): Registering plugin instance: StatusBar
+W/Capacitor( 4684): Unable to read file at path public/plugins
+D/Capacitor( 4684): Loading app at https://localhost
+D/Capacitor( 4684): App started
+D/Capacitor( 4684): App resumed
+D/Capacitor( 4684): Handling local request: https://localhost/
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fonts.css
+D/Capacitor( 4684): Handling local request: https://localhost/app.css
+D/Capacitor( 4684): Handling local request: https://localhost/config.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/react.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/react-dom.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/quill.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/lucide.js
+D/Capacitor( 4684): Handling local request: https://localhost/app.js
+E/chromium( 4731): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+E/chromium( 4731): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+V/Capacitor( 4684): callback: 3865987, pluginId: App, methodName: addListener, methodData: {"eventName":"backButton"}
+V/Capacitor( 4684): callback: 3865988, pluginId: App, methodName: addListener, methodData: {"eventName":"appStateChange"}
+V/Capacitor( 4684): callback: 3865989, pluginId: App, methodName: addListener, methodData: {"eventName":"pause"}
+V/Capacitor( 4684): callback: 3865990, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+V/Capacitor( 4684): callback: 3865991, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 3865992, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#000000"}
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 3865993, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#000000"}
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/geist-sans-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/geist-sans-latin-600-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/geist-sans-latin-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fraunces-latin-600-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fraunces-latin-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-arabic-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2
+E/chromium( 4731): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+E/chromium( 4731): [ERROR:tile_manager.cc(835)] WARNING: tile memory limits exceeded, some content may not draw
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 3865994, pluginId: SplashScreen, methodName: hide, methodData: {"fadeOutDuration":180}
+W/Capacitor( 4684): fadeOutDuration parameter doesn't work on initial splash screen, use launchFadeOutDuration configuration option
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/open-sans-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/open-sans-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-arabic-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/lato-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/lato-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/lato-latin-400-italic.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/source-serif-4-latin-400-italic.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-arabic-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/source-serif-4-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-arabic-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/source-serif-4-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-400-italic.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+V/Capacitor( 4684): callback: 3865995, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+V/Capacitor( 4684): callback: 3865996, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3865997, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3865998, pluginId: WritexAI, methodName: addListener, methodData: {"eventName":"download"}
+V/Capacitor( 4684): callback: 3865999, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866000, pluginId: WritexAI, methodName: download, methodData: {"id":"light","url":"https:\/\/huggingface.co\/Qwen\/Qwen2.5-0.5B-Instruct-GGUF\/resolve\/main\/qwen2.5-0.5b-instruct-q4_k_m.gguf","file":"qwen2.5-0.5b-instruct-q4_k_m.gguf","size":491400032}
+V/Capacitor( 4684): callback: 3866001, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866002, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866003, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866004, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866005, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866006, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866007, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866008, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866009, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866010, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866011, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+V/Capacitor( 4684): callback: 3866012, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866013, pluginId: WritexAI, methodName: load, methodData: {"file":"qwen2.5-0.5b-instruct-q4_k_m.gguf","maxCtx":8192}
+V/Capacitor( 4684): callback: 3866014, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866015, pluginId: WritexAI, methodName: addListener, methodData: {"eventName":"token"}
+V/Capacitor( 4684): callback: 3866016, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rpia6u2ou7en","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested. Answer in the same language as the request or, if none, the documents' language."},{"role":"user","content":"Reply in one short sentence: what is the capital of France?"}],"maxTokens":900,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866017, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866018, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866019, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"r3voh0mxng46","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested. Answer in the same language as the request or, if none, the documents' language."},{"role":"user","content":"اكتب جملة واحدة قصيرة عن البحر."}],"maxTokens":60,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866020, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866021, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866022, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rdpz0vqvv8rc","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"Correct the grammar. Reply with only the corrected sentence: \"She go to school every days.\""}],"maxTokens":40,"temperature":0.6}
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/jspdf.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/pdf.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/pdf.worker.js
+V/Capacitor( 4684): callback: 3866023, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866024, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866025, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rm8pv0m65cea","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"Answer this question using only the documents: What is the project budget?\nQuote short supporting passages. If the answer is not in the documents, say so. Answer in the same language as the request or, if none, the documents' language.\n\n### Document 1: report.pdf\n[Page 1]\nWritex Test Report\n\nThe project budget for 2026 is 4500 dollars.\n\nThe team has three members: Sara, Omar and Lina."}],"maxTokens":50,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866026, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866027, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866028, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rcbinnxb3whp","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"You are reading part 1 of 3 of: Nile notes.\nWrite compact notes for the main points, facts and conclusions: key facts, names, numbers, definitions and short exact quotes. If nothing is relevant, reply \"(nothing)\".\n\n\"\"\"\nSection 1. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 1. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 1. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 1. The river Nile flows north through eleven countries and is about 6650 kilometres long. \n\nSection 2. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 2. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 2. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 2.\n\"\"\""}],"maxTokens":40,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866029, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866030, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"r9amor417gtu","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"You are reading part 2 of 3 of: Nile notes.\nWrite compact notes for the main points, facts and conclusions: key facts, names, numbers, definitions and short exact quotes. If nothing is relevant, reply \"(nothing)\".\n\n\"\"\"\n The river Nile flows north through eleven countries and is about 6650 kilometres long. \n\nSection 3. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 3. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 3. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 3. The river Nile flows north through eleven countries and is about 6650 kilometres long. \n\n\"\"\""}],"maxTokens":40,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866031, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866032, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rronc6xpkr9b","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"You are reading part 3 of 3 of: Nile notes.\nWrite compact notes for the main points, facts and conclusions: key facts, names, numbers, definitions and short exact quotes. If nothing is relevant, reply \"(nothing)\".\n\n\"\"\"\n\nSection 4. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 4. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 4. The river Nile flows north through eleven countries and is about 6650 kilometres long. Section 4. The river Nile flows north through eleven countries and is about 6650 kilometres long. \n\n\n\"\"\""}],"maxTokens":40,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866033, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866034, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rxfla7gsvdfr","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"Summarise the document. Length: short (short = 3-4 sentences; medium = one paragraph and 5-7 key points; detailed = section by section). Answer in the same language as the request or, if none, the documents' language.\n\nNotes made from the documents (read in parts):\n[Nile notes, part NaN]\nSection 1. The river Nile flows north through eleven countries and is about 6650 kilometres long.\n\n**Fact:** The river Nile, also known as the Nile River, flows north through\n\n[Nile notes, part NaN]\n### Key facts\n- The river Nile flows north through eleven countries.\n- It is about 6650 kilometers long.\n\n### Facts and definitions\n1. **River Name**: Nile\n2\n\n[Nile notes, part NaN]\nSection 3. The river Nile flows north through eleven countries and is about 6650 kilometers long.\n\n**Key Facts:**  \n- The river Nile flows through eleven countries.\n- It's"}],"maxTokens":60,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866035, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866036, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866037, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rdyowi1mjy2j","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested."},{"role":"user","content":"Create 2 flashcards from the documents only. Reply with JSON: {\"cards\":[{\"front\":\"\",\"back\":\"\"}]}. Answer in the same language as the request or, if none, the documents' language.\n\n### Document 1: Notes\nPhotosynthesis happens in chloroplasts. Water boils at 100 degrees Celsius at sea level."}],"maxTokens":160,"temperature":0.2,"grammar":"root   ::= object\nvalue  ::= object | array | string | number | (\"true\" | \"false\" | \"null\") ws\nobject ::=\n  \"{\" ws (\n            string \":\" ws value\n    (\",\" ws string \":\" ws value)*\n  )? \"}\" ws\narray  ::=\n  \"[\" ws (\n            value\n    (\",\" ws value)*\n  )? \"]\" ws\nstring ::=\n  \"\\\"\" (\n    [^\"\\\\\\x7F\\x00-\\x1F] |\n    \"\\\\\" ([\"\\\\bfnrt] | \"u\" [0-9a-fA-F]{4})\n  )* \"\\\"\" ws\nnumber ::= (\"-\"? ([0-9] | [1-9] [0-9]{0,15})) (\".\" [0-9]+)? ([eE] [-+]? [0-9] [1-9]{0,15})? ws\nws ::= | \" \" | \"\\n\" [ \\t]{0,20}\n"}
+V/Capacitor( 4684): callback: 3866038, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866039, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866040, pluginId: WritexAI, methodName: generate, methodData: {"requestId":"rculet2qx2h","messages":[{"role":"system","content":"You are Writex AI, the assistant inside the Writex writing app. You run privately on the user's phone. Be accurate and well organised. When documents are provided, rely on them and say clearly when something is not in them; never invent quotes or facts. Use simple Markdown (# headings, - lists, **bold**) unless JSON is requested. Answer in the same language as the request or, if none, the documents' language."},{"role":"user","content":"Write a very long story about the sea, at least 600 words."}],"maxTokens":800,"temperature":0.6}
+V/Capacitor( 4684): callback: 3866041, pluginId: WritexAI, methodName: stop, methodData: {}
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 3866042, pluginId: WritexAI, methodName: unload, methodData: {}
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 3866043, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866044, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 3866045, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+V/Capacitor( 4684): callback: 3866046, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+V/Capacitor( 4684): callback: 3866047, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fonts.css
+D/Capacitor( 4684): Handling local request: https://localhost/app.css
+D/Capacitor( 4684): Handling local request: https://localhost/config.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/react.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/react-dom.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/quill.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/lucide.js
+D/Capacitor( 4684): Handling local request: https://localhost/app.js
+V/Capacitor( 4684): callback: 100751053, pluginId: App, methodName: addListener, methodData: {"eventName":"backButton"}
+V/Capacitor( 4684): callback: 100751054, pluginId: App, methodName: addListener, methodData: {"eventName":"appStateChange"}
+V/Capacitor( 4684): callback: 100751055, pluginId: App, methodName: addListener, methodData: {"eventName":"pause"}
+V/Capacitor( 4684): callback: 100751056, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+V/Capacitor( 4684): callback: 100751057, pluginId: StatusBar, methodName: setStyle, methodData: {"style":"DARK"}
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 100751058, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#000000"}
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 100751059, pluginId: StatusBar, methodName: setBackgroundColor, methodData: {"color":"#000000"}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/geist-sans-latin-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fraunces-latin-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fraunces-latin-600-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-600-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-arabic-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+V/Capacitor( 4684): callback: 100751060, pluginId: SplashScreen, methodName: hide, methodData: {"fadeOutDuration":180}
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/open-sans-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/open-sans-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-arabic-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/lato-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/lato-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/lato-latin-400-italic.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/source-serif-4-latin-400-italic.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/source-serif-4-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-arabic-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-arabic-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/source-serif-4-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/noto-naskh-arabic-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/amiri-latin-700-normal.woff2
+I/Capacitor/Console( 4684): File:  - Line 333 - Msg: undefined
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-400-italic.woff2
+V/Capacitor( 4684): callback: 100751061, pluginId: WritexAI, methodName: device, methodData: {}
+V/Capacitor( 4684): callback: 100751062, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/jspdf.js
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/html2canvas.js
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/fonts.css
+D/Capacitor( 4684): Handling local request: https://localhost/app.css
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-700-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-600-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/carlito-latin-400-normal.woff2
+D/Capacitor( 4684): Handling local request: https://localhost/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2
+V/Capacitor( 4684): callback: 100751063, pluginId: Filesystem, methodName: writeFile, methodData: {"path":"Writex\/Untitled document.pdf","data":"JVBERi0xLjMKJbrfrOAKMyAwIG9iago8PC9UeXBlIC9QYWdlCi9QYXJlbnQgMSAwIFIKL1Jlc291cmNlcyAyIDAgUgovTWVkaWFCb3ggWzAgMCA1OTUuNSA4NDIuMjVdCi9Db250ZW50cyA0IDAgUgo+PgplbmRvYmoKNCAwIG9iago8PAovTGVuZ3RoIDU1Ci9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nDPQMzQ1MDC0MDdVKOcyUHDnKuQytTTVM1UwAEILEyM9IyBTD4SSc7n0PQ0UXPK5AgEUKQp8CmVuZHN0cmVhbQplbmRvYmoKMSAwIG9iago8PC9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFIgXQovQ291bnQgMQo+PgplbmRvYmoKNSAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL0hlbHZldGljYQovU3VidHlwZSAvVHlwZTEKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iago2IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvSGVsdmV0aWNhLUJvbGQKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKNyAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL0hlbHZldGljYS1PYmxpcXVlCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjggMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9IZWx2ZXRpY2EtQm9sZE9ibGlxdWUKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKOSAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL0NvdXJpZXIKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9Db3VyaWVyLUJvbGQKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTEgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9Db3VyaWVyLU9ibGlxdWUKL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTIgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9Db3VyaWVyLUJvbGRPYmxpcXVlCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjEzIDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvVGltZXMtUm9tYW4KL1N1YnR5cGUgL1R5cGUxCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCi9GaXJzdENoYXIgMzIKL0xhc3RDaGFyIDI1NQo+PgplbmRvYmoKMTQgMCBvYmoKPDwKL1R5cGUgL0ZvbnQKL0Jhc2VGb250IC9UaW1lcy1Cb2xkCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjE1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvVGltZXMtSXRhbGljCi9TdWJ0eXBlIC9UeXBlMQovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwovRmlyc3RDaGFyIDMyCi9MYXN0Q2hhciAyNTUKPj4KZW5kb2JqCjE2IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvVGltZXMtQm9sZEl0YWxpYwovU3VidHlwZSAvVHlwZTEKL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iagoxNyAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL1phcGZEaW5nYmF0cwovU3VidHlwZSAvVHlwZTEKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iagoxOCAwIG9iago8PAovVHlwZSAvRm9udAovQmFzZUZvbnQgL1N5bWJvbAovU3VidHlwZSAvVHlwZTEKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Cj4+CmVuZG9iagoxOSAwIG9iago8PAovVHlwZSAvWE9iamVjdAovU3VidHlwZSAvSW1hZ2UKL1dpZHRoIDE1ODgKL0hlaWdodCAyMjQ2Ci9Db2xvclNwYWNlIC9EZXZpY2VSR0IKL0JpdHNQZXJDb21wb25lbnQgOAovTGVuZ3RoIDU1MDgzCi9GaWx0ZXIgL0RDVERlY29kZQo+PgpzdHJlYW0K\/9j\/4AAQSkZJRgABAQAAAQABAAD\/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb\/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD\/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD\/wAARCAjGBjQDASIAAhEBAxEB\/8QAGwABAQEBAQEBAQAAAAAAAAAAAAcGAwIEBQn\/xAA4EAEAAQMDBAEDAwMDBAICAwEAAQIDBAUGEQcSEyEUFSIxCBYXIz
+V/Capacitor( 4684): callback: 100751064, pluginId: WritexAI, methodName: device, methodData: {}
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/vendor/docx.js
+V/Capacitor( 4684): callback: 100751065, pluginId: Filesystem, methodName: writeFile, methodData: {"path":"Writex\/Untitled document.docx","data":"UEsDBBQAAAAIAF2rX10IvxIi+wAAACIEAAAcAAAAd29yZC9fcmVscy9kb2N1bWVudC54bWwucmVsc62TTU7DMBCFr2J5T5wUKAjV7QYhdYvCAVxn8iPisWVPEb09FqVpiiqrCy\/n2fPep9HMavNtRvYFPgwWJa+KkjNAbZsBO8k\/6re7Z75Zr95hVBR\/hH5wgcUWDJL3RO5FiKB7MCoU1gHGl9Z6oyiWvhNO6U\/VgViU5VL4uQe\/9GTbRnK\/bSrO6oODW7xt2w4aXq3eG0C6EiECHUYI0VH5DkjyY11EHy6uxy9yxuPe7MDHOZ4JJikFcZ8TorWW0NJ8DJOUgnjICQHY\/GM4KSmEx6y7AERx7vNt+FNSCMucCBR74Zz\/Wx7FKsXwlHcdkGq1G2cck3SCEBfHvv4BUEsDBBQAAAAIAF2rX11rOBFskAIAAGkKAAARAAAAd29yZC9kb2N1bWVudC54bWyllttu4yAQhl\/F8n2LSZw0tZr2YquterGrSu0+AMEkRjUHAYmTffodnBB746qynRsOgvn4BxiYh6e9KKMdM5YruYzxbRJHTFKVc7lZxn8+ft4s4sg6InNSKsmW8YHZ+OnxocpyRbeCSRcJmr1upDJkVcJ4hdOowrOo0jiNI4BLm1WaLuPCOZ0hZGnBBLG3glOjrFq7W6oEUus1pwxVyuRokuCkbmmjKLMWlPwgckdswIkuTWkmYXCtjCAOumaDBDGfW30DdE0cX\/GSuwOwk3nAqGW8NTI7IW7OgrxJdhR0qoKF6bPu0eT5tDv1isiwEjQoaQuuGzfG0mCwCJDdd07sRNkcAU6vO4NnQyqoGmAf+fnRSJRH5d8TcdLjRDzibNFHwv9rBiWCcNksPGprWpuLZ8MAk0uAhmC75nBejNrqhsavo73KzzPLx\/wA1umQ267Z68S8F0SfI5Du+8FO987zUkQLYhzbNww8GDJD92jRBU1GgMDBCe6ipoNRc+RVdUA97\/IFCFR1SD0v9SXpC+fm40iTLuluHGnaJS3GkTrXCR6SzxEosDoTxDQfTLhDQuWsnDaPIZ5T1jM8QqwtTsGKwLLN4T31BE4IegSWLc44MS2AzV1eDKJMwtuMvC1xpCD2\/Fl64rDnDOI14A4C9sgnPiuVH3ytfWF84Tw\/s5pQoGvDLDM7BnMRDNUlzIKyNrCMurfaSm\/e\/0aV\/8QwvseQd1UZ+Irni3Tm28pw+PGBp4wzhLsYHY1+EQOjTsH\/i9O0NjN8U8DM0F0p5xRkF6FfsnVrtGAkZ5DJ3CWQ2VXZWinX6m62ru4mYbnfW\/Fx0KzuQcr3YnjukVyyN+4oCJ7O67ngX3ANmsc9gkbIEh\/\/AVBLAwQUAAAACABdq19dxmRiB8EEAABXIQAADwAAAHdvcmQvc3R5bGVzLnhtbOVZbXPaOBD+Kx5\/b8AECDClnRy9TDLTSzO9dO6zsAVoYks+SZRwv\/5WLzbGFgFs7sZtP4F2pdU+z+7K8vr9x9ck9r5jLgijUz+46voepiGLCF1O\/W\/Pd+9GvickohGKGcVTf4uF\/\/HD+81EyG2MhZeEk4clZRzNY9Bugr63CQa+B1apmCTh1F9JmU46HRGucILEFUsxBeWC8QRJGPJlJ0H8ZZ2+C1mSIknmJCZy2+l1u8PMDD\/FClssSIg\/sXCdYCr1+g7HMVhkVKxIKjJrm1OsbRiPUs5CLAQwkcTGXoIIzc0E\/YqhhIScCbaQVwDGeqRNwfKgq\/8l8c7A4DwDvcyAoj9i4Se8QOtYCjXkT9wO7Uj\/3DEqhbeZIBESMvVniAO3zAdJKPaGGAl5KwjaE65uqSis6uio\/wOK7yie+r1+JpmpLQqyjnXA\/BbcSssjvT5FIVCsvFxIDKEOepCDm0lMVLr1bobWpJ5ufnMjMCzxoLMSVsttCqtTxNGSo3SlDGrVQzT1H1WcIQyw2KyEPTWnFCVqrYZiJ2mIf9\/pzDB+aDPVraQqgL1tnpXEsZfka3xgO0+vMZuuyRMnjEMtZHPGY8s4Tsg9iSJMzUS6IhH+a4XpN4EjLZLz2JALfx5olDsZvSLlClRA15gC\/QzH8R\/IzGbp4akxXkiHNuiOjH7OpGTJ4fWcLFdvGABmi86YoQ35Acrd0X0mEigs82ukxlEENH2hrkBT\/KpcfCMB8traFcJAZ+h+IRhZoRDOgvCn5IwuKxis+IIg5sbWTDRw9jMR8inXlH1WWm+nPub7KZXmdmOGUnXSVxwIrbwua9UyvB6cWoZFxg+ddvBcKR5weWiIXkV0aOC4ZjHjmQP9\/qA\/vFXoJTw18EzpoKLgKdorH9KBLc5ibhpZ3XD\/RuYxYVq+rZC9p7wg4zdWU6b47LPhy6x60ksWesElvT35mD74BNzPiRooe06UNj3ahRKSXD+h1PNF3SCaQr92Qr9uP\/T+qCn0vhO6vae1GfoNXPmaQR84oduTus3Qx8Om0IdO6PZS0mbocNFviv3Gid0+LlqNvd\/4oBs5sWe38TZjHzY+6cZO7NbdVmMfn3rUhSsAH4KlPez3oIPXcfpSIWCncZFg35Hzm7jqDBx7z3RgtZfTvetodzC8hmuVWZIJVdfEvHAdv2i6kd4xJimT+CteYA4tqeo73cLO8Hg+5VLQj0fdMgGdM3kbk2W+m1hDGETISao3qXvNztA\/Q8IeBi6V9ljOq5zI5EWzM6C9OQ+Hsr\/Yw4Gjzg6+rlWXEK1NO6ny0lPoLtna2esuZZXTKJ9y6GVWswmemuHt2Dk5nQ4RfbFk+y\/p+Z1Gb1cbNhN+xmKz2J21lsE+u9QKRn+xSisjL1Nq9Reps2LofoQy+wyheVwncxCXaVFR86jR\/V+ldW6l3GOkvgxVmyhW0aCR4miWvWCcPsJ0A+XAd4I5hu82NvddmV7scZZuLkEQjHr2ZWEXdGNnP+i57VrniyWn2pTJWKvfmGkNa9d573HHmpE1ZK3az8lYq9\/TaQ1rPce3AyNryFq1FZSxVr8d1B7WTvn0WIe1ahcpY61+J6k9rDkq1MgaslZtQGWs1W9C\/ZCsZf\/Eh38BUEsDBBQAAAAIAF2rX11JOWJZUAEAAKcCAAARAAAAZG9jUHJvcHMvY29yZS54bWylkkFvgjAYhv8K6R0KmOFGAJNt8TSTJdO47Na0n9qMlqatov9+bRWcmbedSHkfHt6vbTU7ijY6gDa8kzXKkhRFIGnHuNzWaLWcx48oMpZIRtpOQo1OYNCsqagqaafhXXcKtOVgIueRpqSqRjtrVYmxoTsQxCSOkC7cdFoQ65Z6ixWh32QLOE\/TAguwhBFLsBfGajSii5LRUan2ug0CRjG0IEBag7Mkw1fWghbm7gch+UUKbk\/KTXQHHcKRPho+gn3fJ\/0koK5\/hj8Xbx9h1JhLv1MUUFMxWlpuW2hWMjxZxDq694UrZ79knqIaiO10s9bcwjGEwyu\/yS0xduFOY8OBPZ+cLZZEAKvw38zjGg7cn2STBWJcuj+F8c9u18YNVJ7HH5L15OV1OUdNnuZFnKXxJFvmWZkX5cM0eZoWX77ajeMqFZcS\/7IOkiY0v71czQ9QSwMEFAAAAAgAXatfXR+jkpbmAAAAzgIAAAsAAABfcmVscy8ucmVsc62Sz04CMRCHX6XpnZ0FjTGGwsWYcDMGH2DSzu420j+ZDopvb0M0ioGFA8dOf\/P162Tmy13YqHfi4lM0etq0WlG0yfnYG\/26fprc6+Vi\/kIblJoog89F1ZZYjB5E8gNAsQMFLE3KFOtNlzig1CP3kNG+YU8wa9s74L8MfchUK2c0r9xUq\/VnpkvYqeu8pcdkt4GiHHniX6KSkXsSoz8SO3Df5aZiNRy3mV1uc\/qnEEjQoSDYxDTJXLtZPJVfoeryXMtlnxgTurnmeGgn
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png
+D/Capacitor( 4684): Handling local request: https://localhost/icons/icon-32.png

@@ -1,0 +1,1690 @@
+[startGroupCollapsed] %cnative %cWritexAI.device (#104690691) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 104690691, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#104690691) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2454061056, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cApp.addListener (#104690683) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {canGoBack: false}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3865995) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3865995, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3865995) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2237235200, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cApp.addListener (#3865987) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {canGoBack: false}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3865996) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3865996, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3865996) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2306732032, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3865997) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3865997, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.addListener (#3865998) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3865998, pluginId: WritexAI, methodName: addListener, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3865997) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2282508288, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3865999) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3865999, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3865999) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2274332672, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.download (#3866000) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866000, pluginId: WritexAI, methodName: download, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 7455, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 5173491, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 9646323, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 13586675, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 16226614, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 23426544, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 29305860, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 35113988, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 42605730, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866001) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866001, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866001) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2258747392, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 47709672, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 53712714, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 59724338, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 63047388, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 68797493, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 74911546, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 80303650, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 86618586, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 93210028, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 98026924, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 105014700, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 111507386, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 115398750, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866002) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866002, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866002) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2301165568, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 123475434, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 127819242, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 134207672, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 141236146, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 146188854, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 151775798, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 158392888, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 167141382, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 172810246, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 180833330, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 187261136, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 192512206, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866003) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866003, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866003) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2298871808, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 197906130, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 203626042, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 208303004, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 214372138, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 221007282, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 225178000, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 230193976, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 237123724, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 242180384, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 247326444, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 252336260, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 257957764, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 263707572, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866004) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866004, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866004) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2301317120, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 269695096, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 274678036, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 280897020, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 284914436, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 290762262, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 295954952, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 300334800, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 304709328, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 308895440, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 313401040, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 317084904, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 320752810, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866005) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866005, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866005) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2334711808, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 326044842, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 329644784, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 333061196, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 337898338, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 343185700, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 348885838, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 354105250, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 358651810, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 364350846, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 371125630, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 375576726, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 383012228, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 389162024, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866006) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866006, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866006) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2255974400, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 393461734, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 398645862, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 404176480, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 410426744, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 416170570, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 420708356, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 426214848, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 433892542, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 440852274, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 448877780, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 456531704, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 465047620, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866007) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866007, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866007) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2447011840, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 471005656, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 478714778, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 487012376, total: 491400032, state: downloading}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3865998) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {id: light, received: 491400032, total: 491400032, state: installed}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866008) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866008, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.download (#3866000) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {file: qwen2.5-0.5b-instruct-q4_k_m.gguf, size: 491400032}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866009) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866009, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866008) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2392797184, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866009) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2392776704, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866010) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866010, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866010) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2332278784, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866011) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866011, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866011) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2350411776, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866012) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866012, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866012) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2371543040, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.load (#3866013) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866013, pluginId: WritexAI, methodName: load, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.load (#3866013) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {loadedFile: qwen2.5-0.5b-instruct-q4_k_m.gguf, loadMs: 6269, maxCtx: 8192}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866014) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866014, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866014) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2386067456, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.addListener (#3866015) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866015, pluginId: WritexAI, methodName: addListener, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866016) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866016, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text: Paris}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text:  is}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text:  the}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text:  capital}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text:  of}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text:  France}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rpia6u2ou7en, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866016) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: Paris is the capital of France., promptTokens: 117, outputTokens: 7, promptMs: 71857, genMs: 76323}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866017) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866017, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866017) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2433429504, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866018) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866018, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866018) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2433421312, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866019) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866019, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ال}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: بحر}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  هو}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  ش}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: وا}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ط}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ئ}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  الأرض}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  التي}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  ت}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ُ}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: م}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: تد}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  بين}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  الج}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: بال}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  وال}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ص}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: خر}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ،}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  و}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: تع}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ت}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: بر}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  خ}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ل}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: قة}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  ق}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: وية}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  من}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  م}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: حي}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ط}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: ها}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  إلى}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  ج}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: بل}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text:  واحد}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r3voh0mxng46, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866019) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: البحر هو شواطئ الأرض التي تُمتد بين الجبال والصخر، وتعتبر خلقة قوية من محيطها إلى جبل واحد., promptTokens: 116, outputTokens: 39, promptMs: 6686, genMs: 3673}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866020) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866020, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866020) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2430562304, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866021) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866021, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866021) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2430554112, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866022) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866022, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text: She}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text:  goes}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text:  to}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text:  school}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text:  every}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text:  day}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdpz0vqvv8rc, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866022) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: She goes to school every day., promptTokens: 105, outputTokens: 7, promptMs: 6182, genMs: 652}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866023) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866023, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866023) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2429628416, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866024) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866024, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866024) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2429620224, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866025) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866025, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text:  project}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text:  budget}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text:  for}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text:  is}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text:  $}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 4}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 5}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rm8pv0m65cea, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866025) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: The project budget for 2026 is $4500., promptTokens: 184, outputTokens: 16, promptMs: 10959, genMs: 1524}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866026) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866026, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866026) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2442846208, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866027) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866027, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866027) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2442838016, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866028) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866028, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: Section}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: 1}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  north}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  eleven}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  countries}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  and}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  is}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  about}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: 5}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  kilometres}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  long}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: .
+
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: **}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: Fact}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: :**}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: ,}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  also}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  known}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  as}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  the}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  River}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text: ,}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  north}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rcbinnxb3whp, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866028) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: Section 1. The river Nile flows north through elev…also known as the Nile River, flows north through, promptTokens: 303, outputTokens: 40, promptMs: 18608, genMs: 3892}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866029) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866029, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866029) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2452099072, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866030) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866030, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: ###}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  Key}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  facts}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: -}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  north}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  eleven}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  countries}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: .
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: -}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  It}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  is}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  about}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 5}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  kilometers}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  long}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: .
+
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: ###}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  Facts}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  and}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  definitions}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 1}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  **}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: River}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  Name}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: **:}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: r9amor417gtu, text: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866030) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: ### Key facts
+- The river Nile flows north through…# Facts and definitions
+1. **River Name**: Nile
+2, promptTokens: 250, outputTokens: 40, promptMs: 15743, genMs: 3881}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866031) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866031, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866031) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2425159680, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866032) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866032, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: Section}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: 3}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  north}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  eleven}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  countries}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  and}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  is}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  about}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: 5}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  kilometers}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  long}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: .
+
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: **}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: Key}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  Facts}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: :**}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:   
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: -}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  eleven}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  countries}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: .
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: -}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text:  It}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rronc6xpkr9b, text: 's}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866032) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: Section 3. The river Nile flows north through elev…river Nile flows through eleven countries.
+- It's, promptTokens: 230, outputTokens: 40, promptMs: 13849, genMs: 3889}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866033) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866033, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866033) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2414112768, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866034) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866034, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: **}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: Key}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  Facts}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: :**}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:   
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: -}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  eleven}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  countries}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: .
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: -}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  It}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 's}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  about}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 5}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  kilometers}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  long}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: .
+
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: **}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: Fact}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: :**}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:   
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  river}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: ,}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  also}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  known}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  as}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  the}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  Nile}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  River}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: ,}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  flows}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  north}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  through}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  eleven}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  countries}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  and}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  is}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  about}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 6}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 5}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  kilometers}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text:  long}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rxfla7gsvdfr, text: .}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866034) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: **Key Facts:**  
+- The river Nile flows through el…even countries and is about 6650 kilometers long., promptTokens: 293, outputTokens: 57, promptMs: 17764, genMs: 5491}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866035) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866035, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866035) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2411184128, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866036) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866036, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866036) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2411175936, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866037) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866037, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: {
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: cards}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ":}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  [
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:    }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  {
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:      }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: front}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ":}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: Photos}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ynthesis}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  happens}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  in}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ",
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:      }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: back}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ":}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: chlor}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: oplast}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: s}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: "
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:    }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  },
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:    }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  {
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:      }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: front}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ":}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: Water}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  boils}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  at}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ",
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:      }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: back}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: ":}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  "}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: 1}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: 0}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  degrees}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  Celsius}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  at}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  sea}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  level}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: "
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:    }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  }
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  }
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text:  ]
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rdyowi1mjy2j, text: }}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866037) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: {
+  "cards": [
+    {
+      "front": "Photosynthesi…": "100 degrees Celsius at sea level"
+    }
+  ]
+}, promptTokens: 155, outputTokens: 59, promptMs: 9124, genMs: 7893}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866038) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866038, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866038) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2443304960, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866039) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866039, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866039) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2443296768, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.generate (#3866040) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866040, pluginId: WritexAI, methodName: generate, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text: #}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  Last}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  Echo}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text: 
+
+}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text: The}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  sea}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text: ,}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  a}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  vast}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  ex}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text: panse}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.addListener (#3866015) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {requestId: rculet2qx2h, text:  of}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.stop (#3866041) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866041, pluginId: WritexAI, methodName: stop, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.stop (#3866041) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.generate (#3866040) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {text: # The Last Echo
+
+The sea, a vast expanse of, promptTokens: 121, outputTokens: 13, promptMs: 7218, genMs: 1279}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.unload (#3866042) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866042, pluginId: WritexAI, methodName: unload, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.unload (#3866042) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866043) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866043, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866043) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2435313664, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866044) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866044, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866044) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2434543616, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866045) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866045, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866045) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2418405376, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866046) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866046, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866046) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2424020992, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cApp.addListener (#3865987) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {canGoBack: false}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#3866047) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 3866047, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#3866047) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2413764608, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cApp.addListener (#3865987) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {canGoBack: false}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cApp.addListener (#100751053) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751053, pluginId: App, methodName: addListener, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cApp.addListener (#100751054) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751054, pluginId: App, methodName: addListener, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cApp.addListener (#100751055) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751055, pluginId: App, methodName: addListener, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cStatusBar.setStyle (#100751056) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751056, pluginId: StatusBar, methodName: setStyle, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cStatusBar.setStyle (#100751057) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751057, pluginId: StatusBar, methodName: setStyle, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cStatusBar.setStyle (#100751056) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cStatusBar.setBackgroundColor (#100751058) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751058, pluginId: StatusBar, methodName: setBackgroundColor, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cStatusBar.setStyle (#100751057) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cStatusBar.setBackgroundColor (#100751059) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751059, pluginId: StatusBar, methodName: setBackgroundColor, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cStatusBar.setBackgroundColor (#100751058) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cStatusBar.setBackgroundColor (#100751059) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cSplashScreen.hide (#100751060) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751060, pluginId: SplashScreen, methodName: hide, options: Object}
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cSplashScreen.hide (#100751060) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] undefined
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#100751061) font-weight: lighter; color: gray font-weight: bold; color: #000
+[startGroupCollapsed] %cnative %cWritexAI.device (#100751061) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751061, pluginId: WritexAI, methodName: device, options: Object}
+[dir] {callbackId: 100751061, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#100751061) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[startGroupCollapsed] %cresult %cWritexAI.device (#100751061) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2353201152, lowMemory: false, cores: 2, threads: 2}
+[dir] {totalMem: 4112920576, availMem: 2353201152, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#100751062) font-weight: lighter; color: gray font-weight: bold; color: #000
+[startGroupCollapsed] %cnative %cWritexAI.device (#100751062) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751062, pluginId: WritexAI, methodName: device, options: Object}
+[dir] {callbackId: 100751062, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#100751062) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[startGroupCollapsed] %cresult %cWritexAI.device (#100751062) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2363494400, lowMemory: false, cores: 2, threads: 2}
+[dir] {totalMem: 4112920576, availMem: 2363494400, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cFilesystem.writeFile (#100751063) font-weight: lighter; color: gray font-weight: bold; color: #000
+[startGroupCollapsed] %cnative %cFilesystem.writeFile (#100751063) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751063, pluginId: Filesystem, methodName: writeFile, options: Object}
+[dir] {callbackId: 100751063, pluginId: Filesystem, methodName: writeFile, options: Object}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cFilesystem.writeFile (#100751063) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[startGroupCollapsed] %cresult %cFilesystem.writeFile (#100751063) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {uri: file:///storage/emulated/0/Documents/Writex/Untitled%20document.pdf}
+[dir] {uri: file:///storage/emulated/0/Documents/Writex/Untitled%20document.pdf}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cWritexAI.device (#100751064) font-weight: lighter; color: gray font-weight: bold; color: #000
+[startGroupCollapsed] %cnative %cWritexAI.device (#100751064) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751064, pluginId: WritexAI, methodName: device, options: Object}
+[dir] {callbackId: 100751064, pluginId: WritexAI, methodName: device, options: Object}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cWritexAI.device (#100751064) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[startGroupCollapsed] %cresult %cWritexAI.device (#100751064) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {totalMem: 4112920576, availMem: 2378346496, lowMemory: false, cores: 2, threads: 2}
+[dir] {totalMem: 4112920576, availMem: 2378346496, lowMemory: false, cores: 2, threads: 2}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cnative %cFilesystem.writeFile (#100751065) font-weight: lighter; color: gray font-weight: bold; color: #000
+[startGroupCollapsed] %cnative %cFilesystem.writeFile (#100751065) font-weight: lighter; color: gray font-weight: bold; color: #000
+[dir] {callbackId: 100751065, pluginId: Filesystem, methodName: writeFile, options: Object}
+[dir] {callbackId: 100751065, pluginId: Filesystem, methodName: writeFile, options: Object}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
+[startGroupCollapsed] %cresult %cFilesystem.writeFile (#100751065) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[startGroupCollapsed] %cresult %cFilesystem.writeFile (#100751065) font-style: italic; font-weight: lighter; color: gray font-style: italic; font-weight: bold; color: #444
+[dir] {uri: file:///storage/emulated/0/Documents/Writex/Untitled%20document.docx}
+[dir] {uri: file:///storage/emulated/0/Documents/Writex/Untitled%20document.docx}
+[endGroup] console.groupEnd
+[endGroup] console.groupEnd
